@@ -4,6 +4,7 @@ use App\Http\Controllers\Frontend\UserDashboardController;
 use App\Http\Controllers\Frontend\InstructorDashboardController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController; // Added for profile routes
+use App\Http\Controllers\Frontend\FrontendController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,10 +14,7 @@ use App\Http\Controllers\ProfileController; // Added for profile routes
 | The main landing page of your application.
 |
 */
-Route::get('/', function () {
-    return view('welcome');
-});
-
+Route::get('/',[FrontendController::class,'index'])->name('home');
 /*
 |--------------------------------------------------------------------------
 | Dashboard Redirect Route
