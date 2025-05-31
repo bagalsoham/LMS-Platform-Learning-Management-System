@@ -50,8 +50,8 @@
         MAIN MENU 3 START
     ============================-->
     <nav class="navbar navbar-expand-lg main_menu main_menu_3">
-        <a class="navbar-brand" href="index_3.html">
-            <img src="images/logo.png" alt="EduCore" class="img-fluid">
+        <a class="navbar-brand" href="{{ route('home') }}">
+            <img src="{{ asset('frontend/assets/images/logo.png') }}" alt="EduCore" class="img-fluid">
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -60,7 +60,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <div class="menu_category">
                 <div class="icon">
-                    <img src="images/grid_icon.png" alt="Category" class="img-fluid">
+                    <img src="{{ asset('frontend/assets/images/grid_icon.png') }}" alt="Category" class="img-fluid">
                 </div>
                 Category
                 <ul>
@@ -166,7 +166,7 @@
             </div>
             <ul class="navbar-nav m-auto">
                 <li class="nav-item">
-                    <a class="nav-link active" href="index.html">Home</a>
+                    <a class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}" href="{{ route('home') }}">Home</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="about.html">About Us</a>
@@ -180,7 +180,7 @@
                     </ul>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">pages <i class="far fa-angle-down"></i></a>
+                    <a class="nav-link" href="#">Pages <i class="far fa-angle-down"></i></a>
                     <ul class="droap_menu">
                         <li><a href="category.html">Categories</a></li>
                         <li><a href="cart_view.html">cart view</a></li>
@@ -193,8 +193,8 @@
                         <li><a href="instructor_finder.html">Instructor finder</a></li>
                         <li><a href="error.html">error</a></li>
                         <li><a href="faq.html">faq</a></li>
-                        <li><a href="sign_in.html">sign in</a></li>
-                        <li><a href="sign_up.html">sign up</a></li>
+                        <li><a href="{{ route('login') }}">sign in</a></li>
+                        <li><a href="{{ route('register') }}">sign up</a></li>
                         <li><a href="forum.html">forum</a></li>
                         <li><a href="forum_categories.html">forum Categories</a></li>
                         <li><a href="forum_create_topic.html">forum create topic</a></li>
@@ -203,7 +203,7 @@
                     </ul>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">blog <i class="far fa-angle-down"></i></a>
+                    <a class="nav-link" href="#">Blog <i class="far fa-angle-down"></i></a>
                     <ul class="droap_menu">
                         <li><a href="blogs.html">blog grid view</a></li>
                         <li><a href="blog_list.html">blog list view</a></li>
@@ -217,28 +217,37 @@
 
             <div class="right_menu">
                 <div class="menu_search_btn">
-                    <img src="images/search_icon.png" alt="Search" class="img-fluid">
+                    <img src="{{ asset('frontend/assets/images/search_icon.png') }}" alt="Search" class="img-fluid">
                 </div>
                 <ul>
                     <li>
                         <a class="menu_signin" href="#">
                             <span>
-                                <img src="images/cart_icon_black.png" alt="user" class="img-fluid">
+                                <img src="{{ asset('frontend/assets/images/cart_icon_black.png') }}" alt="user" class="img-fluid">
                             </span>
                             <b>06</b>
                         </a>
                     </li>
-                    <li>
-                        <a class="admin" href="#">
-                            <span>
-                                <img src="images/user_icon_black.png" alt="user" class="img-fluid">
-                            </span>
-                            admin
-                        </a>
-                    </li>
-                    <li>
-                        <a class="common_btn" href="{{route('login')}}">Sign In</a>
-                    </li>
+                    @auth
+                        <li>
+                            <a class="admin" href="#">
+                                <span>
+                                    <img src="{{ asset('frontend/assets/images/user_icon_black.png') }}" alt="user" class="img-fluid">
+                                </span>
+                                {{ auth()->user()->name }}
+                            </a>
+                        </li>
+                        <li>
+                            <form method="POST" action="{{ route('logout') }}" class="d-inline">
+                                @csrf
+                                <button type="submit" class="common_btn">Logout</button>
+                            </form>
+                        </li>
+                    @else
+                        <li>
+                            <a class="common_btn" href="{{ route('login') }}">Sign In</a>
+                        </li>
+                    @endauth
                 </ul>
             </div>
 

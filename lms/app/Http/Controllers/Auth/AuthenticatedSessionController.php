@@ -4,17 +4,15 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\View\View;
 
 class AuthenticatedSessionController extends Controller
 {
     /**
      * Display the login view.
      */
-    public function create(): View
+    public function create()
     {
         return view('auth.login');
     }
@@ -22,26 +20,25 @@ class AuthenticatedSessionController extends Controller
     /**
      * Handle an incoming authentication request.
      */
-    public function store(LoginRequest $request): RedirectResponse
+    public function store(LoginRequest $request)
     {
         $request->authenticate();
 
         $request->session()->regenerate();
-        if($request->user()->role == 'student'){
-            return redirect()->intended(route('student.dashboard',absolute:false));
-        }
-        elseif ($request->user()->role == 'instructor') {
-            return redirect()->intended(route('instructor.dashboard',absolute:false));
-        }
-        
 
-        return abort(404);
+        if (auth()->user()->role === 'student') {
+            return redirect()->intended(route('student.dashboard'));
+        } elseif (auth()->user()->role === 'instructor') {
+            return redirect()->intended(route('instructor.dashboard'));
+        }
+
+        return redirect()->intended(route('home'));
     }
 
     /**
      * Destroy an authenticated session.
      */
-    public function destroy(Request $request): RedirectResponse
+    public function destroy(Request $request)
     {
         Auth::guard('web')->logout();
 

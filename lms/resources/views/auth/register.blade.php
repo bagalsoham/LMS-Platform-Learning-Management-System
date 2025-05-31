@@ -1,52 +1,81 @@
-<x-guest-layout>
-    <form method="POST" action="{{ route('register') }}">
-        @csrf
+@extends('frontend.layouts.master')
 
-        <!-- Name -->
-        <div>
-            <x-input-label for="name" :value="__('Name')" />
-            <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
-            <x-input-error :messages="$errors->get('name')" class="mt-2" />
+@section('content')
+<section class="wsus__sign_in wsus__sign_in">
+    <div class="row align-items-center">
+        <div class="col-xxl-5 col-xl-6 col-lg-6 wow fadeInLeft">
+            <div class="wsus__sign_img">
+                <img src="{{asset('frontend/assets/images/login_img_2.jpg')}}" alt="register" class="img-fluid">
+                <a href="{{ route('home') }}">
+                    <img src="{{asset('frontend/assets/images/logo.png')}}" alt="EduCore" class="img-fluid">
+                </a>
+            </div>
         </div>
+        <div class="col-xxl-4 col-xl-5 col-lg-6 col-md-9 m-auto wow fadeInRight">
+            <div class="wsus__sign_form_area">
+                @if(session('status'))
+                    <div class="alert alert-success">
+                        {{ session('status') }}
+                    </div>
+                @endif
 
-        <!-- Email Address -->
-        <div class="mt-4">
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+                @if(session('error'))
+                    <div class="alert alert-danger">
+                        {{ session('error') }}
+                    </div>
+                @endif
+
+                <form method="POST" action="{{ route('register') }}">
+                    @csrf
+                    <h2>Create Account<span>!</span></h2>
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="wsus__login_form_input">
+                                <label>Name</label>
+                                <input type="text" name="name" placeholder="Enter your name" value="{{ old('name') }}" required>
+                                @error('name')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="col-xl-12">
+                            <div class="wsus__login_form_input">
+                                <label>Email</label>
+                                <input type="email" name="email" placeholder="Enter your email" value="{{ old('email') }}" required>
+                                @error('email')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="col-xl-12">
+                            <div class="wsus__login_form_input">
+                                <label>Password</label>
+                                <input type="password" name="password" placeholder="Enter your password" required>
+                                @error('password')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="col-xl-12">
+                            <div class="wsus__login_form_input">
+                                <label>Confirm Password</label>
+                                <input type="password" name="password_confirmation" placeholder="Confirm your password" required>
+                                @error('password_confirmation')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="col-xl-12">
+                            <div class="wsus__login_form_input">
+                                <button type="submit" class="common_btn">Register</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <p class="create_account">Already have an account? <a href="{{ route('login') }}">Sign In</a></p>
+            </div>
         </div>
-
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
-
-            <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="new-password" />
-
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
-        </div>
-
-        <!-- Confirm Password -->
-        <div class="mt-4">
-            <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
-
-            <x-text-input id="password_confirmation" class="block mt-1 w-full"
-                            type="password"
-                            name="password_confirmation" required autocomplete="new-password" />
-
-            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
-        </div>
-
-        <div class="flex items-center justify-end mt-4">
-            <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('login') }}">
-                {{ __('Already registered?') }}
-            </a>
-
-            <x-primary-button class="ms-4">
-                {{ __('Register') }}
-            </x-primary-button>
-        </div>
-    </form>
-</x-guest-layout>
+    </div>
+    <a class="back_btn" href="{{ route('home') }}">Back to Home</a>
+</section>
+@endsection

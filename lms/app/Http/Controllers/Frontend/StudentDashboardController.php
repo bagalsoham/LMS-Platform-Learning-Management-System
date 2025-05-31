@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\View\View;
 
-class UserDashboardController extends Controller
+class StudentDashboardController extends Controller
 {
     /**
      * Display the student dashboard.
@@ -14,6 +14,6 @@ class UserDashboardController extends Controller
     public function index(): View
     {
         // 'dashboard' naam ka view return karta hai (resources/views/dashboard.blade.php)
-        return view('student.dashboard');
+        return view('frontend.student.dashboard');
     }
 }

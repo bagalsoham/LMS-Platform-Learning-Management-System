@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Frontend\UserDashboardController;
+use App\Http\Controllers\Frontend\StudentDashboardController;
 use App\Http\Controllers\Frontend\InstructorDashboardController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController; // Added for profile routes
@@ -31,7 +31,7 @@ Route::get('/dashboard', function () {
         // Check if the authenticated user has a role
         if (isset($user->role)) {
             if ($user->role === 'student') {
-                return redirect()->route('student.dashboard');
+                return redirect()->route('frontend.student.dashboard');
             } elseif ($user->role === 'instructor') {
                 return redirect()->route('instructor.dashboard');
             }
@@ -56,7 +56,7 @@ Route::group([
     'prefix' => 'student',
     'as' => 'student.'
 ], function () {
-    Route::get('/dashboard', [UserDashboardController::class, 'index'])->name('dashboard');
+    Route::get('/dashboard', [StudentDashboardController::class, 'index'])->name('dashboard');
 });
 
 /*
@@ -74,6 +74,20 @@ Route::group([
     'as' => 'instructor.'
 ], function () {
     Route::get('/dashboard', [InstructorDashboardController::class, 'index'])->name('dashboard');
+});
+
+/*
+|--------------------------------------------------------------------------
+| Profile Routes
+|--------------------------------------------------------------------------
+|
+| Routes for user profile management.
+|
+*/
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
 /*
