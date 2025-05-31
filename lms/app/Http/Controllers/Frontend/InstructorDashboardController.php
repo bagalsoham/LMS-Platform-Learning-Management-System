@@ -13,6 +13,6 @@ class InstructorDashboardController extends Controller
      */
     public function index(): View
     {
-        return view('instructor.dashboard');
+        return view('frontend.instructor.dashboard');
     }
 }

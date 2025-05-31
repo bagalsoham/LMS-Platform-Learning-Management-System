@@ -33,7 +33,7 @@ Route::get('/dashboard', function () {
             if ($user->role === 'student') {
                 return redirect()->route('frontend.student.dashboard');
             } elseif ($user->role === 'instructor') {
-                return redirect()->route('instructor.dashboard');
+                return redirect()->route('frontend.instructor.dashboard');
             }
         }
     }
