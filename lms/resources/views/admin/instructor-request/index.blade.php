@@ -41,14 +41,18 @@
                             @endif
                           </td>
                           <td>
-                            <a href="#"><svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-download"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2" /><path d="M7 11l5 5l5 -5" /><path d="M12 4l0 12" /></svg></a>
+                            <a href="{{route('admin.instructor-doc-download', $instructorRequest->id)}}">
+                              <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-download"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2" /><path d="M7 11l5 5l5 -5" /><path d="M12 4l0 12" /></svg>
+                            </a>
                           </td>
                           <td>
-                            <form action="">
-                                <select name="" id="" class="form-control">
-                                    <option value="">Select Action</option>
-                                    <option value="approve">Approve</option>
-                                    <option value="reject">Reject</option>
+                            <form  method="POST" action="{{route('admin.instructor-request.update', $instructorRequest->id)}}" class="status-{{$instructorRequest->id}}">
+                              @csrf
+                              @method('PUT')
+                                <select name="status"  id="" class="form-control" onchange="$('.status-{{$instructorRequest->id}}').submit()">
+                                    <option @selected($instructorRequest->approve_status == 'pending') value="">Pending</option>
+                                    <option @selected($instructorRequest->approve_status == 'approved') value="approved">Approve</option>
+                                    <option @selected($instructorRequest->approve_status == 'rejected') value="rejected">Reject</option>
                                 </select>
                             </form>
                           </td>

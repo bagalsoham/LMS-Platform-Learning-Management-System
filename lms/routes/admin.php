@@ -68,5 +68,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth:admin'])->group(functi
     // Logout
     Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
 
+    Route::get('instructor-doc-download/{user}',[InstructorRequestController::class,'download'])->name('instructor-doc-download');
+
     Route::resource('instructor-request', InstructorRequestController::class);
 });

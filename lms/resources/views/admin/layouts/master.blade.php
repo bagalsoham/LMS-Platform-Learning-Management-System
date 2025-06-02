@@ -16,6 +16,7 @@
     <!-- CSS files -->
     <link href="{{asset('admin/assets/dist/css/tabler.min.css?1692870487')}}" rel="stylesheet"/>
     <link href="{{asset('admin/assets/dist/css/demo.min.css?1692870487')}}" rel="stylesheet"/>
+	@vite('resources/js/admin/admin.js')
     <style>
       @import url('https://rsms.me/inter/inter.css');
       :root {
@@ -44,6 +45,8 @@
     </div>
     <!-- Models -->
 
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     
     <!-- Tabler Core -->
     <script src="{{asset('admin/assets/dist/js/tabler.min.js?1692870487')}}" defer></script>
