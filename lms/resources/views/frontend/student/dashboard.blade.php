@@ -38,7 +38,7 @@
                     <div class="wsus__dashboard_sidebar">
                         <div class="wsus__dashboard_sidebar_top">
                             <div class="dashboard_banner">
-                                <img src="{{ asset('frontend/assets/images/single_topic_sidebar_banner.jpg') }}" alt="img" class="img-fluid">
+                                <img src="{{ asset('frontend/assets/images/single_topic_sidebar_banner.jpg') }}" alt="banner" class="img-fluid">
                             </div>
                             <div class="img">
                                 <img src="{{ asset('frontend/assets/images/dashboard_profile_img.png') }}" alt="profile" class="img-fluid w-100">
@@ -158,7 +158,13 @@
                     </div>
                 </div>
                 <div class="col-xl-9 col-md-8">
-                    <div class="row">
+                    <div class="alert alert-primary d-flex align-items-center mb-4" role="alert">
+                        <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Info:"><use xlink:href="#info-fill"/></svg>
+                        <div>
+                            Hi,{{ Auth::user()->name }}! your instructor request has been sent to the admin we will send you a notification once it's approved.
+                        </div>
+                    </div>
+                    <div class="row mb-4">
                         <div class="col-xl-4 col-sm-6 wow fadeInUp">
                             <div class="wsus__dash_earning">
                                 <h6>REVENUE</h6>
@@ -182,7 +188,7 @@
                         </div>
                     </div>
 
-                    <div class="wsus__dashboard_chat_graps">
+                    <div class="wsus__dashboard_chat_graps mb-4">
                         <div class="row">
                             <div class="col-xl-8 wow fadeInRight">
                                 <div class="wsus__dashboard_graph">
@@ -192,7 +198,7 @@
                             </div>
                             <div class="col-xl-4 wow fadeInRight">
                                 <div class="wsus__dashboard_barfiller">
-                                    <h5>Complated Course</h5>
+                                    <h5>Completed Courses</h5>
                                     <div class="single_bar">
                                         <p>Java Code</p>
                                         <div id="bar1" class="barfiller">
