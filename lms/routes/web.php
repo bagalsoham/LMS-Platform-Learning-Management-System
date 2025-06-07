@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Frontend\StudentDashboardController;
 use App\Http\Controllers\Frontend\InstructorDashboardController;
+use App\Http\Controllers\Frontend\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController; // Added for profile routes
 use App\Http\Controllers\Frontend\FrontendController;
@@ -57,6 +58,8 @@ Route::group([
     'as' => 'student.'
 ], function () {
     Route::get('/dashboard', [StudentDashboardController::class, 'index'])->name('dashboard');
+    Route::get('/become-instructor', [StudentDashboardController::class, 'becomeinstructor'])->name('become-instructor');
+    Route::post('/become-instructor', [StudentDashboardController::class, 'becomeinstructorUpdate'])->name('become-instructor.update');
 });
 
 /*
