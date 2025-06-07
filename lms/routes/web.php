@@ -71,7 +71,7 @@ Route::group([
 Route::group([
     'middleware' => ['auth:web', 'verified', 'checkRole:instructor'],
     'prefix' => 'instructor',
-    'as' => 'instructor.'
+    'as' => 'frontend.instructor.'
 ], function () {
     Route::get('/dashboard', [InstructorDashboardController::class, 'index'])->name('dashboard');
 });
