@@ -4,8 +4,8 @@ use App\Http\Controllers\Frontend\StudentDashboardController;
 use App\Http\Controllers\Frontend\InstructorDashboardController;
 use App\Http\Controllers\Frontend\UserController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ProfileController; // Added for profile routes
 use App\Http\Controllers\Frontend\FrontendController;
+use App\Http\Controllers\Frontend\ProfileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,7 +32,7 @@ Route::get('/dashboard', function () {
         // Check if the authenticated user has a role
         if (isset($user->role)) {
             if ($user->role === 'student') {
-                return redirect()->route('frontend.student.dashboard');
+                return redirect()->route('student.dashboard');
             } elseif ($user->role === 'instructor') {
                 return redirect()->route('frontend.instructor.dashboard');
             }
@@ -60,6 +60,9 @@ Route::group([
     Route::get('/dashboard', [StudentDashboardController::class, 'index'])->name('dashboard');
     Route::get('/become-instructor', [StudentDashboardController::class, 'becomeinstructor'])->name('become-instructor');
     Route::post('/become-instructor', [StudentDashboardController::class, 'becomeinstructorUpdate'])->name('become-instructor.update');
+
+    /* Profile Routes */
+    Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
 });
 
 /*
@@ -77,20 +80,6 @@ Route::group([
     'as' => 'frontend.instructor.'
 ], function () {
     Route::get('/dashboard', [InstructorDashboardController::class, 'index'])->name('dashboard');
-});
-
-/*
-|--------------------------------------------------------------------------
-| Profile Routes
-|--------------------------------------------------------------------------
-|
-| Routes for user profile management.
-|
-*/
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
 /*
