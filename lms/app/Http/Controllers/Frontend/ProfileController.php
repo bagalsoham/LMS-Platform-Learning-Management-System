@@ -42,7 +42,8 @@ class ProfileController extends Controller
         $user->gender = $request->gender;
         $user->save();
 
-        return redirect()->back()->with('success', 'Profile updated successfully');
+        notyf()->success('Profile updated successfully');
+        return redirect()->back();
     }
     public function updatePassword(PasswordUpdateRequest $request): RedirectResponse
     {
@@ -50,7 +51,8 @@ class ProfileController extends Controller
         $user->password = bcrypt($request->password);
         $user->save();
 
-        return redirect()->back()->with('success', 'Password updated successfully');
+        notyf()->success('Password updated successfully');
+        return redirect()->back();
     }
     public function updateSocial(SocialUpdateRequest $request): RedirectResponse
     {
@@ -61,6 +63,7 @@ class ProfileController extends Controller
         $user->website = $request->website;
         $user->save();
 
+        notyf()->success('Social information updated successfully');
         return redirect()->back();
     }
 }

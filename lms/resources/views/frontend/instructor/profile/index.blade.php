@@ -1,6 +1,14 @@
 @extends('frontend.layouts.master')
 
 @section('content')
+    @if ($errors->any())
+        @foreach ($errors->all() as $error)
+            <script>
+                notyf()->error('{{ $error }}');
+            </script>
+        @endforeach
+    @endif
+
     <!--===========================
         BREADCRUMB START
     ============================-->

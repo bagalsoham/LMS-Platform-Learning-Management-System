@@ -38,6 +38,7 @@ class StudentDashboardController extends Controller
             'document' => $filePath
         ]);
 
-        return redirect()->route('student.dashboard')->with('success', 'Your instructor application has been submitted successfully!');
+        notyf()->info('Your instructor application has been submitted and is being reviewed.');
+        return redirect()->route('student.dashboard');
     }
 }
