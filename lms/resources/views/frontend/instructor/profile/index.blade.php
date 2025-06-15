@@ -2,18 +2,18 @@
 
 @section('content')
     <!--===========================
-                                                    BREADCRUMB START
-                                                ============================-->
+        BREADCRUMB START
+    ============================-->
     <section class="wsus__breadcrumb" style="background: url({{ asset('frontend/assets/images/breadcrumb_bg.jpg') }});">
         <div class="wsus__breadcrumb_overlay">
             <div class="container">
                 <div class="row">
                     <div class="col-12 wow fadeInUp">
                         <div class="wsus__breadcrumb_text">
-                            <h1>Student Dashboard</h1>
+                            <h1>Instructor Dashboard</h1>
                             <ul>
                                 <li><a href="#">Home</a></li>
-                                <li>Student dashboard</li>
+                                <li>Instructor dashboard</li>
                             </ul>
                         </div>
                     </div>
@@ -22,13 +22,12 @@
         </div>
     </section>
     <!--===========================
-                                                    BREADCRUMB END
-                                                ============================-->
-
+        BREADCRUMB END
+    ============================-->
 
     <!--===========================
-                                                    DASHBOARD OVERVIEW START
-                                                ============================-->
+        DASHBOARD OVERVIEW START
+    ============================-->
     <section class="wsus__dashboard mt_90 xs_mt_70 pb_120 xs_pb_100">
         <div class="container">
             <div class="row">
@@ -42,7 +41,7 @@
                                 <p>Manage your courses and its update like live, draft and insight.</p>
                             </div>
                         </div>
-                        <form action="{{ route('student.profile.update') }}" method="POST"
+                        <form action="{{ route('instructor.profile.update') }}" method="POST"
                             class="wsus__dashboard_profile_update" enctype="multipart/form-data">
                             @csrf
                             <div class="wsus__dashboard_profile wsus__dashboard_profile_avatar">
@@ -119,7 +118,7 @@
                                 <p>Add your new password here to update .</p>
                             </div>
                         </div>
-                        <form action="{{ route('student.profile.update-password') }}" method="POST"
+                        <form action="{{ route('instructor.profile.update-password') }}" method="POST"
                             class="wsus__dashboard_profile_update">
                             @csrf
                             <div class="row">
@@ -162,7 +161,7 @@
                                 <p>Update your links here.</p>
                             </div>
                         </div>
-                        <form action="{{ route('student.profile.update-social') }}" method="post"
+                        <form action="{{ route('instructor.profile.update-social') }}" method="post"
                             class="wsus__dashboard_profile_update">
                             @csrf
                             <div class="row">
@@ -211,6 +210,6 @@
         </div>
     </section>
     <!--===========================
-                                                    DASHBOARD OVERVIEW END
-                                                ============================-->
+        DASHBOARD OVERVIEW END
+    ============================-->
 @endsection

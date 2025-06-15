@@ -26,12 +26,18 @@ class ProfileUpdateRequest extends FormRequest
             'name' => ['required', 'max:255', 'string'],
             'headline' => ['nullable', 'max:255', 'string'],
             'email' => ['required', 'max:255', 'email', 'unique:users,email,' . $this->user()->id],
-            'bio' => ['nullable', 'max:6000', 'string'],
+            'about' => ['nullable', 'max:6000', 'string'],
             'gender' => ['nullable', 'in:male,female'],
-            'facebook' => ['nullable', 'url', 'max:255'],
-            'twitter' => ['nullable', 'url', 'max:255'],
-            'linkedin' => ['nullable', 'url', 'max:255'],
-            'website' => ['nullable', 'url', 'max:255'],
+            'avatar' => ['nullable', 'image', 'mimes:jpeg,png,jpg', 'max:2048'],
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'avatar.image' => 'The file must be an image.',
+            'avatar.mimes' => 'The image must be a file of type: jpeg, png, jpg.',
+            'avatar.max' => 'The image may not be greater than 2MB.',
         ];
     }
 }

@@ -63,8 +63,9 @@ Route::group([
 
     /* Profile Routes */
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
-
-    Route::post('profile/update',[ProfileController::class,'profileUpdate'])->name('profile.update');
+    Route::post('/profile/update', [ProfileController::class, 'profileUpdate'])->name('profile.update');
+    Route::post('/profile/update-password', [ProfileController::class, 'updatePassword'])->name('profile.update-password');
+    Route::post('/profile/update-social', [ProfileController::class, 'updateSocial'])->name('profile.update-social');
 });
 
 /*
@@ -79,9 +80,15 @@ Route::group([
 Route::group([
     'middleware' => ['auth:web', 'verified', 'checkRole:instructor'],
     'prefix' => 'instructor',
-    'as' => 'frontend.instructor.'
+    'as' => 'instructor.'
 ], function () {
     Route::get('/dashboard', [InstructorDashboardController::class, 'index'])->name('dashboard');
+
+    /* Profile Routes */
+    Route::get('/profile', [ProfileController::class, 'instructorIndex'])->name('profile.index');
+    Route::post('/profile/update', [ProfileController::class, 'profileUpdate'])->name('profile.update');
+    Route::post('/profile/update-password', [ProfileController::class, 'updatePassword'])->name('profile.update-password');
+    Route::post('/profile/update-social', [ProfileController::class, 'updateSocial'])->name('profile.update-social');
 });
 
 /*
