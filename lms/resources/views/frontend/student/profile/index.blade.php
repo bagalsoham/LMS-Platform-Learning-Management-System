@@ -2,8 +2,8 @@
 
 @section('content')
     <!--===========================
-                    BREADCRUMB START
-                ============================-->
+                        BREADCRUMB START
+                    ============================-->
     <section class="wsus__breadcrumb" style="background: url({{ asset('frontend/assets/images/breadcrumb_bg.jpg') }});">
         <div class="wsus__breadcrumb_overlay">
             <div class="container">
@@ -22,13 +22,13 @@
         </div>
     </section>
     <!--===========================
-                    BREADCRUMB END
-                ============================-->
+                        BREADCRUMB END
+                    ============================-->
 
 
     <!--===========================
-                    DASHBOARD OVERVIEW START
-                ============================-->
+                        DASHBOARD OVERVIEW START
+                    ============================-->
     <section class="wsus__dashboard mt_90 xs_mt_70 pb_120 xs_pb_100">
         <div class="container">
             <div class="row">
@@ -61,41 +61,48 @@
                             </div>
                         </div>
 
-                        <form action="#" class="wsus__dashboard_profile_update">
+                        <form action="{{ route('student.profile.update') }}" method="POST"
+                            class="wsus__dashboard_profile_update">
+                            @csrf
                             <div class="row">
                                 <div class="col-xl-12">
                                     <div class="wsus__dashboard_profile_update_info">
                                         <label>Name</label>
-                                        <input type="text" placeholder="Enter your first name" name="name">
+                                        <input type="text" placeholder="Enter your first name" name="name" value="{{ auth()->user()->name }}">
+                                        <x-input-error :messages="$errors->get('name')" class="mt-2 text-danger" />
                                     </div>
                                 </div>
                                 <div class="col-xl-12">
                                     <div class="wsus__dashboard_profile_update_info">
                                         <label>Headline</label>
-                                        <input type="text" placeholder="Enter your headline" name="heading">
+                                        <input type="text" placeholder="Enter your headline" name="headline" value="{{ auth()->user()->headline }}">
+                                        <x-input-error :messages="$errors->get('headline')" class="mt-2 text-danger" />
                                     </div>
                                 </div>
                                 <div class="col-xl-6">
                                     <div class="wsus__dashboard_profile_update_info">
                                         <label>Email</label>
-                                        <input type="text" placeholder="Enter your email" name="email">
+                                        <input type="text" placeholder="Enter your email" name="email" value="{{ auth()->user()->email }}">
+                                        <x-input-error :messages="$errors->get('email')" class="mt-2 text-danger" />
                                     </div>
                                 </div>
                                 <div class="col-xl-6">
                                     <div class="wsus__dashboard_profile_update_info">
                                         <label>Gender</label>
-                                        <select name="" id="" class="form-control" name="gender">
+                                        <select name="gender" id="" class="form-control">
                                             <option value="">Select</option>
-                                            <option value="male">Male</option>
-                                            <option value="female">Female</option>
+                                            <option value="male" @selected(auth()->user()->gender == 'male')>Male</option>
+                                            <option value="female" @selected(auth()->user()->gender == 'female')>Female</option>
                                         </select>
+                                        <x-input-error :messages="$errors->get('gender')" class="mt-2 text-danger" />
                                     </div>
                                 </div>
 
                                 <div class="col-xl-12">
                                     <div class="wsus__dashboard_profile_update_info">
                                         <label>About Me</label>
-                                        <textarea rows="7" placeholder="Your text here" name=""></textarea>
+                                        <textarea rows="7" placeholder="Your text here" name="about">{{ auth()->user()->bio }}</textarea>
+                                        <x-input-error :messages="$errors->get('about')" class="mt-2 text-danger" />
                                     </div>
                                 </div>
                                 <div class="col-xl-12">
@@ -118,25 +125,29 @@
                                 <div class="col-xl-12">
                                     <div class="wsus__dashboard_profile_update_info">
                                         <label>Facebook</label>
-                                        <input type="text" placeholder="Enter your first name" name="name">
+                                        <input type="text" placeholder="Enter your first name" name="facebook" value="{{ auth()->user()->facebook }}">
+                                        <x-input-error :messages="$errors->get('facebook')" class="mt-2 text-danger" />
                                     </div>
                                 </div>
                                 <div class="col-xl-12">
                                     <div class="wsus__dashboard_profile_update_info">
                                         <label>X</label>
-                                        <input type="text" placeholder="Enter your first name" name="name">
+                                        <input type="text" placeholder="Enter your first name" name="twitter" value="{{ auth()->user()->twitter }}">
+                                        <x-input-error :messages="$errors->get('twitter')" class="mt-2 text-danger" />
                                     </div>
                                 </div>
                                 <div class="col-xl-12">
                                     <div class="wsus__dashboard_profile_update_info">
                                         <label>LinkedIn</label>
-                                        <input type="text" placeholder="Enter your first name" name="name">
+                                        <input type="text" placeholder="Enter your first name" name="linkedin" value="{{ auth()->user()->linkedin }}">
+                                        <x-input-error :messages="$errors->get('linkedin')" class="mt-2 text-danger" />
                                     </div>
                                 </div>
                                 <div class="col-xl-12">
                                     <div class="wsus__dashboard_profile_update_info">
                                         <label>Website</label>
-                                        <input type="text" placeholder="Enter your first name" name="name">
+                                        <input type="text" placeholder="Enter your first name" name="website" value="{{ auth()->user()->website }}">
+                                        <x-input-error :messages="$errors->get('website')" class="mt-2 text-danger" />
                                     </div>
                                 </div>
                                 <div class="col-xl-12">
@@ -152,6 +163,6 @@
         </div>
     </section>
     <!--===========================
-                    DASHBOARD OVERVIEW END
-                ============================-->
+                        DASHBOARD OVERVIEW END
+                    ============================-->
 @endsection
