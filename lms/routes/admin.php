@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\Auth\PasswordController;
 use App\Http\Controllers\Admin\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Admin\Auth\RegisteredUserController;
 use App\Http\Controllers\Admin\Auth\VerifyEmailController;
+use App\Http\Controllers\Admin\CourseLanguageController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\InstructorRequestController;
@@ -31,7 +32,7 @@ Route::prefix('admin')->name('admin.')->middleware(['guest:admin'])->group(funct
     Route::get('login', [AuthenticatedSessionController::class, 'create'])->name('login');
     Route::post('login', [AuthenticatedSessionController::class, 'store']);
 
-    
+
     // Forgot Password
     Route::get('forgot-password', [PasswordResetLinkController::class, 'create'])->name('password.request');
     Route::post('forgot-password', [PasswordResetLinkController::class, 'store'])->name('password.email');
@@ -67,8 +68,12 @@ Route::prefix('admin')->name('admin.')->middleware(['auth:admin'])->group(functi
 
     // Logout
     Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
+    /*Instructor request route  */
 
     Route::get('instructor-doc-download/{user}',[InstructorRequestController::class,'download'])->name('instructor-doc-download');
 
     Route::resource('instructor-request', InstructorRequestController::class);
+
+    /* Course Language controller  */
+    Route::resource('course-languages', CourseLanguageController::class);
 });
