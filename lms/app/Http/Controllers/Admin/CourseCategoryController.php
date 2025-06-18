@@ -8,7 +8,7 @@ use App\Http\Requests\Admin\CourseCategoryUpdateRequest;
 use App\Models\CourseCategory;
 use App\Traits\FileUpload;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
+use Exception;
 use Illuminate\Support\Str;
 
 
@@ -93,8 +93,16 @@ class CourseCategoryController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(CourseCategory $course_category)
     {
-        //
+
+        try{
+            $course_category ->delete();
+            notyf()->error('Deleted Successfully');
+        }catch(Exception $e){
+            logger($e);
+            return response(['message'=> 'Something went wrong'],500);
+
+        }
     }
 }

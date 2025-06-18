@@ -22,10 +22,12 @@ trait FileUpload {
 
         return '/' .$directory. '/' . $filename; //uploads/ file.ext
     }
-    public function deleteFile($path)
+    public function deleteFile( ? string $path):bool
 {
     if($path && file_exists(public_path($path))) {
         unlink(public_path($path));
+
     }
+    return false;
 }
 }
