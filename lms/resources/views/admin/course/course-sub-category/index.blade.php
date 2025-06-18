@@ -1,16 +1,21 @@
 @extends('admin.layouts.master')
 
-@section('title', 'Course Languages')
-
 @section('content')
     <div class="page-body">
         <div class="container-xl">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">Course Categories</h3>
+                    <h3 class="card-title">Course Sub Categories of: ({{ $course_category->name }})</h3>
                     <div class="card-actions">
-                        <a href="{{ route('admin.course-category.create') }}" class="btn btn-primary">
-                            <i class="ti ti-plus" style="font-size: 18px;"></i>
+                        <a href="{{ route('admin.course-category.index') }}"
+                            class="btn btn-dark">
+                            <i class="ti ti-arrow-left"></i>
+                            Back
+                        </a>
+
+                        <a href="{{ route('admin.course-sub-category.create', $course_category->id) }}"
+                            class="btn btn-primary">
+                            <i class="ti ti-plus"></i>
                             Add new
                         </a>
                     </div>
@@ -28,52 +33,55 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @forelse ($categories as $category)
+                                @forelse ($subCategory as $category)
                                     <tr>
-                                        <td><i class="{{ $category->icon }}"></i></td>
+                                       <td><img src="{{ asset($category->image) }}" alt=""></td>
                                         <td>{{ $category->name }}</td>
                                         <td>
                                             @if ($category->show_at_trending == 1)
                                                 <span class="badge bg-lime text-lime-fg">Yes</span>
                                             @else
-                                                <span class="badge bg-red text-lime-fg">No</span>
+                                                <span class="badge bg-red text-red-fg">No</span>
                                             @endif
                                         </td>
                                         <td>
                                             @if ($category->status == 1)
-                                                <span class="badge bg-lime text-lime-fg">Yes</span>
+                                                <span class="badge bg-lime text-lime-fg">Active</span>
                                             @else
-                                                <span class="badge bg-red text-lime-fg">No</span>
+                                                <span class="badge bg-red text-red-fg">Inactive</span>
                                             @endif
                                         </td>
                                         <td>
-                                            <a href="{{ route('admin.course-sub-category.index', $category->id) }}"
-                                                class="btn-sm btn-primary text-purple">
-                                                <i class="ti ti-list" style="font-size: 18px;"></i>
-                                            </a>
-                                            <a href="{{ route('admin.course-category.edit', $category->id) }}"
+                                            <a href="{{ route('admin.course-sub-category.edit', [
+                                                'course_category' => $course_category->id,
+                                                'course_sub_category' => $category->id,
+                                            ]) }}"
                                                 class="btn-sm btn-primary">
-                                                <i class="ti ti-edit" style="font-size: 18px;"></i>
+                                                <i class="ti ti-edit"></i>
                                             </a>
-                                            <a href="#" class="text-red delete-item"
-                                                data-delete-url="{{ route('admin.course-category.destroy', $category->id) }}">
-                                                <i class="ti ti-trash-x" style="font-size: 18px;"></i>
+
+                                            <a href="javascript:void(0)"
+                                                data-delete-url="{{ route('admin.course-sub-category.destroy', [
+                                                    'course_category' => $course_category->id,
+                                                    'course_sub_category' => $category->id,
+                                                ]) }}"
+                                                class="text-red delete-item">
+                                                <i class="ti ti-trash-x"></i>
                                             </a>
                                         </td>
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="3" class="text-center">No Data Found!</td>
+                                        <td colspan="5" class="text-center">No Data Found!</td>
                                     </tr>
                                 @endforelse
                             </tbody>
                         </table>
                     </div>
-                    <div class="mt-4">
-                        {{ $categories->links() }}
-                    </div>
                 </div>
             </div>
         </div>
     </div>
+
+
 @endsection

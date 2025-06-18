@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Admin\Auth\VerifyEmailController;
 use App\Http\Controllers\Admin\CourseCategoryController;
 use App\Http\Controllers\Admin\CourseLanguageController;
+use App\Http\Controllers\Admin\CourseSubCategoryController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\InstructorRequestController;
@@ -84,4 +85,16 @@ Route::prefix('admin')->name('admin.')->middleware(['auth:admin'])->group(functi
     /* Categories */
     Route::resource('course-category', CourseCategoryController::class);
 
+    Route::get('/course-category/{course_category}/sub-category', [CourseSubCategoryController::class, 'index'])->name('course-sub-category.index');
+
+    Route::get('/course-category/{course_category}/sub-category/create', [CourseSubCategoryController::class, 'create'])->name('course-sub-category.create');
+
+    Route::post('/course-category/{course_category}/sub-category', [CourseSubCategoryController::class, 'store',])->name('course-sub-category.store');
+
+    Route::get('/course-category/{course_category}/sub-category/{course_sub_category}/edit', [CourseSubCategoryController::class, 'edit'])->name('course-sub-category.edit');
+
+
+    Route::put('/course-category/{course_category}/sub-category/{course_sub_category}', [CourseSubCategoryController::class, 'update'])->name('course-sub-category.update');
+
+    Route::delete('/course-category/{course_category}/sub-category/{course_sub_category}', [CourseSubCategoryController::class, 'destroy'])->name('course-sub-category.destroy');
 });

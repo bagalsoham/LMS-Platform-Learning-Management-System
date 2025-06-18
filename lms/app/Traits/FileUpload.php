@@ -13,21 +13,22 @@ use Illuminate\Http\UploadedFile;
  *
  * It can be included in any class using `use FileUpload;`.
  */
-trait FileUpload {
-    public function uploadFile(UploadedFile $file, string $directory = 'uploads'):string{
-        $filename = 'educore-'.uniqid().'.'.$file->getClientOriginalExtension();
+trait FileUpload
+{
+    public function uploadFile(UploadedFile $file, string $directory = 'uploads'): string
+    {
+        $filename = 'educore-' . uniqid() . '.' . $file->getClientOriginalExtension();
 
         //move the file to storage
         $file->move(public_path($directory), $filename);
 
-        return '/' .$directory. '/' . $filename; //uploads/ file.ext
+        return '/' . $directory . '/' . $filename; //uploads/ file.ext
     }
-    public function deleteFile( ? string $path):bool
-{
-    if($path && file_exists(public_path($path))) {
-        unlink(public_path($path));
-
+    public function deleteFile(?string $path): bool
+    {
+        if ($path && file_exists(public_path($path))) {
+            unlink(public_path($path));
+        }
+        return false;
     }
-    return false;
-}
 }
