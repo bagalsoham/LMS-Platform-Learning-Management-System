@@ -6,11 +6,11 @@ use Illuminate\Http\UploadedFile;
 
 /**
  * Trait FileUpload
- * 
+ *
  * This trait will contain reusable methods related to file uploading,
- * such as moving uploaded files, validating file types or sizes, and 
- * generating unique file names. 
- * 
+ * such as moving uploaded files, validating file types or sizes, and
+ * generating unique file names.
+ *
  * It can be included in any class using `use FileUpload;`.
  */
 trait FileUpload {
@@ -22,4 +22,10 @@ trait FileUpload {
 
         return '/' .$directory. '/' . $filename; //uploads/ file.ext
     }
+    public function deleteFile($path)
+{
+    if($path && file_exists(public_path($path))) {
+        unlink(public_path($path));
+    }
+}
 }

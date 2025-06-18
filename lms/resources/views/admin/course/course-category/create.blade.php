@@ -30,12 +30,6 @@
                                     <div class="col-md-6">
                                         <x-input name="name" label="Name" placeholder="Enter Category Name" />
                                     </div>
-                                    {{-- <div class="col-md-12">
-                                        <x-input name="slug" label="Slug" placeholder="Enter Slug" />
-                                    </div> --}}
-                                    {{-- <div class="col-md-12">
-                                        <x-select name="parent_id" label="Parent Category" :options="$parentCategories ?? []" />
-                                    </div> --}}
                                     <div class="col-md-3">
                                         <x-toggle-switch name="show_at_trending" label="Show at Trending" />
                                     </div>

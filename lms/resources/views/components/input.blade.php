@@ -1,4 +1,4 @@
-@props(['label' => null, 'name', 'placeholder' => null])
+@props(['label' => null, 'name', 'placeholder' => null,'value'=>'value'])
 <div class="mb-3">
     <label class="form-label">{{ $label ? $label : $name}}</label>
     @error($name)
@@ -6,5 +6,5 @@
             {{ $message }}
         </div>
     @enderror
-    <input type="text" class="form-control @error($name) is-invalid @enderror" name="{{ $name }}" placeholder="{{ $placeholder }}">
+    <input type="text" class="form-control @error($name) is-invalid @enderror" value="{{ $value }}" name="{{ $name }}" placeholder="{{ $placeholder }}">
 </div>
