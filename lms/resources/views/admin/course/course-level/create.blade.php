@@ -12,14 +12,7 @@
                             <h3 class="card-title">Create Course Level</h3>
                             <div class="card-actions">
                                 <a href="{{ route('admin.course-levels.index') }}" class="btn btn-primary">
-                                    <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
-                                        viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                                        stroke-linecap="round" stroke-linejoin="round">
-                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                        <path d="M9 14l-4 -4l4 -4" />
-                                        <path d="M5 10l14 0" />
-                                    </svg>
+                                    <i class="ti ti-arrow-left"></i>
                                     Back
                                 </a>
                             </div>
@@ -27,16 +20,7 @@
                         <div class="card-body">
                             <form action="{{ route('admin.course-levels.store') }} " method="POST">
                                 @csrf
-                                <div class="mb-3">
-                                    <label class="form-label">Name</label>
-                                    @error('name')
-                                        <div class="invalid-feedback d-block">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror
-                                    <input type="text" class="form-control @error('name') is-invalid @enderror" name="name"
-                                        placeholder="Enter Level">
-                                </div>
+                                <x-input name="name" label="Name" placeholder="Enter Level" />
                                 <div class="mb-3">
                                     <button class="btn btn-primary " type="submit">Create</button>
                                 </div>

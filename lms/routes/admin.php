@@ -7,8 +7,8 @@ use App\Http\Controllers\Admin\Auth\EmailVerificationPromptController;
 use App\Http\Controllers\Admin\Auth\NewPasswordController;
 use App\Http\Controllers\Admin\Auth\PasswordController;
 use App\Http\Controllers\Admin\Auth\PasswordResetLinkController;
-use App\Http\Controllers\Admin\Auth\RegisteredUserController;
 use App\Http\Controllers\Admin\Auth\VerifyEmailController;
+use App\Http\Controllers\Admin\CourseCategoryController;
 use App\Http\Controllers\Admin\CourseLanguageController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\DashboardController;
@@ -77,7 +77,11 @@ Route::prefix('admin')->name('admin.')->middleware(['auth:admin'])->group(functi
 
     /* Course Language controller  */
     Route::resource('course-languages', CourseLanguageController::class);
-    
+
     /* Course Level controller  */
     Route::resource('course-levels', CourseLevelController::class);
+
+    /* Categories */
+    Route::resource('course-category', CourseCategoryController::class);
+
 });

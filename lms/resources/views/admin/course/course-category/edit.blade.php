@@ -1,0 +1,1 @@
+                                <x-input name="name" label="Name" placeholder="Enter Category" :value="$category->name" /> 
