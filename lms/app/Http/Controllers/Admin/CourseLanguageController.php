@@ -41,7 +41,7 @@ class CourseLanguageController extends Controller
         $language -> save();
 
         notyf()->success('Created successfully');
-        return to_route('admin.course-language.index');
+        return to_route('admin.course-languages.index');
 
     }
 
@@ -75,7 +75,7 @@ class CourseLanguageController extends Controller
         $course_language->save();
 
         notyf()->success('Updated successfully');
-        return to_route('admin.course-language.index');
+        return to_route('admin.course-languages.index');
     }
 
     /**

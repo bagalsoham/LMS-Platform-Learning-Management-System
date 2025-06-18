@@ -1,5 +1,7 @@
 @extends('admin.layouts.master')
 
+@section('title', 'Edit Course Language')
+
 @section('content')
     <div class="page-body">
         <div class="container-xl">
@@ -9,7 +11,7 @@
                         <div class="card-header">
                             <h3 class="card-title">Update Languages</h3>
                             <div class="card-actions">
-                                <a href="{{ route('admin.course-language.index') }}" class="btn btn-primary">
+                                <a href="{{ route('admin.course-languages.index') }}" class="btn btn-primary">
                                     <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                         viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
@@ -25,7 +27,7 @@
                             </div>
                         </div>
                         <div class="card-body">
-                            <form action="{{ route('admin.course-language.update',$course_language->id) }} " method="POST">
+                            <form action="{{ route('admin.course-languages.update',$course_language->id) }} " method="POST">
                                 @csrf
                                 @method('put')
                                 <div class="mb-3">

@@ -13,6 +13,7 @@ use App\Http\Controllers\Admin\CourseLanguageController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\InstructorRequestController;
+use App\Http\Controllers\Admin\CourseLevelController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -76,4 +77,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth:admin'])->group(functi
 
     /* Course Language controller  */
     Route::resource('course-languages', CourseLanguageController::class);
+    
+    /* Course Level controller  */
+    Route::resource('course-levels', CourseLevelController::class);
 });

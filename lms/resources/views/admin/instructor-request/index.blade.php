@@ -1,5 +1,7 @@
 @extends('admin.layouts.master')
 
+@section('title', 'Instructor Request')
+
 @section('content')
 <div class="page-body">
     <div class="container-xl">
