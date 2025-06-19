@@ -36,7 +36,6 @@ class CourseSubCategoryController extends Controller
      */
     public function store(CourseSubCategoryStoreRequest $request, CourseCategory $course_category)
     {
-
         $category = new CourseCategory();
         if ($request->hasFile('image')) {
             $imagePath = $this->uploadFile($request->file('image'));
@@ -46,13 +45,14 @@ class CourseSubCategoryController extends Controller
         $category->name = $request->name;
         $category->slug = Str::slug($request->name);
         $category->parent_id = $course_category->id;
-        $category->show_at_trending = $request->show_at_treading ?? 0;
+        // Fixed typo here - should be 'show_at_trending' not 'show_at_treading'
+        $category->show_at_trending = $request->show_at_trending ?? 0;
         $category->status = $request->status ?? 0;
         $category->save();
 
         notyf()->success("Created Successfully!");
 
-        return to_route('admin.course-sub-categories.index', $course_category->id);
+        return to_route('admin.course-sub-category.index', $course_category->id);
     }
 
     /**
@@ -81,13 +81,15 @@ class CourseSubCategoryController extends Controller
         $category->name = $request->name;
         $category->slug = Str::slug($request->name);
         $category->parent_id = $course_category->id;
-        $category->show_at_trending = $request->show_at_treading ?? 0;
+        // Fixed typo here - should be 'show_at_trending' not 'show_at_treading'
+        $category->show_at_trending = $request->show_at_trending ?? 0;
         $category->status = $request->status ?? 0;
         $category->save();
 
         notyf()->success("Updated Successfully!");
 
-        return to_route('admin.course-sub-categories.index', $course_category->id);
+        // Fixed typo in route name - should be 'course-sub-category' not 'course-sub-categories'
+        return to_route('admin.course-sub-category.index', $course_category->id);
     }
 
     /**
@@ -101,7 +103,7 @@ class CourseSubCategoryController extends Controller
             notyf()->success('Deleted Successfully!');
             return response(['message' => 'Deleted Successfully!'], 200);
         }catch(Exception $e) {
-            logger("Course Level Error >> ".$e);
+            logger("Course Sub Category Error >> ".$e);
             return response(['message' => 'Something went wrong!'], 500);
         }
     }

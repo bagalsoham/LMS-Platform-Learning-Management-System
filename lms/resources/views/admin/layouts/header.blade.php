@@ -1,3 +1,4 @@
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <header class="navbar navbar-expand-md d-none d-lg-flex d-print-none">
     <div class="container-xl">
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-menu"
@@ -154,23 +155,22 @@
             <div class="nav-item dropdown">
                 <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown"
                     aria-label="Open user menu">
-                    <span class="avatar avatar-sm" style="background-image: url(./static/avatars/000m.jpg)"></span>
+                    <span class="avatar avatar-sm" style="background-image: url({{ asset('admin/static/avatars/000m.jpg') }})"></span>
                     <div class="d-none d-xl-block ps-2">
-                        <div>Paweł Kuna</div>
-                        <div class="mt-1 small text-secondary">UI Designer</div>
+                        <div>{{ auth()->user()->name ?? 'Admin User' }}</div>
+                        <div class="mt-1 small text-secondary">Administrator</div>
                     </div>
                 </a>
                 <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
                     <a href="#" class="dropdown-item">Status</a>
-                    <a href="./profile.html" class="dropdown-item">Profile</a>
+                    <a href="#" class="dropdown-item">Profile</a>
                     <a href="#" class="dropdown-item">Feedback</a>
                     <div class="dropdown-divider"></div>
-                    <a href="./settings.html" class="dropdown-item">Settings</a>
-                    <a href="./sign-in.html" onClick="event.preventDefault();getElementById('logout').submit();" class="dropdown-item">Logout</a>
-                    <form method="POST" id="logout" action="{{ route('admin.logout') }}">
-                        @csrf
-
-                    </form>
+                    <a href="#" class="dropdown-item">Settings</a>
+                    <a href="#" class="dropdown-item" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                        <i class="ti ti-logout me-2"></i>
+                        Logout
+                    </a>
                 </div>
             </div>
         </div>
@@ -195,4 +195,9 @@
             </div>
         </div>
     </div>
+
+    <!-- Hidden Logout Form -->
+    <form id="logout-form" action="{{ route('admin.logout') }}" method="POST" style="display: none;">
+        @csrf
+    </form>
 </header>

@@ -5,7 +5,7 @@ window.$ = window.jQuery = $;
 
 /** Notyf init */
 const notyf = new Notyf({
-    duration: 4000,
+    duration: 8000,
     position: { x: 'right', y: 'top' },
     dismissible: true
 });
@@ -33,7 +33,7 @@ function initDeleteHandlers() {
     $('.delete-confirm').on('click', function(e) {
         e.preventDefault();
         const $confirmBtn = $(this);
-        
+
         $.ajax({
             method: 'DELETE',
             url: delete_url,

@@ -35,7 +35,13 @@
                             <tbody>
                                 @forelse ($subCategory as $category)
                                     <tr>
-                                       <td><img src="{{ asset($category->image) }}" alt=""></td>
+                                        <td>
+                                            @if($category->icon)
+                                                <i class="{{ $category->icon }}" style="font-size: 1.2rem;"></i>
+                                            @else
+                                                <span class="text-muted">No Icon</span>
+                                            @endif
+                                        </td>
                                         <td>{{ $category->name }}</td>
                                         <td>
                                             @if ($category->show_at_trending == 1)
@@ -56,8 +62,8 @@
                                                 'course_category' => $course_category->id,
                                                 'course_sub_category' => $category->id,
                                             ]) }}"
-                                                class="btn-sm btn-primary">
-                                                <i class="ti ti-edit"></i>
+                                                class="btn-sm btn-primary" style="font-size: 1.2rem;">
+                                                <i class="ti ti-edit" ></i>
                                             </a>
 
                                             <a href="javascript:void(0)"
@@ -65,7 +71,7 @@
                                                     'course_category' => $course_category->id,
                                                     'course_sub_category' => $category->id,
                                                 ]) }}"
-                                                class="text-red delete-item">
+                                                class="text-red delete-item" style="font-size: 1.2rem;">
                                                 <i class="ti ti-trash-x"></i>
                                             </a>
                                         </td>
@@ -82,6 +88,4 @@
             </div>
         </div>
     </div>
-
-
 @endsection

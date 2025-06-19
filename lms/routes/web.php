@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Frontend\CourseController;
 use App\Http\Controllers\Frontend\StudentDashboardController;
 use App\Http\Controllers\Frontend\InstructorDashboardController;
 use App\Http\Controllers\Frontend\UserController;
@@ -34,7 +35,7 @@ Route::get('/dashboard', function () {
             if ($user->role === 'student') {
                 return redirect()->route('student.dashboard');
             } elseif ($user->role === 'instructor') {
-                return redirect()->route('frontend.instructor.dashboard');
+                return redirect()->route('instructor.dashboard');
             }
         }
     }
@@ -89,6 +90,14 @@ Route::group([
     Route::post('/profile/update', [ProfileController::class, 'profileUpdate'])->name('profile.update');
     Route::post('/profile/update-password', [ProfileController::class, 'updatePassword'])->name('profile.update-password');
     Route::post('/profile/update-social', [ProfileController::class, 'updateSocial'])->name('profile.update-social');
+
+
+    /* Course routes */
+    Route::get('courses',[CourseController::class,'index'])->name('course.index');
+    Route::get('courses/create',[CourseController::class,'create'])->name('course.create');
+
+    Route::post('courses/create',[CourseController::class,'storeBasicInfo'])->name('course.store-basic-info');
+
 });
 
 /*

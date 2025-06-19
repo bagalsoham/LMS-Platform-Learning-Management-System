@@ -19,8 +19,9 @@ class CourseCategoryController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-    {   $categories = CourseCategory::paginate(15);
-            return view('admin.course.course-category.index',compact('categories'));//compact to pass the variable as it is in the view file
+    {
+        $categories = CourseCategory::whereNull('parent_id')->paginate(15);
+        return view('admin.course.course-category.index', compact('categories'));
     }
 
     /**
@@ -95,7 +96,9 @@ class CourseCategoryController extends Controller
      */
     public function destroy(CourseCategory $course_category)
     {
-
+        if(CourseCategory::where('parent_id', $course_category->id)->exists()){
+             return response(['message'=> 'Cannot delete a category having a sub category'],422);
+        }
         try{
             $course_category ->delete();
             notyf()->error('Deleted Successfully');

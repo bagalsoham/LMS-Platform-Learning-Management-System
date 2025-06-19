@@ -6,8 +6,16 @@
     <meta name="viewport"
         content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
     <title>EduCore - Online Courses & Education HTML Template</title>
+    <meta name="base_url" content="{{ url('/') }}">
+    <meta name="csrf_token" content="{{ csrf_token() }}">
+    <link href="https://unpkg.com/@tabler/icons@latest/iconfont/tabler-icons.min.css" rel="stylesheet">
+
     <link rel="icon" type="image/png" href="images/favicon.png">
     @vite(['resources/css/frontend.css'])
+
+       {{-- Dynamic js --}}
+    @stack('header_scripts')
+
     <link rel="stylesheet" href="{{asset('frontend/assets/css/all.min.css')}}">
     <link rel="stylesheet" href="{{asset('frontend/assets/css/bootstrap.min.css')}}">
     <link rel="stylesheet" href="{{asset('frontend/assets/css/animated_barfiller.css')}}">
@@ -26,6 +34,7 @@
     <link rel="stylesheet" href="{{asset('frontend/assets/css/spacing.css')}}">
     <link rel="stylesheet" href="{{asset('frontend/assets/css/style.css')}}">
     <link rel="stylesheet" href="{{asset('frontend/assets/css/responsive.css')}}">
+
 </head>
 
 <body class="home_3">
@@ -43,7 +52,7 @@
 
 
     @yield('content')
-    
+
     <!--================================
         SCROLL BUTTON START
     =================================-->
@@ -98,6 +107,8 @@
 
     <!--main/custom js-->
     <script src="{{asset('frontend/assets/')}}js/main.js"></script>
+
+
 
 </body>
 
