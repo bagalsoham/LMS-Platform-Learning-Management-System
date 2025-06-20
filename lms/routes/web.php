@@ -96,8 +96,10 @@ Route::group([
     Route::get('courses',[CourseController::class,'index'])->name('course.index');
     Route::get('courses/create',[CourseController::class,'create'])->name('course.create');
 
+
     Route::post('courses/create',[CourseController::class,'storeBasicInfo'])->name('course.store-basic-info');
 
+    Route::get('courses/{id}/edit',[CourseController::class,'edit'])->name('course.edit');
 });
 
 /*
