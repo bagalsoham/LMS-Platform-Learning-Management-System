@@ -49,7 +49,7 @@
                                     <a href="" class="nav-link active">Basic Infos</a>
                                 </li>
                                 <li class="nav-item" role="presentation">
-                                    <a href="" class="nav-link">More Infos</a>
+                                    <a href="{{-- {{ route('instructor.course.more-info') }} --}}" class="nav-link">More Infos</a>
                                 </li>
                                 <li class="nav-item" role="presentation">
                                     <a href="" class="nav-link" >Course Contents</a>
