@@ -1,3 +1,4 @@
+# Laravel default ignores
 /.phpunit.cache
 /node_modules
 /public/build
@@ -6,18 +7,31 @@
 /storage/*.key
 /storage/pail
 /vendor
+
+# Environment files
 .env
 .env.backup
 .env.production
+
+# PHP Tools
 .phpactor.json
 .phpunit.result.cache
+
+# Homestead
 Homestead.json
 Homestead.yaml
+
+# Debug logs
 npm-debug.log
 yarn-error.log
+
+# Composer & IDE
 /auth.json
 /.fleet
 /.idea
 /.nova
 /.vscode
 /.zed
+
+# Custom folder to ignore
+/resources/views/edu-core-frontend/
