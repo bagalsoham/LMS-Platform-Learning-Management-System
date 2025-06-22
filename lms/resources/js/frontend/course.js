@@ -1,55 +1,44 @@
-const base_url = $('meta[name="base_url"]').attr('content');
+const csrf_token = $(`meta[name="csrf_token"]`).attr('content');
+const base_url = $(`meta[name="base_url"]`).attr('content');
 const basic_info_url = base_url + '/instructor/courses/create';
+const update_url = base_url + '/instructor/courses/update';
+
+// Get course ID from URL if available
 const courseId = window.location.pathname.split('/')[3];
-const more_info_url = base_url + '/instructor/courses/' + courseId + '/update';
+const basic_info_update_url = courseId ? base_url + '/instructor/courses/' + courseId + '/update' : update_url;
+const more_info_url = courseId ? base_url + '/instructor/courses/' + courseId + '/update' : update_url;
 
-// Utility function to show error messages
-function showError(message, duration = 5000) {
-    // Remove existing error messages
-    $('.error-message').remove();
+var notyf = new Notyf({
+    duration: 5000,
+    dismissible: true
+});
 
-    // Create and show error message
-    const errorHtml = `
-        <div class="error-message alert alert-danger alert-dismissible fade show" role="alert" style="position: fixed; top: 20px; right: 20px; z-index: 9999; max-width: 400px;">
-            <strong>Error:</strong> ${message}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-    `;
-    $('body').append(errorHtml);
+var loader = `
+<div class="modal-content text-center p-3" style="display:inline">
+    <div class="spinner-border" role="status">
+        <span class="visually-hidden">Loading...</span>
+    </div>
+</div>
+`;
 
-    // Auto-hide after duration
-    setTimeout(() => {
-        $('.error-message').fadeOut(() => {
-            $('.error-message').remove();
-        });
-    }, duration);
+// Debug function to log important information
+function debugLog(message, data = null) {
+    console.log(`[DEBUG] ${message}`, data || '');
 }
 
-// Utility function to show success messages
-function showSuccess(message, duration = 3000) {
-    $('.success-message').remove();
-
-    const successHtml = `
-        <div class="success-message alert alert-success alert-dismissible fade show" role="alert" style="position: fixed; top: 20px; right: 20px; z-index: 9999; max-width: 400px;">
-            <strong>Success:</strong> ${message}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-    `;
-    $('body').append(successHtml);
-
-    setTimeout(() => {
-        $('.success-message').fadeOut(() => {
-            $('.success-message').remove();
-        });
-    }, duration);
-}
-
-// Utility function to parse error response
+// Enhanced error parsing with more detailed logging
 function parseErrorResponse(xhr) {
+    debugLog('Parsing error response', {
+        status: xhr.status,
+        statusText: xhr.statusText,
+        responseText: xhr.responseText
+    });
+
     let errorMessage = 'An unexpected error occurred. Please try again.';
 
     try {
         const response = JSON.parse(xhr.responseText);
+        debugLog('Parsed JSON response', response);
 
         if (response.message) {
             errorMessage = response.message;
@@ -68,6 +57,8 @@ function parseErrorResponse(xhr) {
             errorMessage = response.error;
         }
     } catch (e) {
+        debugLog('JSON parsing failed, using status code', e);
+
         // If JSON parsing fails, check for common HTTP status codes
         switch (xhr.status) {
             case 400:
@@ -103,7 +94,50 @@ function parseErrorResponse(xhr) {
         }
     }
 
+    debugLog('Final error message', errorMessage);
     return errorMessage;
+}
+
+// Utility function to show error messages with both notyf and custom alerts
+function showError(message, duration = 5000) {
+    // Use notyf for primary error display
+    notyf.error(message);
+
+    // Also show custom alert for critical errors
+    $('.error-message').remove();
+    const errorHtml = `
+        <div class="error-message alert alert-danger alert-dismissible fade show" role="alert" style="position: fixed; top: 20px; right: 20px; z-index: 9999; max-width: 400px;">
+            <strong>Error:</strong> ${message}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    `;
+    $('body').append(errorHtml);
+
+    setTimeout(() => {
+        $('.error-message').fadeOut(() => {
+            $('.error-message').remove();
+        });
+    }, duration);
+}
+
+// Utility function to show success messages
+function showSuccess(message, duration = 3000) {
+    notyf.success(message);
+
+    $('.success-message').remove();
+    const successHtml = `
+        <div class="success-message alert alert-success alert-dismissible fade show" role="alert" style="position: fixed; top: 20px; right: 20px; z-index: 9999; max-width: 400px;">
+            <strong>Success:</strong> ${message}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    `;
+    $('body').append(successHtml);
+
+    setTimeout(() => {
+        $('.success-message').fadeOut(() => {
+            $('.success-message').remove();
+        });
+    }, duration);
 }
 
 // Utility function to disable/enable form
@@ -117,7 +151,6 @@ function toggleFormState(form, disabled) {
         $inputs.prop('readonly', true);
         $form.addClass('form-disabled');
 
-        // Add loading spinner to submit button
         const originalText = $submitBtn.text();
         $submitBtn.data('original-text', originalText)
                   .html('<span class="spinner-border spinner-border-sm me-2" role="status"></span>Processing...');
@@ -126,7 +159,6 @@ function toggleFormState(form, disabled) {
         $inputs.prop('readonly', false);
         $form.removeClass('form-disabled');
 
-        // Restore original button text
         const originalText = $submitBtn.data('original-text');
         if (originalText) {
             $submitBtn.html(originalText);
@@ -134,14 +166,25 @@ function toggleFormState(form, disabled) {
     }
 }
 
-// Handle basic info form submission
-$('.basic_info_form').on('submit', function(e) {
+//course tab navigation
+$('.course-tab').on('click', function (e) {
+    e.preventDefault();
+    let step = $(this).data('step');
+    $('.course-form').find('input[name=next_step]').val(step);
+    $('.course-form').trigger('submit');
+});
+
+// Enhanced basic info form handler
+$('.basic_info_form').on('submit', function (e) {
     e.preventDefault();
 
     const $form = $(this);
-    const formData = new FormData(this);
+    let formData = new FormData(this);
 
-    console.log('Sending basic info request to:', basic_info_url);
+    debugLog('Basic info form submission', {
+        url: basic_info_url,
+        formData: Object.fromEntries(formData.entries())
+    });
 
     $.ajax({
         method: "POST",
@@ -149,18 +192,16 @@ $('.basic_info_form').on('submit', function(e) {
         data: formData,
         contentType: false,
         processData: false,
-        timeout: 30000, // 30 second timeout
-        beforeSend: function() {
-            console.log('Sending basic info request...');
+        timeout: 30000,
+        beforeSend: function () {
+            debugLog('Sending basic info request...');
             toggleFormState($form, true);
         },
-        success: function(data) {
-            console.log('Basic info success:', data);
+        success: function (data) {
+            debugLog('Basic info success response', data);
 
-            if (data.status === 'success') {
+            if (data.status == 'success') {
                 showSuccess(data.message || 'Basic information saved successfully!');
-
-                // Redirect after a short delay to show success message
                 setTimeout(() => {
                     window.location.href = data.redirect;
                 }, 1000);
@@ -168,12 +209,13 @@ $('.basic_info_form').on('submit', function(e) {
                 showError(data.message || 'Failed to save basic information. Please try again.');
             }
         },
-        error: function(xhr, status, error) {
-            console.error('Basic info error:', {
+        error: function (xhr, status, error) {
+            debugLog('Basic info error', {
                 status: xhr.status,
                 statusText: xhr.statusText,
                 responseText: xhr.responseText,
-                error: error
+                error: error,
+                ajaxStatus: status
             });
 
             let errorMessage;
@@ -190,56 +232,151 @@ $('.basic_info_form').on('submit', function(e) {
 
             showError(errorMessage);
         },
-        complete: function() {
-            console.log('Basic info request completed');
+        complete: function () {
+            debugLog('Basic info request completed');
             toggleFormState($form, false);
         }
     });
 });
 
-// Handle more info form submission
-$('.more_info_form').on('submit', function(e) {
+// Enhanced basic info update form handler
+$('.basic_info_update_form').on('submit', function (e) {
     e.preventDefault();
 
     const $form = $(this);
-    const formData = new FormData(this);
+    let formData = new FormData(this);
 
-    // Add step parameter to form data
-    formData.append('step', '2');
+    // Check if courseId exists for update operations
+    if (courseId && courseId !== 'undefined') {
+        formData.append('step', '1');
+        debugLog('Using course-specific update URL', { courseId, url: basic_info_update_url });
+    }
 
-    console.log('Sending more info request to:', more_info_url);
+    debugLog('Basic info update form submission', {
+        url: courseId ? basic_info_update_url : update_url,
+        courseId: courseId,
+        formData: Object.fromEntries(formData.entries())
+    });
 
     $.ajax({
         method: "POST",
-        url: more_info_url,
+        url: courseId ? basic_info_update_url : update_url,
         data: formData,
         contentType: false,
         processData: false,
-        timeout: 30000, // 30 second timeout
-        beforeSend: function() {
-            console.log('Sending more info request...');
+        timeout: 30000,
+        beforeSend: function (xhr) {
+            // Add CSRF token if available
+            const token = $('meta[name="csrf-token"]').attr('content');
+            if (token) {
+                xhr.setRequestHeader('X-CSRF-TOKEN', token);
+                debugLog('CSRF token added', token);
+            }
+
+            debugLog('Sending basic info update request...');
             toggleFormState($form, true);
         },
-        success: function(data) {
-            console.log('More info success:', data);
+        success: function (data) {
+            debugLog('Basic info update success response', data);
 
-            if (data.status === 'success') {
+            if (data.status == 'success') {
+                showSuccess(data.message || 'Basic information updated successfully!');
+
+                if (data.redirect) {
+                    setTimeout(() => {
+                        window.location.href = data.redirect;
+                    }, 1000);
+                }
+            } else {
+                showError(data.message || 'Failed to update basic information. Please try again.');
+            }
+        },
+        error: function (xhr, status, error) {
+            debugLog('Basic info update error', {
+                status: xhr.status,
+                statusText: xhr.statusText,
+                responseText: xhr.responseText,
+                error: error,
+                ajaxStatus: status
+            });
+
+            let errorMessage;
+
+            if (status === 'timeout') {
+                errorMessage = 'Request timed out. Please check your connection and try again.';
+            } else if (status === 'abort') {
+                errorMessage = 'Request was cancelled. Please try again.';
+            } else if (xhr.status === 0) {
+                errorMessage = 'Network error. Please check your internet connection.';
+            } else {
+                errorMessage = parseErrorResponse(xhr);
+            }
+
+            showError(errorMessage);
+        },
+        complete: function () {
+            debugLog('Basic info update request completed');
+            toggleFormState($form, false);
+        }
+    });
+});
+
+// Enhanced more info form handler
+$('.more_info_form').on('submit', function (e) {
+    e.preventDefault();
+
+    const $form = $(this);
+    let formData = new FormData(this);
+
+    // Add step parameter for course updates
+    if (courseId && courseId !== 'undefined') {
+        formData.append('step', '2');
+    }
+
+    debugLog('More info form submission', {
+        url: courseId ? more_info_url : update_url,
+        courseId: courseId,
+        formData: Object.fromEntries(formData.entries())
+    });
+
+    $.ajax({
+        method: "POST",
+        url: courseId ? more_info_url : update_url,
+        data: formData,
+        contentType: false,
+        processData: false,
+        timeout: 30000,
+        beforeSend: function (xhr) {
+            const token = $('meta[name="csrf-token"]').attr('content');
+            if (token) {
+                xhr.setRequestHeader('X-CSRF-TOKEN', token);
+            }
+
+            debugLog('Sending more info request...');
+            toggleFormState($form, true);
+        },
+        success: function (data) {
+            debugLog('More info success response', data);
+
+            if (data.status == 'success') {
                 showSuccess(data.message || 'Course information updated successfully!');
 
-                // Redirect after a short delay to show success message
-                setTimeout(() => {
-                    window.location.href = data.redirect;
-                }, 1000);
+                if (data.redirect) {
+                    setTimeout(() => {
+                        window.location.href = data.redirect;
+                    }, 1000);
+                }
             } else {
                 showError(data.message || 'Failed to save course information. Please try again.');
             }
         },
-        error: function(xhr, status, error) {
-            console.error('More info error:', {
+        error: function (xhr, status, error) {
+            debugLog('More info error', {
                 status: xhr.status,
                 statusText: xhr.statusText,
                 responseText: xhr.responseText,
-                error: error
+                error: error,
+                ajaxStatus: status
             });
 
             let errorMessage;
@@ -256,24 +393,27 @@ $('.more_info_form').on('submit', function(e) {
 
             showError(errorMessage);
         },
-        complete: function() {
-            console.log('More info request completed');
+        complete: function () {
+            debugLog('More info request completed');
             toggleFormState($form, false);
         }
     });
 });
 
-// Handle form validation before submission
-$('.basic_info_form, .more_info_form').on('submit', function(e) {
+// Enhanced form validation
+$('.basic_info_form, .basic_info_update_form, .more_info_form').on('submit', function(e) {
     const $form = $(this);
     const requiredFields = $form.find('[required]');
     let hasErrors = false;
 
-    // Remove existing validation errors
+    debugLog('Form validation started', {
+        formClass: $form.attr('class'),
+        requiredFieldsCount: requiredFields.length
+    });
+
     $form.find('.field-error').removeClass('field-error');
     $form.find('.validation-error').remove();
 
-    // Check required fields
     requiredFields.each(function() {
         const $field = $(this);
         const value = $field.val().trim();
@@ -282,20 +422,209 @@ $('.basic_info_form, .more_info_form').on('submit', function(e) {
             hasErrors = true;
             $field.addClass('field-error');
 
-            // Add error message
             const fieldName = $field.attr('name') || $field.attr('id') || 'This field';
             const errorMsg = `<div class="validation-error text-danger small mt-1">${fieldName} is required.</div>`;
             $field.after(errorMsg);
+
+            debugLog('Validation error', {
+                field: fieldName,
+                value: value
+            });
         }
     });
 
-    // Prevent submission if there are validation errors
     if (hasErrors) {
         e.preventDefault();
         e.stopImmediatePropagation();
         showError('Please fill in all required fields.');
+        debugLog('Form submission prevented due to validation errors');
         return false;
     }
+
+    debugLog('Form validation passed');
+});
+
+$(document).ready(function () {
+    // Debug information on page load
+    debugLog('Page loaded', {
+        base_url: base_url,
+        courseId: courseId,
+        basic_info_url: basic_info_url,
+        basic_info_update_url: basic_info_update_url,
+        more_info_url: more_info_url,
+        update_url: update_url,
+        pathname: window.location.pathname,
+        hasCSRFToken: !!$('meta[name="csrf-token"]').attr('content')
+    });
+
+    // show hide path input depending on source
+    $(document).on('change', '.storage', function () {
+        let value = $(this).val();
+        $('.source_input').val('');
+        console.log("working");
+        if (value == 'upload') {
+            $('.upload_source').removeClass('d-none');
+            $('.external_source').addClass('d-none');
+        } else {
+            $('.upload_source').addClass('d-none');
+            $('.external_source').removeClass('d-none');
+        }
+    });
+});
+
+/** Course Contents */
+
+$('.dynamic-modal-btn').on('click', function (e) {
+    e.preventDefault();
+    $('#dynamic-modal').modal("show");
+
+    let course_id = $(this).data('id');
+
+    $.ajax({
+        method: 'GET',
+        url: base_url + '/instructor/course-content/:id/create-chapter'.replace(':id', course_id),
+        data: {},
+        beforeSend: function () {
+            $('.dynamic-modal-content').html(loader);
+        },
+        success: function (data) {
+            $('.dynamic-modal-content').html(data);
+        },
+        error: function (xhr, status, error) {
+            const errorMessage = parseErrorResponse(xhr);
+            showError(errorMessage);
+        }
+    });
+});
+
+$('.edit_chapter').on('click', function (e) {
+    e.preventDefault();
+    $('#dynamic-modal').modal("show");
+
+    let chapter_id = $(this).data('chapter-id');
+
+    $.ajax({
+        method: 'GET',
+        url: base_url + '/instructor/course-content/:id/edit-chapter'.replace(':id', chapter_id),
+        data: {},
+        beforeSend: function () {
+            $('.dynamic-modal-content').html(loader);
+        },
+        success: function (data) {
+            $('.dynamic-modal-content').html(data);
+        },
+        error: function (xhr, status, error) {
+            const errorMessage = parseErrorResponse(xhr);
+            showError(errorMessage);
+        }
+    });
+});
+
+$('.add_lesson').on('click', function() {
+    $('#dynamic-modal').modal("show");
+
+    let courseId = $(this).data('course-id');
+    let chapterId = $(this).data('chapter-id');
+
+    $.ajax({
+        method: 'GET',
+        url: base_url + '/instructor/course-content/create-lesson',
+        data: {
+            'course_id': courseId,
+            'chapter_id': chapterId
+        },
+        beforeSend: function () {
+            $('.dynamic-modal-content').html(loader);
+        },
+        success: function (data) {
+            $('.dynamic-modal-content').html(data);
+        },
+        error: function (xhr, status, error) {
+            const errorMessage = parseErrorResponse(xhr);
+            showError(errorMessage);
+        }
+    });
+});
+
+$('.edit_lesson').on('click', function() {
+    $('#dynamic-modal').modal("show");
+
+    let courseId = $(this).data('course-id');
+    let chapterId = $(this).data('chapter-id');
+    let lessonId = $(this).data('lesson-id');
+
+    $.ajax({
+        method: 'GET',
+        url: base_url + '/instructor/course-content/edit-lesson',
+        data: {
+            'course_id': courseId,
+            'chapter_id': chapterId,
+            'lesson_id': lessonId
+        },
+        beforeSend: function () {
+            $('.dynamic-modal-content').html(loader);
+        },
+        success: function (data) {
+            $('.dynamic-modal-content').html(data);
+        },
+        error: function (xhr, status, error) {
+            const errorMessage = parseErrorResponse(xhr);
+            showError(errorMessage);
+        }
+    });
+});
+
+if($('.sortable_list li').length) {
+    $('.sortable_list').sortable({
+        items: "li",
+        containment: "parent",
+        cursor: "move",
+        handle: ".dragger",
+        update: function(event, ui) {
+            let orderIds = $(this).sortable("toArray", {
+                attribute: "data-lesson-id",
+            });
+
+            let chapterId = ui.item.data("chapter-id");
+
+            $.ajax({
+                method: 'POST',
+                url: base_url + `/instructor/course-chapter/${chapterId}/sort-lesson`,
+                data: {
+                    _token: csrf_token,
+                    order_ids: orderIds
+                },
+                success: function(data) {
+                    showSuccess(data.message || 'Lesson order updated successfully!');
+                },
+                error: function(xhr, status, error) {
+                    const errorMessage = parseErrorResponse(xhr);
+                    showError(errorMessage);
+                }
+            });
+        }
+    });
+}
+
+$('.sort_chapter_btn').on('click', function() {
+    $('#dynamic-modal').modal("show");
+    let courseId = $(this).data('id');
+
+    $.ajax({
+        method: 'GET',
+        url: base_url + `/instructor/course-content/${courseId}/sort-chapter`,
+        data: {},
+        beforeSend: function () {
+            $('.dynamic-modal-content').html(loader);
+        },
+        success: function (data) {
+            $('.dynamic-modal-content').html(data);
+        },
+        error: function (xhr, status, error) {
+            const errorMessage = parseErrorResponse(xhr);
+            showError(errorMessage);
+        }
+    });
 });
 
 // Add CSS for form states and error styling
