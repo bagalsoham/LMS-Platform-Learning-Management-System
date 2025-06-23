@@ -90,15 +90,15 @@ Route::group([
     Route::post('/profile/update', [ProfileController::class, 'profileUpdate'])->name('profile.update');
     Route::post('/profile/update-password', [ProfileController::class, 'updatePassword'])->name('profile.update-password');
     Route::post('/profile/update-social', [ProfileController::class, 'updateSocial'])->name('profile.update-social');
-});
 
-/* Course routes - Optimized */
-Route::prefix('instructor')->name('instructor.')->middleware(['auth', 'verified'])->group(function () {
-    Route::get('courses', [CourseController::class, 'index'])->name('course.index');
-    Route::get('courses/create', [CourseController::class, 'create'])->name('course.create');
-    Route::post('courses/create', [CourseController::class, 'storeBasicInfo'])->name('course.store-basic-info');
-    Route::get('courses/{course}/edit', [CourseController::class, 'edit'])->name('course.edit');
-    Route::put('courses/{course}', [CourseController::class, 'update'])->name('course.update');
+
+    /* Course routes */
+    /* Course routes */
+Route::get('courses',[CourseController::class,'index'])->name('course.index');
+Route::get('courses/create',[CourseController::class,'create'])->name('course.create');
+Route::post('courses/create',[CourseController::class,'storeBasicInfo'])->name('course.store-basic-info');
+Route::get('courses/{id}/edit',[CourseController::class,'edit'])->name('course.edit');
+Route::post('courses/{id}/update',[CourseController::class,'update'])->name('course.update');
 });
 
 /*
