@@ -3,11 +3,10 @@
 @section('course_content')
 <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab" tabindex="0">
     <div class="add_course_basic_info">
-        <form action="{{ route('instructor.course.store-basic-info') }}" method="post" class="basic_info_form" enctype="multipart/form-data">
+        <form action="{{ route('instructor.course.store') }}" method="post" class="basic_info_form course-form" enctype="multipart/form-data">
             @csrf
             <input type="hidden" name="current_step" value="1">
             <input type="hidden" name="next_step" value="2">
-            
             <div class="row">
                 <div class="col-xl-12">
                     <div class="add_course_basic_info_imput">
@@ -28,23 +27,36 @@
                     </div>
                 </div>
                 <div class="col-xl-6">
+
                     <div class="add_course_basic_info_imput">
                         <label for="#">Demo Video Storage <b>(optional)</b></label>
-                        <select class="select_js" name="demo_video_storage">
+                        <select class="storage" name="demo_video_storage">
                             <option value=""> Please Select </option>
                             <option value="upload"> Upload </option>
-                            <option value="youtube"> You Tube </option>
+                            <option value="youtube"> Youtube </option>
                             <option value="vimeo"> Vimeo </option>
                             <option value="external_link"> External Link </option>
-
                         </select>
                     </div>
                 </div>
                 <div class="col-xl-6">
-                    <div class="add_course_basic_info_imput" >
+                    <div class="add_course_basic_info_imput upload_source">
                         <label for="#">Path</label>
-                        <input type="file" name="demo_video_source">
+                        <div class="input-group">
+                            <span class="input-group-btn">
+                              <a id="lfm" data-input="thumbnail" data-preview="holder" class="btn btn-primary">
+                                <i class="fa fa-picture-o"></i> Choose
+                              </a>
+                            </span>
+                            <input id="thumbnail" class="form-control source_input" type="text" name="file" >
+                          </div>
                     </div>
+                    <div class="add_course_basic_info_imput external_source d-none">
+                        <label for="#">Path</label>
+                        <input type="text" name="url" class="source_input">
+                    </div>
+
+
                 </div>
                 <div class="col-xl-6">
                     <div class="add_course_basic_info_imput">
@@ -62,7 +74,7 @@
                 <div class="col-xl-12">
                     <div class="add_course_basic_info_imput mb-0">
                         <label for="#">Description</label>
-                        <textarea rows="8" placeholder="Description" name="description"></textarea>
+                        <textarea rows="8" placeholder="Description" name="description" class="editor"></textarea>
                         <button type="submit" class="common_btn mt_20">Save</button>
                     </div>
                 </div>
@@ -71,3 +83,9 @@
     </div>
 </div>
 @endsection
+
+@push('scripts')
+<script>
+     $('#lfm').filemanager('file');
+</script>
+@endpush
