@@ -80,33 +80,33 @@
     <script src="{{asset('frontend/assets/js/jquery.waypoints.min.js')}}"></script>
     <script src="{{asset('frontend/assets/js/jquery.countup.min.js')}}"></script>
     <!--venobox js-->
-    <script src="{{asset('frontend/assets/')}}js/venobox.min.js"></script>
+    <script src="{{ asset('frontend/assets/js/venobox.min.js') }}"></script>
     <!--nice-select js-->
-    <script src="{{asset('frontend/assets/')}}js/jquery.nice-select.min.js"></script>
+    <script src="{{ asset('frontend/assets/js/jquery.nice-select.min.js') }}"></script>
     <!--Scroll Button js-->
-    <script src="{{asset('frontend/assets/')}}js/scroll_button.js"></script>
+    <script src="{{ asset('frontend/assets/js/scroll_button.js') }}"></script>
     <!--pointer js-->
-<!--     <script src="{{asset('frontend/assets/')}}js/pointer.js"></script>
+<!--     <script src="{{ asset('frontend/assets/js/pointer.js') }}"></script
  -->    <!--range slider js-->
-    <script src="{{asset('frontend/assets/')}}js/range_slider.js"></script>
+    <script src="{{ asset('frontend/assets/js/range_slider.js') }}"></script>
     <!--barfiller js-->
-    <script src="{{asset('frontend/assets/')}}js/animated_barfiller.js"></script>
+    <script src="{{ asset('frontend/assets/js/animated_barfiller.js') }}"></script>
     <!--calendar js-->
-    <script src="{{asset('frontend/assets/')}}js/jquery.calendar.js"></script>
+    <script src="{{ asset('frontend/assets/js/jquery.calendar.js') }}"></script>
     <!--starRating js-->
-    <script src="{{asset('frontend/assets/')}}js/starRating.js"></script>
+    <script src="{{ asset('frontend/assets/js/starRating.js') }}"></script>
     <!--Bar Graph js-->
-    <script src="{{asset('frontend/assets/')}}js/jquery.simple-bar-graph.min.js"></script>
+    <script src="{{ asset('frontend/assets/js/jquery.simple-bar-graph.min.js') }}"></script>
     <!--select2 js-->
-    <script src="{{asset('frontend/assets/')}}js/select2.min.js"></script>
+    <script src="{{ asset('frontend/assets/js/select2.min.js') }}"></script>
     <!--Video player js-->
-    <script src="{{asset('frontend/assets/')}}js/video_player.min.js"></script>
-    <script src="{{asset('frontend/assets/')}}js/video_player_youtube.js"></script>
+    <script src="{{ asset('frontend/assets/js/video_player.min.js') }}"></script>
+    <script src="{{ asset('frontend/assets/js/video_player_youtube.js') }}"></script>
     <!--wow js-->
-    <script src="{{asset('frontend/assets/')}}js/wow.min.js"></script>
+    <script src="{{ asset('frontend/assets/js/wow.min.js') }}"></script>
 
     <!--main/custom js-->
-    <script src="{{asset('frontend/assets/')}}js/main.js"></script>
+    <script src="{{ asset('frontend/assets/js/main.js') }}"></script
 
 
 

@@ -51,7 +51,7 @@ class CourseController extends Controller
         // save course id on session
         Session::put('course_create_id', $course->id);
 
-        redirect()->route('instructor.course.edit', ['id' => $course->id, 'step' => 2])->with('success', 'Course basic info created successfully.');
+        return redirect()->route('instructor.course.edit', ['id' => $course->id, 'step' => 2]);
     }
 
     function edit(Request $request)
@@ -126,7 +126,7 @@ class CourseController extends Controller
             // save course id on session
             Session::put('course_create_id', $course->id);
 
-            return redirect()->route('instructor.course.edit', ['id' => $course->id, 'step' => $request->next_step])->with('success', 'Course basic info updated successfully.');
+            return redirect()->route('instructor.course.edit', ['id' => $course->id, 'step' => $request->next_step]);
 
         case '2':
             // validation
@@ -151,10 +151,10 @@ class CourseController extends Controller
             $course->course_language_id = $request->language;
             $course->save();
 
-            return redirect()->route('instructor.course.edit', ['id' => $request->id, 'step' => $request->next_step])->with('success', 'Course more info updated successfully.');
+            return redirect()->route('instructor.course.edit', ['id' => $request->id, 'step' => $request->next_step]);
 
         case '3':
-            return redirect()->route('instructor.course.content', ['id' => $request->id])->with('success', 'Course content updated successfully.');
+            return redirect()->route('instructor.course.content', ['id' => $request->id]);
 
         case '4':
             // validation
@@ -169,7 +169,7 @@ class CourseController extends Controller
             $course->status = $request->status;
             $course->save();
 
-            return redirect()->route('instructor.course.index')->with('success', 'Course updated successfully.');
+            return redirect()->route('instructor.course.index');
 
         default:
             return redirect()->route('instructor.course.index')->with('error', 'Invalid step.');

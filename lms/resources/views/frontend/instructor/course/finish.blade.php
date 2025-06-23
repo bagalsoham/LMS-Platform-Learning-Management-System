@@ -3,10 +3,11 @@
 @section('course_content')
     <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab" tabindex="0">
         <div class="dashboard_add_course_finish">
-            <form action="#" class="more_info_form">
+            <form action="#" class="more_info_form ">
                 @csrf
                 <input type="hidden" name="id" value="{{ @$course?->id }}">
                 <input type="hidden" name="current_step" value="4">
+                <input type="hidden" name="next_step" value="4">
 
                 <div class="row">
                     <div class="col-xl-12">
