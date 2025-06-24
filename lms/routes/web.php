@@ -99,6 +99,11 @@ Route::get('courses/create',[CourseController::class,'create'])->name('course.cr
 Route::post('courses/create',[CourseController::class,'storeBasicInfo'])->name('course.store-basic-info');
 Route::get('courses/{id}/edit',[CourseController::class,'edit'])->name('course.edit');
 Route::post('courses/{id}/update',[CourseController::class,'update'])->name('course.update');
+
+//laravel filemanager routes
+Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']], function () {
+     \UniSharp\LaravelFilemanager\Lfm::routes();
+ });
 });
 
 /*

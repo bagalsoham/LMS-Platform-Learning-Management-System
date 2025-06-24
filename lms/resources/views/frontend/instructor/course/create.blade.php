@@ -30,7 +30,7 @@
 
                     <div class="add_course_basic_info_imput">
                         <label for="#">Demo Video Storage <b>(optional)</b></label>
-                        <select class="storage" name="demo_video_storage">
+                        <select class=" storage " name="demo_video_storage">
                             <option value=""> Please Select </option>
                             <option value="upload"> Upload </option>
                             <option value="youtube"> Youtube </option>

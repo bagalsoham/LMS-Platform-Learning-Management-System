@@ -35,6 +35,7 @@
     <link rel="stylesheet" href="{{asset('frontend/assets/css/style.css')}}">
     <link rel="stylesheet" href="{{asset('frontend/assets/css/responsive.css')}}">
 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
 </head>
 
 <body class="home_3">
@@ -50,7 +51,6 @@
 
     @include('frontend.layouts.header')
 
-
     @yield('content')
 
     <!--================================
@@ -64,7 +64,6 @@
     <!--================================
         SCROLL BUTTON END
     =================================-->
-
 
     <!--jquery library js-->
     <script src="{{asset('frontend/assets/js/jquery-3.7.1.min.js')}}"></script>
@@ -86,8 +85,8 @@
     <!--Scroll Button js-->
     <script src="{{ asset('frontend/assets/js/scroll_button.js') }}"></script>
     <!--pointer js-->
-<!--     <script src="{{ asset('frontend/assets/js/pointer.js') }}"></script
- -->    <!--range slider js-->
+    <!-- <script src="{{ asset('frontend/assets/js/pointer.js') }}"></script> -->
+    <!--range slider js-->
     <script src="{{ asset('frontend/assets/js/range_slider.js') }}"></script>
     <!--barfiller js-->
     <script src="{{ asset('frontend/assets/js/animated_barfiller.js') }}"></script>
@@ -105,10 +104,19 @@
     <!--wow js-->
     <script src="{{ asset('frontend/assets/js/wow.min.js') }}"></script>
 
+    <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
+
+    <!--Laravel File Manager js-->
+    <script src="/vendor/laravel-filemanager/js/stand-alone-button.js"></script>
+
+    {{-- Course specific js - Add this for course pages --}}
+    <script src="{{ asset('frontend/assets/js/Course.js') }}"></script>
+
+    {{-- Dynamic js from individual pages --}}
+    @stack('scripts')
+
     <!--main/custom js-->
-    <script src="{{ asset('frontend/assets/js/main.js') }}"></script
-
-
+    <script src="{{ asset('frontend/assets/js/main.js') }}"></script>
 
 </body>
 
