@@ -11,7 +11,7 @@
     <link href="https://unpkg.com/@tabler/icons@latest/iconfont/tabler-icons.min.css" rel="stylesheet">
 
     <link rel="icon" type="image/png" href="images/favicon.png">
-    @vite(['resources/css/frontend.css'])
+    @vite(['resources/css/frontend.css', 'resources/js/frontend/frontend.js'])
 
 
     {{-- Dynamic js --}}
@@ -120,11 +120,26 @@
     {{-- Course specific js - Add this for course pages --}}
     <script src="{{ asset('frontend/assets/js/course.js') }}"></script>
 
-    {{-- Dynamic js from individual pages --}}
-    @stack('scripts')
-
     <!--main/custom js-->
     <script src="{{ asset('frontend/assets/js/main.js') }}"></script>
+
+    {{-- Dynamic js from individual pages --}}
+    @stack('scripts')
+    <script>
+        var notyf = new Notyf({
+            duration: 5000,
+            dismissible: true,
+        });
+        window.notyf = notyf;
+        @if ($errors->any())
+            @foreach ($errors->all() as $error)
+                notyf.error(@json($error));
+            @endforeach
+        @endif
+    </script>
+
+
+
 
 </body>
 

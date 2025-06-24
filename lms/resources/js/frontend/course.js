@@ -1,12 +1,7 @@
 const csrf_token = $(`meta[name="csrf_token"]`).attr("content");
 const base_url = $(`meta[name="base_url"]`).attr("content");
 const basic_info_url = base_url + "/instructor/courses/create";
-const update_url = base_url + "/instructor/courses/update";
-
-var notyf = new Notyf({
-    duration: 5000,
-    dismissible: true,
-});
+// Remove the old update_url since we'll build it dynamically
 
 var loader = `
 <div class="modal-content text-center" style="height: 100px; display: flex; align-items: center; justify-content: center;">
@@ -53,10 +48,19 @@ $(".basic_info_form").on("submit", function (e) {
 
 $(".basic_info_update_form").on("submit", function (e) {
     e.preventDefault();
+    let form = $(this);
     let formData = new FormData(this);
+    let url = form.attr("action");
+
+    // Build URL if action is empty
+    if (!url) {
+        let courseId = form.find('input[name="id"]').val();
+        url = base_url + "/instructor/courses/" + courseId + "/update";
+    }
+
     $.ajax({
         method: "POST",
-        url: update_url,
+        url: url,
         data: formData,
         contentType: false,
         processData: false,
@@ -81,6 +85,13 @@ $(".more_info_form").on("submit", function (e) {
     let form = $(this);
     let formData = new FormData(this);
     let url = form.attr("action");
+
+    // Build URL if action is empty - this is the KEY FIX
+    if (!url) {
+        let courseId = form.find('input[name="id"]').val();
+        url = base_url + "/instructor/courses/" + courseId + "/update";
+    }
+
     $.ajax({
         method: "POST",
         url: url,
@@ -123,10 +134,10 @@ $(document).on("click", ".dynamic-modal-btn", function (e) {
     e.preventDefault();
     $("#dynamic-modal").modal("show");
     let course_id = $(this).data('id');
-    
+
     $.ajax({
         method: "GET",
-        url: base_url + "/instructor/course-content/:id/create-chapter".replace(':id', course_id),
+        url: base_url + "/instructor/course-content/" + course_id + "/create-chapter",
         dataType: "html",
         beforeSend: function () {
             $(".dynamic-modal-content").html(loader);

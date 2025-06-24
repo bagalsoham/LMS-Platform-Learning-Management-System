@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Frontend\CourseBasicInfoCreateRequest;
 use App\Models\Course;
 use App\Models\CourseCategory;
+use App\Models\CourseChapter;
 use App\Models\CourseLanguage;
 use App\Models\CourseLevel;
 use App\Traits\FileUpload;
@@ -39,7 +40,7 @@ class CourseController extends Controller
         $thumbnailPath = $this->uploadFile($request->file('thumbnail'));
         $course = new Course();
         $course->title = $request->title;
-        $course->slug =Str::slug($request->title);
+        $course->slug = Str::slug($request->title);
         $course->seo_description = $request->seo_description;
         $course->thumbnail = $thumbnailPath;
         $course->demo_video_storage = $request->demo_video_storage;
@@ -83,8 +84,9 @@ class CourseController extends Controller
 
             case '3':
                 $courseId = $request->id;
-/*                 $chapters = CourseChapter::where(['course_id' => $courseId, 'instructor_id' => Auth::user()->id])->orderBy('order')->get();
- */                return view('frontend.instructor.course.course-content', compact('courseId', ));
+                $chapters = CourseChapter::where(['course_id' => $courseId, 'instructor_id' => Auth::user()->id])->orderBy('order')->get();
+
+                return view('frontend.instructor.course.course-content', compact('courseId','chapters'));
                 break;
 
             case '4':
@@ -174,13 +176,11 @@ class CourseController extends Controller
                 }
                 return redirect()->route('instructor.course.edit', ['id' => $request->id, 'step' => $request->next_step]);
             case '3':
-                if ($request->ajax()) {
-                    return response()->json([
-                        'status' => 'success',
-                        'redirect' => route('instructor.course.content', ['id' => $request->id])
-                    ]);
-                }
-                return redirect()->route('instructor.course.content', ['id' => $request->id]);
+                return response()->json([
+                    'status' => 'success',
+                    'message' => 'Updated successfully.',
+                    'redirect' => route('instructor.course.edit', ['id' => $request->id, 'step' => $request->next_step])
+                ]);
             case '4':
                 // validation
                 $request->validate([
