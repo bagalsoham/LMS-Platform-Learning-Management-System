@@ -4,7 +4,6 @@ use App\Http\Controllers\Frontend\CourseContentController;
 use App\Http\Controllers\Frontend\CourseController;
 use App\Http\Controllers\Frontend\StudentDashboardController;
 use App\Http\Controllers\Frontend\InstructorDashboardController;
-use App\Http\Controllers\Frontend\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Frontend\FrontendController;
 use App\Http\Controllers\Frontend\ProfileController;
@@ -101,7 +100,8 @@ Route::post('courses/create',[CourseController::class,'storeBasicInfo'])->name('
 Route::get('courses/{id}/edit',[CourseController::class,'edit'])->name('course.edit');
 Route::post('courses/{id}/update',[CourseController::class,'update'])->name('course.update');
 
-Route::get('course-content/create-chapter',[CourseContentController::class,'createChapterModal'])->name('course-content.create-chapter');
+Route::get('course-content/{course}/create-chapter',[CourseContentController::class,'createChapterModal'])->name('course-content.create-chapter');
+Route::post('course-content/{course}/create-chapter',[CourseContentController::class,'storeChapter'])->name('course-content.store-chapter');
 
 //laravel filemanager routes
 Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']], function () {
