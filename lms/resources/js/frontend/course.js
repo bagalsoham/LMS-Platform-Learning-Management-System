@@ -1,61 +1,58 @@
-const csrf_token = $(`meta[name="csrf_token"]`).attr('content');
-const base_url = $(`meta[name="base_url"]`).attr('content');
-const basic_info_url = base_url + '/instructor/courses/create';
-const update_url = base_url + '/instructor/courses/update';
+const csrf_token = $(`meta[name="csrf_token"]`).attr("content");
+const base_url = $(`meta[name="base_url"]`).attr("content");
+const basic_info_url = base_url + "/instructor/courses/create";
+const update_url = base_url + "/instructor/courses/update";
 
-const notyf = new Notyf({
+var notyf = new Notyf({
     duration: 5000,
-    dismissible: true
+    dismissible: true,
 });
+
+var loader = `
+<div class="modal-content text-center" style="height: 100px; display: flex; align-items: center; justify-content: center;">
+<div class="spinner-border" role="status">
+  <span class="sr-only">Loading...</span>
+</div></div>
+`;
 
 //course tab navigation
-$('.course-tab').on('click', function (e) {
+$(".course-tab").on("click", function (e) {
     e.preventDefault();
-    let step = $(this).data('step');
-    $('.course-form').find('input[name=next_step]').val(step);
-    $('.course-form').trigger('submit');
+    let step = $(this).data("step");
+    $(".course-form").find("input[name=next_step]").val(step);
+    $(".course-form").trigger("submit");
 });
 
-
-
-
-
-$('.basic_info_form').on('submit', function (e) {
+$(".basic_info_form").on("submit", function (e) {
     e.preventDefault();
-
+    let form = $(this);
     let formData = new FormData(this);
+    let url = form.attr("action"); // Use the form's action attribute
     $.ajax({
         method: "POST",
-        url: basic_info_url,
+        url: url,
         data: formData,
         contentType: false,
         processData: false,
-        beforeSend: function () {
-
-        },
+        beforeSend: function () {},
         success: function (data) {
-            if (data.status == 'success') {
-
-                window.location.href = data.redirect
+            if (data.status == "success") {
+                window.location.href = data.redirect;
             }
         },
         error: function (xhr, status, error) {
-           console.log(xhr);
+            console.log(xhr);
             let errors = xhr.responseJSON.errors;
-
             $.each(errors, function (key, value) {
                 notyf.error(value[0]);
             });
-
         },
-        complete: function () { }
-    })
-
+        complete: function () {},
+    });
 });
 
-$('.basic_info_update_form').on('submit', function (e) {
+$(".basic_info_update_form").on("submit", function (e) {
     e.preventDefault();
-
     let formData = new FormData(this);
     $.ajax({
         method: "POST",
@@ -63,124 +60,79 @@ $('.basic_info_update_form').on('submit', function (e) {
         data: formData,
         contentType: false,
         processData: false,
-        beforeSend: function () {
-
-        },
+        beforeSend: function () {},
         success: function (data) {
-            if (data.status == 'success') {
-                window.location.href = data.redirect
+            if (data.status == "success") {
+                window.location.href = data.redirect;
             }
         },
         error: function (xhr, status, error) {
             let errors = xhr.responseJSON.errors;
             $.each(errors, function (key, value) {
                 notyf.error(value[0]);
-            })
+            });
         },
-        complete: function () { }
-    })
-
+        complete: function () {},
+    });
 });
 
-$('.more_info_form').on('submit', function (e) {
+$(".more_info_form").on("submit", function (e) {
     e.preventDefault();
-
+    let form = $(this);
     let formData = new FormData(this);
+    let url = form.attr("action");
     $.ajax({
         method: "POST",
-        url: update_url,
+        url: url,
         data: formData,
         contentType: false,
         processData: false,
-        beforeSend: function () {
-
-        },
+        beforeSend: function () {},
         success: function (data) {
-            if (data.status == 'success') {
-
-                window.location.href = data.redirect
+            if (data.status == "success") {
+                window.location.href = data.redirect;
             }
         },
         error: function (xhr, status, error) {
             let errors = xhr.responseJSON.errors;
             $.each(errors, function (key, value) {
                 notyf.error(value[0]);
-            })
+            });
         },
-        complete: function () { }
-    })
-
+        complete: function () {},
+    });
 });
 
-//show hide path input depending on source type
-/* $('.storage').on('change', function () {
-    let value = $(this).val();
-    console.log(value);
-
-    if(value == 'upload'){
-        $('.upload_source').removeClass('d-none');
-        $('.external_source').addClass('d-none');
-    } else if(value == '' || value == 'Please Select') {
-        // Hide both when no option is selected
-        $('.upload_source').addClass('d-none');
-        $('.external_source').addClass('d-none');
-    } else {
-        // Show external source for youtube, vimeo, external_link
-        $('.external_source').removeClass('d-none');
-        $('.upload_source').addClass('d-none');
-    }
-}); */
-
-$(document).ready(function() {
-    // Initialize Laravel File Manager for video files
-    if ($('#video_lfm').length > 0) {
-        $('#video_lfm').filemanager('file');
-    }
-
-    // Also initialize any other file managers on the page
-    if ($('#lfm').length > 0) {
-        $('#lfm').filemanager('file');
-    }
-
-    // Show/hide path input depending on source type
-    $('.storage').on('change', function () {
+$(document).ready(function () {
+    // show hide path input depending on source
+    $(document).on("change", ".storage", function () {
         let value = $(this).val();
-        console.log('Selected storage type:', value);
-
-        if(value == 'upload'){
-            $('.upload_source').removeClass('d-none');
-            $('.external_source').addClass('d-none');
-            // Clear external URL when switching to upload
-            $('.external_source input[name="url"]').val('');
-        } else if(value == '' || value == 'Please Select') {
-            // Hide both when no option is selected
-            $('.upload_source').addClass('d-none');
-            $('.external_source').addClass('d-none');
+        $(".source_input").val("");
+        console.log("working");
+        if (value == "upload") {
+            $(".upload_source").removeClass("d-none");
+            $(".external_source").addClass("d-none");
         } else {
-            // Show external source for youtube, vimeo, external_link
-            $('.external_source').removeClass('d-none');
-            $('.upload_source').addClass('d-none');
-            // Clear file path when switching to external
-            $('.upload_source input[name="file"]').val('');
+            $(".upload_source").addClass("d-none");
+            $(".external_source").removeClass("d-none");
         }
     });
+});
 
-    // Optional: Add validation to ensure the correct input has value
-    $('form.course-form').on('submit', function(e) {
-        let storageType = $('.storage').val();
-        let hasFile = $('#video_path').val().trim() !== '';
-        let hasUrl = $('.external_source input[name="url"]').val().trim() !== '';
+$(document).on("click", ".dynamic-modal-btn", function (e) {
+    e.preventDefault();
+    $("#dynamic-modal").modal("show");
 
-        if (storageType && storageType !== '' && storageType !== 'Please Select') {
-            if (storageType === 'upload' && !hasFile) {
-                alert('Please select a video file for upload.');
-                e.preventDefault();
-                return false;
-            } else if (storageType !== 'upload' && !hasUrl) {
-                alert('Please enter a video URL.');
-                e.preventDefault();
-                return false;
-            }
-        }
+    $.ajax({
+        method: "GET",
+        url: base_url + "/instructor/course-content/create-chapter",
+        dataType: "html",
+        beforeSend: function () {
+            $(".dynamic-modal-content").html(loader);
+        },
+        success: function (data) {
+            $(".dynamic-modal-content").html(data);
+        },
+        error: function (xhr, status, error) {},
     });
 });

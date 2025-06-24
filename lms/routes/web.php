@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Frontend\CourseContentController;
 use App\Http\Controllers\Frontend\CourseController;
 use App\Http\Controllers\Frontend\StudentDashboardController;
 use App\Http\Controllers\Frontend\InstructorDashboardController;
@@ -99,6 +100,8 @@ Route::get('courses/create',[CourseController::class,'create'])->name('course.cr
 Route::post('courses/create',[CourseController::class,'storeBasicInfo'])->name('course.store-basic-info');
 Route::get('courses/{id}/edit',[CourseController::class,'edit'])->name('course.edit');
 Route::post('courses/{id}/update',[CourseController::class,'update'])->name('course.update');
+
+Route::get('course-content/create-chapter',[CourseContentController::class,'createChapterModal'])->name('course-content.create-chapter');
 
 //laravel filemanager routes
 Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']], function () {

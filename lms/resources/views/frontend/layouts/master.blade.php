@@ -13,7 +13,8 @@
     <link rel="icon" type="image/png" href="images/favicon.png">
     @vite(['resources/css/frontend.css'])
 
-       {{-- Dynamic js --}}
+
+    {{-- Dynamic js --}}
     @stack('header_scripts')
 
     <link rel="stylesheet" href="{{asset('frontend/assets/css/all.min.css')}}">
@@ -52,6 +53,13 @@
     @include('frontend.layouts.header')
 
     @yield('content')
+
+    <!-- Modal -->
+    <div class="modal fade" id="dynamic-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg dynamic-modal-content">
+
+        </div>
+    </div>
 
     <!--================================
         SCROLL BUTTON START
@@ -110,7 +118,7 @@
     <script src="/vendor/laravel-filemanager/js/stand-alone-button.js"></script>
 
     {{-- Course specific js - Add this for course pages --}}
-    <script src="{{ asset('frontend/assets/js/Course.js') }}"></script>
+    <script src="{{ asset('frontend/assets/js/course.js') }}"></script>
 
     {{-- Dynamic js from individual pages --}}
     @stack('scripts')

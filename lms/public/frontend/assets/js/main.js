@@ -10,14 +10,14 @@ $(function () {
             $('#main-content').fadeIn('slow');
         });
     });
-    
+
     // Fallback in case the load event doesn't trigger (after 10 seconds)
     setTimeout(function() {
         $('#preloader').fadeOut('slow', function() {
             $('#main-content').fadeIn('slow');
         });
     }, 3000); // 3 seconds timeout
-    
+
 
 
     // Menu fix js
@@ -460,8 +460,7 @@ $(function () {
 
 
     // Cursore pointer
-    init_pointer({});
-
+    // init_pointer({});
 
     // Top courses slider
     $('.top_courses_slider').slick({
