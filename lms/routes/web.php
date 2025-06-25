@@ -103,6 +103,14 @@ Route::post('courses/{id}/update',[CourseController::class,'update'])->name('cou
 Route::get('course-content/{course}/create-chapter',[CourseContentController::class,'createChapterModal'])->name('course-content.create-chapter');
 Route::post('course-content/{course}/create-chapter',[CourseContentController::class,'storeChapter'])->name('course-content.store-chapter');
 
+Route::get('course-content/create-lesson',[CourseContentController::class,'createLesson'])->name('course-content.create-lesson');
+Route::post('course-content/create-lesson', [CourseContentController::class, 'storeLesson'])
+    ->name('course-content.store-lesson');
+
+/* Lesson modal routes */
+Route::get('course-content/edit-lesson', [CourseContentController::class, 'editLesson'])->name('course-content.edit-lesson'); // For loading the edit modal via AJAX
+Route::post('course-content/{id}/update-lesson', [CourseContentController::class, 'updateLesson'])->name('course-content.update-lesson'); // For submitting the edit form
+
 //laravel filemanager routes
 Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']], function () {
      \UniSharp\LaravelFilemanager\Lfm::routes();

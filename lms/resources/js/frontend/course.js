@@ -148,3 +148,63 @@ $(document).on("click", ".dynamic-modal-btn", function (e) {
         error: function (xhr, status, error) {},
     });
 });
+
+$('.add_lesson').on('click', function (e) {
+    e.preventDefault();
+    $("#dynamic-modal").modal("show");
+
+    let courseId = $(this).data('course-id');
+    let chapterId = $(this).data('chapter-id');
+    $.ajax({
+        method: 'GET',
+        url: base_url + '/instructor/course-content/create-lesson',
+        data: {  // ← Changed from 'dataType' to 'data'
+            'course_id': courseId,
+            'chapter_id': chapterId
+        },
+        dataType: 'html',  // ← Added proper dataType (since you're loading HTML into modal)
+        beforeSend: function () {
+            $(".dynamic-modal-content").html(loader);
+        },
+        success: function (data) {
+            $(".dynamic-modal-content").html(data);
+        },
+        error: function (xhr, status, error) {
+            console.error('Error loading lesson form:', error);
+            $(".dynamic-modal-content").html('<p>Error loading form. Please try again.</p>');
+        }
+    });
+});
+
+$('.edit_lesson').on('click', function (e) {
+    e.preventDefault();
+    $("#dynamic-modal").modal("show");
+
+    let courseId = $(this).data('course-id');
+    let chapterId = $(this).data('chapter-id');
+    let lessonId = $(this).data('lesson-id'); // Assuming you have a lesson ID to edit
+    $.ajax({
+        method: 'GET',
+        url: base_url + '/instructor/course-content/edit-lesson',
+        data: {  // ← Changed from 'dataType' to 'data'
+            'course_id': courseId,
+            'chapter_id': chapterId,
+            'lesson_id': lessonId // Pass the lesson ID for editing
+        },
+        dataType: 'html',  // ← Added proper dataType (since you're loading HTML into modal)
+        beforeSend: function () {
+            $(".dynamic-modal-content").html(loader);
+        },
+        success: function (data) {
+            $(".dynamic-modal-content").html(data);
+        },
+        error: function (xhr, status, error) {
+            console.error('Error loading lesson form:', error);
+            $(".dynamic-modal-content").html('<p>Error loading form. Please try again.</p>');
+        }
+    });
+});
+
+
+
+

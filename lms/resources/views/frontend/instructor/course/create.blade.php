@@ -56,8 +56,6 @@
                             <label for="#">Path</label>
                             <input type="text" name="url" class="source_input">
                         </div>
-
-
                     </div>
                     <div class="col-xl-6">
                         <div class="add_course_basic_info_imput">
@@ -85,10 +83,6 @@
     </div>
 @endsection
 
-@push('scripts')
-    <script>
-        $('#lfm').filemanager('file');
-    </script>
-@endpush
-
-
+<script>
+    $('#lfm').filemanager('file');
+</script>

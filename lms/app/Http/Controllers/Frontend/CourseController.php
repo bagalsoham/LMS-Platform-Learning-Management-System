@@ -208,7 +208,8 @@ class CourseController extends Controller
                         'message' => 'Invalid step.'
                     ], 400);
                 }
-                return redirect()->route('instructor.course.index')->with('error', 'Invalid step.');
+                notyf()->error('Invalid step.');
+                return redirect()->route('instructor.course.index');
         }
     }
 }
