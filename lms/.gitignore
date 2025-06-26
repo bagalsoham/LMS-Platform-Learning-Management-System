@@ -35,3 +35,11 @@ yarn-error.log
 
 # Custom folder to ignore
 /resources/views/edu-core-frontend/
+
+
+
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.svg

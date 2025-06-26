@@ -5,11 +5,12 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use App\Models\CourseChapter;
 use App\Models\CourseChapterLesson;
+use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use PhpParser\Node\Expr\Cast\String_;
+use Illuminate\Http\Response;
 
 class CourseContentController extends Controller
 {
@@ -99,9 +100,9 @@ class CourseContentController extends Controller
             return response()->json(['error' => 'Lesson not found'], 404);
         }
 
-        return view('frontend.instructor.course.partials.chapter-lesson-modal', compact('courseId', 'chapterId', 'lesson' ,'editMode'))->render();
+        return view('frontend.instructor.course.partials.chapter-lesson-modal', compact('courseId', 'chapterId', 'lesson', 'editMode'))->render();
     }
-    function updateLesson(Request $request,string $id): RedirectResponse
+    function updateLesson(Request $request, string $id): RedirectResponse
     {
         $request->validate([
             'title' => 'required|string|max:255',
@@ -135,4 +136,17 @@ class CourseContentController extends Controller
         return redirect()->back();
     }
 
+
+    public function destroyLesson(Request $request, string $id):Response
+    {
+        try {
+            $lesson = CourseChapterLesson::findOrFail($id);
+            $lesson->delete();
+            notyf()->success('Deleted Successfully!');
+            return response(['message' => 'Deleted Successfully!'], 200);
+        } catch (Exception $e) {
+            logger("Course Sub Category Error >> " . $e);
+            return response(['message' => 'Something went wrong!'], 500);
+        }
+    }
 }

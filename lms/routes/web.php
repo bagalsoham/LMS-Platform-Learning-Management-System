@@ -110,6 +110,9 @@ Route::post('course-content/create-lesson', [CourseContentController::class, 'st
 /* Lesson modal routes */
 Route::get('course-content/edit-lesson', [CourseContentController::class, 'editLesson'])->name('course-content.edit-lesson'); // For loading the edit modal via AJAX
 Route::post('course-content/{id}/update-lesson', [CourseContentController::class, 'updateLesson'])->name('course-content.update-lesson'); // For submitting the edit form
+Route::delete('course-content/{lesson}/lesson', [CourseContentController::class, 'destroyLesson'])->name('course-content.destroy-lesson');
+
+
 
 //laravel filemanager routes
 Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']], function () {
