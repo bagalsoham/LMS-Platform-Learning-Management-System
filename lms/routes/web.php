@@ -7,6 +7,8 @@ use App\Http\Controllers\Frontend\InstructorDashboardController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Frontend\FrontendController;
 use App\Http\Controllers\Frontend\ProfileController;
+use Illuminate\Support\Facades\Auth;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -27,8 +29,8 @@ Route::get('/',[FrontendController::class,'index'])->name('home');
 |
 */
 Route::get('/dashboard', function () {
-    if (auth()->check()) {
-        $user = auth()->user();
+    if (Auth::check()) {
+        $user = Auth::user();
 
         // Check if the authenticated user has a role
         if (isset($user->role)) {
@@ -101,6 +103,11 @@ Route::get('courses/{id}/edit',[CourseController::class,'edit'])->name('course.e
 Route::post('courses/{id}/update',[CourseController::class,'update'])->name('course.update');
 
 Route::get('course-content/{course}/create-chapter',[CourseContentController::class,'createChapterModal'])->name('course-content.create-chapter');
+
+Route::get('course-content/{chapterId}/edit-chapter',[CourseContentController::class,'editChapterModal'])->name('course-content.edit-chapter');
+
+Route::put('course-content/{chapterId}/update-chapter',[CourseContentController::class,'updateChapterModal'])->name('course-content.update-chapter');
+
 Route::post('course-content/{course}/create-chapter',[CourseContentController::class,'storeChapter'])->name('course-content.store-chapter');
 
 Route::get('course-content/create-lesson',[CourseContentController::class,'createLesson'])->name('course-content.create-lesson');

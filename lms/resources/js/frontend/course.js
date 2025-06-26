@@ -149,6 +149,25 @@ $(document).on("click", ".dynamic-modal-btn", function (e) {
     });
 });
 
+$(document).on("click", ".edit_chapter", function (e) {
+    e.preventDefault();
+    $("#dynamic-modal").modal("show");
+    let chapter_id = $(this).data('chapter-id'); // <-- FIXED
+
+    $.ajax({
+        method: "GET",
+        url: base_url + "/instructor/course-content/" + chapter_id + "/edit-chapter",
+        dataType: "html",
+        beforeSend: function () {
+            $(".dynamic-modal-content").html(loader);
+        },
+        success: function (data) {
+            $(".dynamic-modal-content").html(data);
+        },
+        error: function (xhr, status, error) {},
+    });
+});
+
 $('.add_lesson').on('click', function (e) {
     e.preventDefault();
     $("#dynamic-modal").modal("show");

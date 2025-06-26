@@ -37,6 +37,12 @@
                                             data-course-id="{{ $chapter->course_id }}">
                                             <a class="dropdown-item" href="javascript:;">Add Lesson</a>
                                         </li>
+                                        <li class="add_lesson" >
+                                            <a class="dropdown-item" href="javascript:;">Add Document</a>
+                                        </li>
+                                        <li class="add_lesson" >
+                                            <a class="dropdown-item" href="javascript:;">Add Quiz</a>
+                                        </li>
 
                                     </ul>
                                 </div>

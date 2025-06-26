@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\CourseCategory;
 use App\Models\CourseChapter;
 use App\Models\CourseChapterLesson;
 use Exception;
@@ -34,6 +35,32 @@ class CourseContentController extends Controller
         notyf()->success('Chapter created successfully');
         return redirect()->back();
     }
+
+
+    public function editChapterModal(string $id): string
+    {
+        $editMode = true;
+        $chapter = CourseChapter::where([
+            'id' => $id,
+            'instructor_id' => Auth::user()->id,
+        ])->firstOrFail();
+        return view('frontend.instructor.course.partials.course-chapter-modal', ['chapter' => $chapter, 'editMode' => $editMode])->render();
+    }
+
+    function updateChapterModal(Request $request,string $id):RedirectResponse{
+
+        $request->validate([
+            'title' => 'required|string|max:255',
+        ]);
+
+        $chapter = CourseChapter::findOrFail($id);
+        $chapter->title = $request->title;
+        $chapter->save();
+
+        notyf()->success('Chapter updated successfully');
+        return redirect()->back();
+    }
+
 
     function createLesson(Request $request): string // Fixed return type
     {
@@ -137,7 +164,7 @@ class CourseContentController extends Controller
     }
 
 
-    public function destroyLesson(Request $request, string $id):Response
+    public function destroyLesson(Request $request, string $id): Response
     {
         try {
             $lesson = CourseChapterLesson::findOrFail($id);
