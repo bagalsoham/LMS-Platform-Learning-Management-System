@@ -18,7 +18,7 @@ return new class extends Migration
             $table->text('description')->null();
             $table->foreignId('instructor_id')->constrained('users');
             $table->foreignId('course_id')->constrained('courses');
-            $table->foreignId('chapter_id')->constrained('course_chapters')->onDelete('cascade');
+            $table->foreignId('chapter_id')->constrained('course_chapters')->onDelete('cascade');//since while deleting chapter, all lessons will be deleted by it self
             $table->text('file_path');
             $table->enum('storage', ['upload', 'youtube', 'vimeo', 'external_link']);
             $table->string('volume')->nullable();

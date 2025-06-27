@@ -10,7 +10,7 @@
             action="{{ @$editMode == true ? route('instructor.course-content.update-lesson', $lesson->id) : route('instructor.course-content.store-lesson') }}"
             method="post">
             @csrf
-            
+
             <input type="hidden" name="course_id" value="{{ $courseId }}">
             <input type="hidden" name="chapter_id" value="{{ $chapterId }}">
 
@@ -56,7 +56,7 @@
                                     <i class="fa fa-picture-o"></i> Choose File
                                 </a>
                             </span>
-                            <input id="demo_video_file" class="form-control source_input" type="text" name="file_path"
+                            <input id="demo_video_file" class="form-control source_input" type="text" name="file"
                                 value="{{ @$lesson?->file_path }}" placeholder="Select file from media manager">
                         </div>
                     </div>

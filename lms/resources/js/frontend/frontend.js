@@ -1,7 +1,7 @@
 
 const csrf_token = $('meta[name="csrf-token"]').attr("content");
-console.log(csrf_token); // Should now log the token
-
+/* console.log(csrf_token); // Should now log the token
+ */
 
 
 var notyf = new Notyf({

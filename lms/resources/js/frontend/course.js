@@ -1,4 +1,5 @@
-const csrf_token = $(`meta[name="csrf_token"]`).attr("content");
+// Use the correct meta tag for CSRF token
+const csrf_token = $(`meta[name="csrf-token"]`).attr("content");
 const base_url = $(`meta[name="base_url"]`).attr("content");
 const basic_info_url = base_url + "/instructor/courses/create";
 // Remove the old update_url since we'll build it dynamically
@@ -9,6 +10,13 @@ var loader = `
   <span class="sr-only">Loading...</span>
 </div></div>
 `;
+
+// Set CSRF token in AJAX headers globally
+$.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': csrf_token
+    }
+});
 
 //course tab navigation
 $(".course-tab").on("click", function (e) {
@@ -224,6 +232,60 @@ $('.edit_lesson').on('click', function (e) {
     });
 });
 
+if($('.sortable_list li').length){
+    $('.sortable_list').sortable({
+        items: "li",
+        containment:"parent",
+        cursor: "move",
+        handle: ".dragger",
+        forcePlaceholderSize: true,
+        update: function (event, ui) {
+            let orderIds = $(this).sortable("toArray",{
+                attribute: "data-lesson-id",
+            });
+            let chapterId = $(this).data('chapter-lesson-id');
 
+            $.ajax({
+                method:"POST",
+                url:base_url + "/instructor/course-chapter/" + chapterId + "/sort-lesson",
+                data:{
+                    _token: csrf_token,
+                    order_ids:orderIds,
+                },
+                success:function(data){
+                    notyf.success(data.message);
+
+                },
+                error:function(xhr, status, error){
+                    notyf.error(data.error);
+                }
+            });
+        }
+
+    });
+}
+
+
+$('.sort_chapter_btn').on('click', function (e) {
+    $("#dynamic-modal").modal("show");
+    let courseId = $(this).data('id'); // Assuming you have a course ID to sort chapters
+    $.ajax({
+        method: 'GET',
+        url: base_url + '/instructor/course-content/' + courseId + '/sort-chapter',
+        data: {  // ← Changed from 'dataType' to 'data'
+
+        },
+        dataType: 'html',  // ← Added proper dataType (since you're loading HTML into modal)
+        beforeSend: function () {
+            $(".dynamic-modal-content").html(loader);
+        },
+        success: function (data) {
+            $(".dynamic-modal-content").html(data);
+        },
+        error: function (xhr, status, error) {
+            notyf.error(error);
+        }
+    });
+});
 
 

@@ -10,6 +10,7 @@ class CourseChapter extends Model
     use HasFactory;
     function lessons()
     {
-        return $this->hasMany(CourseChapterLesson::class, 'chapter_id', 'id');
+
+        return $this->hasMany(CourseChapterLesson::class, 'chapter_id', 'id')->orderBy('order');
     }
 }

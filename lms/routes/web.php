@@ -110,6 +110,8 @@ Route::put('course-content/{chapterId}/update-chapter',[CourseContentController:
 
 Route::post('course-content/{course}/create-chapter',[CourseContentController::class,'storeChapter'])->name('course-content.store-chapter');
 
+Route::delete('course-content/{chapter}/chapter',[CourseContentController::class,'destroyChapter'])->name('course-content.destroy-chapter');
+
 Route::get('course-content/create-lesson',[CourseContentController::class,'createLesson'])->name('course-content.create-lesson');
 Route::post('course-content/create-lesson', [CourseContentController::class, 'storeLesson'])
     ->name('course-content.store-lesson');
@@ -119,7 +121,11 @@ Route::get('course-content/edit-lesson', [CourseContentController::class, 'editL
 Route::post('course-content/{id}/update-lesson', [CourseContentController::class, 'updateLesson'])->name('course-content.update-lesson'); // For submitting the edit form
 Route::delete('course-content/{lesson}/lesson', [CourseContentController::class, 'destroyLesson'])->name('course-content.destroy-lesson');
 
+Route::post('course-chapter/{chapter}/sort-lesson', [CourseContentController::class, 'sortLesson'])->name('course-content.sort-lesson'); // For submitting the sorted lesson order
 
+Route::get('course-content/{course}/sort-chapter', [CourseContentController::class, 'sortChapter'])->name('course-content.sort-chapter'); // For loading the sorted chapter order
+
+Route::post('course-content/{course}/sort-chapter', [CourseContentController::class, 'updateSortChapter'])->name('course-content.update-sort-chapter'); // For loading the sorted chapter order
 
 //laravel filemanager routes
 Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']], function () {
