@@ -10,8 +10,10 @@
         </form>
         <div class="add_course_content">
             <div class="add_course_content_btn_area d-flex flex-wrap justify-content-between mt-3">
-                <a class="common_btn dynamic-modal-btn btn btn-primary" href="#" data-id="{{ $courseId }}"> Add New Chapter</a>
-                <a class="common_btn sort_chapter_btn btn btn-primary" data-id="{{ $courseId }}" href="javascript:;">Short Chapter</a>
+                <a class="common_btn dynamic-modal-btn btn btn-primary" href="#" data-id="{{ $courseId }}"> Add
+                    New Chapter</a>
+                <a class="common_btn sort_chapter_btn btn btn-primary" data-id="{{ $courseId }}"
+                    href="javascript:;">Short Chapter</a>
             </div>
             <div class="accordion" id="accordionExample">
                 @foreach ($chapters as $chapter)
@@ -30,7 +32,9 @@
                                     </div>
                                     <ul class="dropdown-menu dropdown-menu-end">
                                         <li>
-                                            <a class="dropdown-item add_lesson" href="javascript:;" data-chapter-id="{{ $chapter->id }}" data-course-id="{{ $chapter->course_id }}">Add Lesson</a>
+                                            <a class="dropdown-item add_lesson" href="javascript:;"
+                                                data-chapter-id="{{ $chapter->id }}"
+                                                data-course-id="{{ $chapter->course_id }}">Add Lesson</a>
                                         </li>
                                         <li>
                                             <a class="dropdown-item" href="javascript:;">Add Document</a>
@@ -41,24 +45,35 @@
 
                                     </ul>
                                 </div>
-                                <a class="edit edit_chapter" data-course-id="{{ $chapter->course_id }}" data-chapter-id="{{ $chapter->id }}" href="#"><i class="ti ti-edit"></i></a>
-                                <a class="del delete-item" href="{{ route('admin.course-content.destroy-chapter', $chapter->id) }}"><i class="ti ti-trash-x"></i></a>
+                                <a class="edit edit_chapter" data-course-id="{{ $chapter->course_id }}"
+                                    data-chapter-id="{{ $chapter->id }}" href="#"><i class="ti ti-edit"></i></a>
+                                <a class="del delete-item" href="#" data-id="{{ $chapter->id }}"
+                                    data-type="chapter"><i class="ti ti-trash-x"></i></a>
                             </div>
                         </h2>
                         <div id="collapse-{{ $chapter->id }}" class="accordion-collapse collapse"
                             data-bs-parent="#accordionExample">
                             <div class="accordion-body">
                                 <ul class="item_list sortable_list">
-                                    @foreach($chapter->lessons ?? [] as $lesson)
-                                    <li class="" data-lesson-id="{{ $lesson->id }}" data-chapter-id="{{ $chapter->id }}">
-                                        <span>{{ $lesson->title }}</span>
-                                        <div class="add_course_content_action_btn">
-                                            <a class="edit_lesson" data-lesson-id="{{ $lesson->id }}" data-chapter-id="{{ $chapter->id }}"
-                                                data-course-id="{{ $chapter->course_id }}" class="edit" href="javascript:;"><i class="ti ti-edit"></i></a>
-                                            <a class="del delete-item" href="{{ route('admin.course-content.destroy-lesson', $lesson->id) }}"><i class="ti ti-trash-x"></i></a>
-                                            <a class="arrow dragger" href="javascript:;"><i class="ti ti-arrows-maximize"></i></a>
-                                        </div>
-                                    </li>
+                                    @foreach ($chapter->lessons ?? [] as $lesson)
+                                        <li class="" data-lesson-id="{{ $lesson->id }}"
+                                            data-chapter-id="{{ $chapter->id }}">
+                                            <span>{{ $lesson->title }}</span>
+                                            <div class="add_course_content_action_btn">
+                                                <a class="edit_lesson" data-lesson-id="{{ $lesson->id }}"
+                                                    data-chapter-id="{{ $chapter->id }}"
+                                                    data-course-id="{{ $chapter->course_id }}" class="edit"
+                                                    href="javascript:;"><i class="ti ti-edit"></i>
+                                                </a>
+                                                <a class="del delete-item" href="#" data-id="{{ $lesson->id }}"
+                                                    data-type="lesson">
+                                                    <i class="ti ti-trash-x"></i>
+                                                </a>
+                                                <a class="arrow dragger" href="javascript:;"><i
+                                                        class="ti ti-arrows-maximize"></i>
+                                                </a>
+                                            </div>
+                                        </li>
                                     @endforeach
                                 </ul>
 
@@ -70,5 +85,4 @@
             </div>
         </div>
     </div>
-
 @endsection

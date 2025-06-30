@@ -1,5 +1,8 @@
-import $ from "jquery";
-window.$ = window.jQuery = $;
+console.log("Admin JS Loaded");
+
+// jQuery is already loaded globally, no need to import
+// Use the globally available jQuery
+const $ = window.jQuery;
 
 import { Notyf } from "notyf";
 import "notyf/notyf.min.css";
@@ -11,63 +14,94 @@ const notyf = new Notyf({
 });
 
 /** Read CSRF and base URL from meta tags */
-const csrf_token = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
-const base_url = document.querySelector('meta[name="base-url"]').getAttribute("content");
+const csrf_token = document.querySelector('meta[name="csrf-token"]')?.getAttribute("content");
+const base_url = document.querySelector('meta[name="base-url"]')?.getAttribute("content");
+
+// Make notyf globally available
+window.notyf = notyf;
 
 document.addEventListener("DOMContentLoaded", function () {
     var el;
 
     // TomSelect
     if (window.TomSelect) {
-        new TomSelect((el = document.getElementById("select-users")), {
-            copyClassesToDropdown: false,
-            dropdownParent: "body",
-            controlInput: "<input>",
-            render: {
-                item: function (data, escape) {
-                    return `<div><span class="dropdown-item-indicator">${data.customProperties || ""}</span>${escape(data.text)}</div>`;
+        const selectElement = document.getElementById("select-users");
+        if (selectElement) {
+            new TomSelect(selectElement, {
+                copyClassesToDropdown: false,
+                dropdownParent: "body",
+                controlInput: "<input>",
+                render: {
+                    item: function (data, escape) {
+                        return `<div><span class="dropdown-item-indicator">${data.customProperties || ""}</span>${escape(data.text)}</div>`;
+                    },
+                    option: function (data, escape) {
+                        return `<div><span class="dropdown-item-indicator">${data.customProperties || ""}</span>${escape(data.text)}</div>`;
+                    },
                 },
-                option: function (data, escape) {
-                    return `<div><span class="dropdown-item-indicator">${data.customProperties || ""}</span>${escape(data.text)}</div>`;
-                },
-            },
-        });
+            });
+        }
     }
 
     // TinyMCE
-    tinymce.init({
-        selector: ".editor",
-        height: 500,
-        menubar: false,
-        plugins: [
-            "advlist", "autolink", "lists", "link", "charmap", "anchor",
-            "searchreplace", "visualblocks", "fullscreen", "insertdatetime",
-            "media", "table", "help", "wordcount"
-        ],
-        toolbar:
-            "undo redo | blocks | bold italic backcolor | " +
-            "alignleft aligncenter alignright alignjustify | " +
-            "bullist numlist outdent indent | removeformat | help",
-        content_style: "body { font-family:Helvetica,Arial,sans-serif; font-size:16px }",
-    });
+    if (window.tinymce) {
+        tinymce.init({
+            selector: ".editor",
+            height: 500,
+            menubar: false,
+            plugins: [
+                "advlist", "autolink", "lists", "link", "charmap", "anchor",
+                "searchreplace", "visualblocks", "fullscreen", "insertdatetime",
+                "media", "table", "help", "wordcount"
+            ],
+            toolbar:
+                "undo redo | blocks | bold italic backcolor | " +
+                "alignleft aligncenter alignright alignjustify | " +
+                "bullist numlist outdent indent | removeformat | help",
+            content_style: "body { font-family:Helvetica,Arial,sans-serif; font-size:16px }",
+        });
+    }
 
-    $(".select2").select2();
+    // Select2 initialization
+    if (window.$ && $.fn.select2) {
+        $(".select2").select2();
+    }
 });
 
 /** Delete Item with confirmation */
 let delete_url = "";
 
-$(".delete-item").on("click", function (e) {
+$(document).on("click", ".delete-item", function (e) {
     e.preventDefault();
 
-    const chapterId = $(this).data("id");
-    delete_url = `${base_url}/admin/course-content/${chapterId}/chapter`;
+    const itemId = $(this).data("id");
+    const itemType = $(this).data("type"); // 'chapter' or 'lesson'
+
+    if (!itemId || !itemType) {
+        notyf.error("No item ID or type found for deletion");
+        return;
+    }
+
+    if (itemType === "chapter") {
+        delete_url = `${base_url}/admin/course-content/${itemId}/chapter`;
+    } else if (itemType === "lesson") {
+        delete_url = `${base_url}/admin/course-content/${itemId}/lesson`;
+    } else {
+        notyf.error("Unknown item type for deletion");
+        return;
+    }
 
     $("#modal-danger").modal("show");
 });
 
-$(".delete-confirm").on("click", function (e) {
+$(document).on("click", ".delete-confirm", function (e) {
     e.preventDefault();
+
+    // Check if delete_url is set
+    if (!delete_url) {
+        notyf.error("No delete URL specified");
+        return;
+    }
 
     $.ajax({
         method: "DELETE",
@@ -84,6 +118,7 @@ $(".delete-confirm").on("click", function (e) {
         error: function (xhr) {
             const message = xhr.responseJSON?.message || "Delete failed.";
             notyf.error(message);
+            console.error('Delete error:', xhr);
         },
         complete: function () {
             $(".delete-confirm").text("Delete");
@@ -92,13 +127,13 @@ $(".delete-confirm").on("click", function (e) {
 });
 
 /** Database Clear with confirmation */
-$(".db-clear").on("click", function (e) {
+$(document).on("click", ".db-clear", function (e) {
     e.preventDefault();
     delete_url = $(this).attr("href");
     $("#modal-database-clear").modal("show");
 });
 
-$(".db-clear-submit").on("submit", function (e) {
+$(document).on("submit", ".db-clear-submit", function (e) {
     e.preventDefault();
 
     $.ajax({
@@ -125,30 +160,32 @@ $(".db-clear-submit").on("submit", function (e) {
 
 /** Certificate Position Save */
 $(function () {
-    $(".draggable-element").draggable({
-        containment: ".certificate-body",
-        stop: function (event, ui) {
-            const elementId = $(this).attr("id");
-            const x = ui.position.left;
-            const y = ui.position.top;
+    if ($.fn.draggable) {
+        $(".draggable-element").draggable({
+            containment: ".certificate-body",
+            stop: function (event, ui) {
+                const elementId = $(this).attr("id");
+                const x = ui.position.left;
+                const y = ui.position.top;
 
-            $.ajax({
-                method: "POST",
-                url: `${base_url}/admin/certificate-item`,
-                data: {
-                    _token: csrf_token,
-                    element_id: elementId,
-                    x_position: x,
-                    y_position: y,
-                },
-            });
-        },
-    });
+                $.ajax({
+                    method: "POST",
+                    url: `${base_url}/admin/certificate-item`,
+                    data: {
+                        _token: csrf_token,
+                        element_id: elementId,
+                        x_position: x,
+                        y_position: y,
+                    },
+                });
+            },
+        });
+    }
 });
 
 /** Featured Instructor AJAX */
 $(function () {
-    $(".select_instructor").on("change", function () {
+    $(document).on("change", ".select_instructor", function () {
         const id = $(this).val();
 
         $.ajax({

@@ -5,12 +5,11 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <meta name="csrf_token" content="{{ csrf_token() }}">
-    <meta name="base_url" content="{{ url('/') }}">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="base-url" content="{{ url('/') }}">
     <title>Dashboard</title>
 
     <!-- plugin css -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons@latest/iconfont/tabler-icons.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/3.21.0/tabler-icons.min.css"
         integrity="sha512-XrgoTBs7P5YtpkeKqKOKkruURsawIaRrhe8QrcWeMnFeyRZiOcRNjBAX+AQeXOvx9/9fSY32dVct1PccRoCICQ=="
@@ -33,12 +32,11 @@
         }
     </style>
     @stack('styles')
-    <!-- Only use Vite for CSS -->
+
+    <!-- Vite CSS -->
     @vite(['resources/css/admin.css'])
+
     @stack('header_scripts')
-
-
-    @vite(['resources/js/admin.js','resources/js/admin/course.js'])
 </head>
 
 <body>
@@ -104,14 +102,13 @@
         </div>
     </div>
 
-    <!-- Models -->
+    <!-- Database Clear Modal -->
     <div class="modal modal-blur fade" id="modal-database-clear" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
             <div class="modal-content">
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 <div class="modal-status bg-danger"></div>
                 <div class="modal-body text-center py-4">
-                    <!-- Download SVG icon from http://tabler-icons.io/i/alert-triangle -->
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon mb-2 text-danger icon-lg" width="24"
                         height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
                         stroke-linecap="round" stroke-linejoin="round">
@@ -145,11 +142,8 @@
         </div>
     </div>
 
-
-    <!-- Libs JS -->
-    <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
+    <!-- Third-party Libraries -->
     <script src="{{ asset('admin/assets/dist/libs/tinymce/tinymce.min.js') }}"></script>
-    <!-- JS: Core libraries in correct order -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
@@ -157,10 +151,8 @@
     <script src="/vendor/laravel-filemanager/js/stand-alone-button.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="{{ asset('admin/assets/dist/js/tabler.min.js?1692870487') }}"></script>
-    <!-- Your custom JS -->
-    
-    @stack('scripts')
 
+    <!-- Set up global variables before Vite scripts -->
     <script>
         window.base_url = '{{ url("/") }}';
         window.csrf_token = '{{ csrf_token() }}';
@@ -179,7 +171,17 @@
             </div>
         </div>`;
     </script>
+
+    <!-- Vite JavaScript files -->
+    @vite(['resources/js/admin/admin.js'])
+
+    <!-- Stack for page-specific scripts -->
     @stack('scripts')
+
+    <!-- Only load course.js on course-related pages -->
+    @if(request()->is('admin/courses*') || request()->is('admin/course-content*'))
+        @vite(['resources/js/admin/course.js'])
+    @endif
 
 </body>
 </html>
