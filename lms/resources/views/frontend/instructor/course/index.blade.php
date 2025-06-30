@@ -2,8 +2,8 @@
 
 @section('content')
     <!--===========================
-                        BREADCRUMB START
-                    ============================-->
+                                    BREADCRUMB START
+                                ============================-->
     <section class="wsus__breadcrumb" style="background: url({{ asset(config('settings.site_breadcrumb')) }});">
         <div class="wsus__breadcrumb_overlay">
             <div class="container">
@@ -22,13 +22,13 @@
         </div>
     </section>
     <!--===========================
-                                    BREADCRUMB END
-                                ============================-->
+                                                BREADCRUMB END
+                                            ============================-->
 
 
     <!--===========================
-            DASHBOARD COURSE START
-        ============================-->
+                        DASHBOARD COURSE START
+                    ============================-->
     <section class="wsus__dashboard mt_90 xs_mt_70 pb_120 xs_pb_100">
         <div class="container">
             <div class="row">
@@ -90,25 +90,20 @@
                                                                     class="img-fluid w-100">
                                                             </div>
                                                         </td>
-                                                        {{-- <td class="details">
+                                                        <td class="details">
                                                             <p class="rating">
-                                                                @for ($i = 1; $i <= 5; $i++)
-                                                                    @if ($i <= $course->reviews()->avg('rating'))
-                                                                        <i class="fas fa-star"></i>
-                                                                    @else
-                                                                        <i class="far fa-star"></i>
-                                                                    @endif
-                                                                @endfor
-
-                                                                <span>({{ number_format($course->reviews()->avg('rating'), 2) ?? 0 }}
-                                                                    Rating)</span>
+                                                                <i class="fas fa-star"></i>
+                                                                <i class="fas fa-star"></i>
+                                                                <i class="fas fa-star"></i>
+                                                                <i class="fas fa-star"></i>
+                                                                <i class="far fa-star"></i>
+                                                                <span>(4.2 Rating)</span>
                                                             </p>
                                                             <a class="title" href="#">{{ $course->title }}</a>
-
                                                         </td>
                                                         <td class="sale">
-                                                            <p>{{ $course->enrollments()->count() }}</p>
-                                                        </td> --}}
+                                                            <p>156</p>
+                                                        </td>
                                                         <td class="status">
                                                             <p class="active">Active</p>
                                                         </td>
@@ -116,8 +111,7 @@
                                                             <a class="edit"
                                                                 href="{{ route('instructor.course.edit', ['id' => $course->id, 'step' => 1]) }}"><i
                                                                     class="far fa-edit"></i></a>
-                                                            <a class="del" href="#"><i
-                                                                    class="fas fa-trash-alt"></i></a>
+                                                            <a class="del" href="#"><i class="fas fa-trash-alt"></i></a>
                                                         </td>
                                                     </tr>
                                                 @endforeach
@@ -133,6 +127,6 @@
         </div>
     </section>
     <!--===========================
-            DASHBOARD COURSE END
-        ============================-->
+                        DASHBOARD COURSE END
+                    ============================-->
 @endsection

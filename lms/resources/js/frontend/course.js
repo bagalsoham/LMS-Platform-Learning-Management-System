@@ -280,7 +280,7 @@ $('.sort_chapter_btn').on('click', function (e) {
             $(".dynamic-modal-content").html(loader);
         },
         success: function (data) {
-            $(".dynamic-modal-content").html(data);
+            $(".dynamic-modal-content").html(data); 
         },
         error: function (xhr, status, error) {
             notyf.error(error);

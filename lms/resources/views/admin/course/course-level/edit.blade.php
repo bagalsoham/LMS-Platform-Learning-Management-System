@@ -22,13 +22,13 @@
                                 @csrf
                                 @method('put')
                                 <div class="mb-3">
-                                    <label class="form-label">Name</label>
+                                    {{-- Remove duplicate label --}}
+                                    <x-input name="name" label="Name" placeholder="Enter Level" :value="$course_level->name" />
                                     @error('name')
                                         <div class="invalid-feedback d-block">
                                             {{ $message }}
                                         </div>
                                     @enderror
-                                    <x-input name="name" label="Name" placeholder="Enter Level" :value="$course_level->name" />
                                 </div>
                                 <div class="mb-3">
                                     <button class="btn btn-primary " type="submit">Update</button>

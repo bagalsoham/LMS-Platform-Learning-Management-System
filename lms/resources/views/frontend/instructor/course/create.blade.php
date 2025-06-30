@@ -45,12 +45,13 @@
                             <label for="#">Path</label>
                             <div class="input-group">
                                 <span class="input-group-btn">
-                                    <a id="lfm" data-input="demo_video_file" data-preview="holder" class="btn btn-primary">
+                                    <a id="lfm" data-input="thumbnail" data-preview="holder" class="btn btn-primary">
                                         <i class="fa fa-picture-o"></i> Choose
                                     </a>
                                 </span>
-                                <input id="demo_video_file" class="form-control source_input" type="text" name="file">
+                                <input id="thumbnail" class="form-control source_input" type="text" name="file">
                             </div>
+                            <img id="holder" style="margin-top:15px;max-height:100px;">
                         </div>
                         <div class="add_course_basic_info_imput external_source d-none">
                             <label for="#">Path</label>
@@ -83,6 +84,10 @@
     </div>
 @endsection
 
+@push('scripts')
 <script>
-    $('#lfm').filemanager('file');
+    $(function() {
+        $('#lfm').filemanager('file');
+    });
 </script>
+@endpush

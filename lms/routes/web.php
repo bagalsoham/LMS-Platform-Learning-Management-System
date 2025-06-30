@@ -94,8 +94,7 @@ Route::group([
     Route::post('/profile/update-social', [ProfileController::class, 'updateSocial'])->name('profile.update-social');
 
 
-    /* Course routes */
-    /* Course routes */
+/* Course routes */
 Route::get('courses',[CourseController::class,'index'])->name('course.index');
 Route::get('courses/create',[CourseController::class,'create'])->name('course.create');
 Route::post('courses/create',[CourseController::class,'storeBasicInfo'])->name('course.store-basic-info');
@@ -125,7 +124,7 @@ Route::post('course-chapter/{chapter}/sort-lesson', [CourseContentController::cl
 
 Route::get('course-content/{course}/sort-chapter', [CourseContentController::class, 'sortChapter'])->name('course-content.sort-chapter'); // For loading the sorted chapter order
 
-Route::post('course-content/{course}/sort-chapter', [CourseContentController::class, 'updateSortChapter'])->name('course-content.update-sort-chapter'); // For loading the sorted chapter order
+Route::post('course-content/{course}/sort-chapter', [CourseContentController::class, 'updateSortChapter'])->name('course-content.update-sort-chapter'); // For updating the sorted chapter order
 
 //laravel filemanager routes
 Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']], function () {

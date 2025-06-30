@@ -90,3 +90,11 @@
 @endsection
 
 {{-- Course.js file should be included in your main layout or course-app layout --}}
+
+@push('scripts')
+<script>
+    $(function() {
+        $('#lfm').filemanager('file');
+    });
+</script>
+@endpush

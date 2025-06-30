@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Http\Controllers\Admin;
+
 use App\Http\Controllers\Admin\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Admin\Auth\ConfirmablePasswordController;
 use App\Http\Controllers\Admin\Auth\EmailVerificationNotificationController;
@@ -12,6 +14,8 @@ use App\Http\Controllers\Admin\CourseCategoryController;
 use App\Http\Controllers\Admin\CourseLanguageController;
 use App\Http\Controllers\Admin\CourseSubCategoryController;
 use App\Http\Controllers\Admin\ProfileController;
+use App\Http\Controllers\Admin\CourseController;
+use App\Http\Controllers\Admin\CourseContentController; // Missing import added here
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\InstructorRequestController;
 use App\Http\Controllers\Admin\CourseLevelController;
@@ -29,6 +33,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 /* Guest Routes: Accessible only when NOT logged in as admin */
+
 Route::prefix('admin')->name('admin.')->middleware(['guest:admin'])->group(function () {
     // Login
     Route::get('login', [AuthenticatedSessionController::class, 'create'])->name('login');
@@ -47,7 +52,7 @@ Route::prefix('admin')->name('admin.')->middleware(['guest:admin'])->group(funct
 /* Authenticated Routes: Accessible only when logged in as admin */
 Route::prefix('admin')->name('admin.')->middleware(['auth:admin'])->group(function () {
     // Dashboard
-    Route::get('dashboard',[DashboardController::class,'index'])->name('dashboard');
+    Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     // Profile Routes
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -72,7 +77,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth:admin'])->group(functi
     Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
     /*Instructor request route  */
 
-    Route::get('instructor-doc-download/{user}',[InstructorRequestController::class,'download'])->name('instructor-doc-download');
+    Route::get('instructor-doc-download/{user}', [InstructorRequestController::class, 'download'])->name('instructor-doc-download');
 
     Route::resource('instructor-request', InstructorRequestController::class);
 
@@ -97,4 +102,47 @@ Route::prefix('admin')->name('admin.')->middleware(['auth:admin'])->group(functi
     Route::put('/course-category/{course_category}/sub-category/{course_sub_category}', [CourseSubCategoryController::class, 'update'])->name('course-sub-category.update');
 
     Route::delete('/course-category/{course_category}/sub-category/{course_sub_category}', [CourseSubCategoryController::class, 'destroy'])->name('course-sub-category.destroy');
+
+
+    //admin course routes
+    Route::get('courses', [CourseController::class, 'index'])->name('course.index');
+    Route::put('courses/{course}/update-approval', [CourseController::class, 'updateApproval'])->name('course.update-approval');
+    Route::get('courses/create', [CourseController::class, 'create'])->name('course.create');
+    Route::post('courses/create', [CourseController::class, 'storeBasicInfo'])->name('course.store-basic-info');
+
+
+    Route::get('courses/{id}/edit', [CourseController::class, 'edit'])->name('course.edit');
+    Route::post('courses/{id}/update', [CourseController::class, 'update'])->name('course.update');
+
+    Route::get('course-content/{course}/create-chapter', [CourseContentController::class, 'createChapterModal'])->name('course-content.create-chapter');
+
+    Route::get('course-content/{chapterId}/edit-chapter', [CourseContentController::class, 'editChapterModal'])->name('course-content.edit-chapter');
+
+    Route::put('course-content/{chapterId}/update-chapter', [CourseContentController::class, 'updateChapterModal'])->name('course-content.update-chapter');
+
+    Route::post('course-content/{course}/create-chapter', [CourseContentController::class, 'storeChapter'])->name('course-content.store-chapter');
+
+    Route::delete('course-content/{chapter}/chapter', [CourseContentController::class, 'destroyChapter'])->name('course-content.destroy-chapter');
+
+    Route::get('course-content/create-lesson', [CourseContentController::class, 'createLesson'])->name('course-content.create-lesson');
+    Route::post('course-content/create-lesson', [CourseContentController::class, 'storeLesson'])
+        ->name('course-content.store-lesson');
+
+    /* Lesson modal routes */
+    Route::get('course-content/edit-lesson', [CourseContentController::class, 'editLesson'])->name('course-content.edit-lesson'); // For loading the edit modal via AJAX
+    Route::post('course-content/{id}/update-lesson', [CourseContentController::class, 'updateLesson'])->name('course-content.update-lesson'); // For submitting the edit form
+
+    Route::delete('course-content/{id}/lesson', [CourseContentController::class, 'destroyLesson'])->name('course-content.destroy-lesson');
+
+    Route::post('course-chapter/{chapter}/sort-lesson', [CourseContentController::class, 'sortLesson'])->name('course-content.sort-lesson'); // For submitting the sorted lesson order
+
+    Route::get('course-content/{course}/sort-chapter', [CourseContentController::class, 'sortChapter'])->name('course-content.sort-chapter'); // For loading the sorted chapter order
+
+    Route::post('course-content/{course}/sort-chapter', [CourseContentController::class, 'updateSortChapter'])->name('course-content.update-sort-chapter'); // Fixed the method name
+
+
+    // Laravel File Manager routes for admin and web
+    Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth:admin']], function () {
+        \UniSharp\LaravelFilemanager\Lfm::routes();
+    });
 });

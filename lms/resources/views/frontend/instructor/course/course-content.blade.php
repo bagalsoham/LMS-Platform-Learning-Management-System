@@ -79,7 +79,7 @@
                         </div>
                     </div>
                 @empty
-                    <div class="alert alert-info">
+                    <div class="alert alert-info mt-4">
                         No chapters found. Click "Add New Chapter" to create your first chapter.
                     </div>
                 @endforelse
