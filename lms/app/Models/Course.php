@@ -17,4 +17,8 @@ class Course extends Model
     {
         return $this->hasMany(CourseCategory::class, 'parent_id');
     }
+
+    function category():HasOne{
+        return $this->hasOne(CourseCategory::class,'id','category_id');
+    }
 }

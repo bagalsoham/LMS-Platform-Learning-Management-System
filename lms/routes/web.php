@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Frontend\CourseContentController;
 use App\Http\Controllers\Frontend\CourseController;
+use App\Http\Controllers\Frontend\CoursePageController;
 use App\Http\Controllers\Frontend\StudentDashboardController;
 use App\Http\Controllers\Frontend\InstructorDashboardController;
 use Illuminate\Support\Facades\Route;
@@ -19,6 +20,8 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 Route::get('/',[FrontendController::class,'index'])->name('home');
+Route::get('/courses',[CoursePageController::class,'index'])->name('courses.index');
+Route::get('/course/{slug}',[CoursePageController::class,'show'])->name('courses.show');
 /*
 |--------------------------------------------------------------------------
 | Dashboard Redirect Route
