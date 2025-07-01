@@ -1,10 +1,17 @@
 @extends('frontend.layouts.master')
-
+@push('meta')
+    <meta property="og:title" content="{{ $course->title }}">
+    <meta property="og:description" content="{{ $course->seo_description }}">
+    <meta property="og:url" content="{{ url()->current() }}">
+    <meta property="og:image" content="{{ asset($course->thumbnail) }}">
+    <meta property="og:type" content="Course">
+@endpush
 @section('content')
- <!--===========================
-        BREADCRUMB START
-    ============================-->
-    <section class="wsus__breadcrumb course_details_breadcrumb" style="background: url({{ asset('frontend/assets/images/breadcrumb_bg.jpg') }});">
+    <!--===========================
+            BREADCRUMB START
+        ============================-->
+    <section class="wsus__breadcrumb course_details_breadcrumb"
+        style="background: url({{ asset('frontend/assets/images/breadcrumb_bg.jpg') }});">
         <div class="wsus__breadcrumb_overlay">
             <div class="container">
                 <div class="row">
@@ -21,16 +28,19 @@
                             <h1>{{ $course->title }}</h1>
                             <ul class="list">
                                 <li>
-                                    <span><img src="{{ asset($course->instructor->image) }}" alt="user" class="img-fluid"></span>
-                                    By {{ $course->instructor ->name}}
+                                    <span><img src="{{ asset($course->instructor->image) }}" alt="user"
+                                            class="img-fluid"></span>
+                                    By {{ $course->instructor->name }}
                                 </li>
                                 <li>
-                                    <span><img src="{{ asset('frontend/assets/images/globe_icon_blue.png') }}" alt="Globe" class="img-fluid"></span>
+                                    <span><img src="{{ asset('frontend/assets/images/globe_icon_blue.png') }}"
+                                            alt="Globe" class="img-fluid"></span>
                                     {{ $course->category->name }}
                                 </li>
                                 <li>
-                                    <span><img src="{{ asset('frontend/assets/images/calendar_blue.png') }}" alt="Calendar" class="img-fluid"></span>
-                                    Last updated {{ date('d/M/Y',strtotime($course->updated_at))}}
+                                    <span><img src="{{ asset('frontend/assets/images/calendar_blue.png') }}" alt="Calendar"
+                                            class="img-fluid"></span>
+                                    Last updated {{ date('d/M/Y', strtotime($course->updated_at)) }}
                                 </li>
                             </ul>
                         </div>
@@ -40,13 +50,13 @@
         </div>
     </section>
     <!--===========================
-        BREADCRUMB END
-    ============================-->
+            BREADCRUMB END
+        ============================-->
 
 
     <!--===========================
-        COURSES DETAILS START
-    ============================-->
+            COURSES DETAILS START
+        ============================-->
     <section class="wsus__courses_details pb_120 xs_pb_100">
         <div class="container">
             <div class="row">
@@ -86,7 +96,7 @@
                                 aria-labelledby="pills-home-tab" tabindex="0">
                                 <div class="wsus__courses_overview box_area">
                                     <h3>Course Description</h3>
-                                    <p>{{$course->description }}</p>
+                                    <p>{{ $course->description }}</p>
                                 </div>
                             </div>
                             <div class="tab-pane fade" id="pills-profile" role="tabpanel"
@@ -235,7 +245,8 @@
                                                             alt="Badge" class="img-fluid"></li>
                                                     <li data-bs-toggle="tooltip" data-bs-placement="top"
                                                         data-bs-title="2 Years of Membership"><img
-                                                            src="images/badge_4.png" alt="Badge" class="img-fluid"></li>
+                                                            src="images/badge_4.png" alt="Badge" class="img-fluid">
+                                                    </li>
                                                     <li data-bs-toggle="tooltip" data-bs-placement="top"
                                                         data-bs-title="Collector Lavel 1">
                                                         <img src="images/badge_5.png" alt="Badge" class="img-fluid">
@@ -506,7 +517,7 @@
                 <div class="col-lg-4 col-md-8 wow fadeInRight">
                     <div class="wsus__courses_sidebar">
                         <div class="wsus__courses_sidebar_video">
-                            <img src="{{ asset($course->thumbnail)}}" alt="Video" class="img-fluid">
+                            <img src="{{ asset($course->thumbnail) }}" alt="Video" class="img-fluid">
                             @if ($course->demo_video_source != null)
                                 <a class="play_btn venobox vbox-item" data-autoplay="true" data-vbtype="video"
                                     href="{{ $course->demo_video_source }}">
@@ -515,37 +526,46 @@
                                 </a>
                             @endif
                         </div>
-                        <h3 class="wsus__courses_sidebar_price"><del>$36.00</del>$54.00</h3>
+                        <h3 class="wsus__courses_sidebar_price">
+                            @if ($course->discount > 0)
+                               
+                                <del>{{ config('settings.currency_icon') }}{{ $course->price }}</del>₹{{ $course->discount }}
+                            @elseif($course->price <= 0)
+                                FREE
+                            @else
+                                 {{ config('settings.currency_icon') }}{{ $course->price }}
+                            @endif
+                        </h3>
                         <div class="wsus__courses_sidebar_list_info">
                             <ul>
                                 <li>
                                     <p>
-                                        <span><img src="images/clock_icon_black.png" alt="clock"
-                                                class="img-fluid"></span>
+                                        <span><img src="{{ asset('frontend/assets/images/clock_icon_black.png') }}"
+                                                alt="clock" class="img-fluid"></span>
                                         Course Duration
                                     </p>
-                                    34 min 54 sec
+                                    {{ convertMinutesToHours($course->duration) }}
                                 </li>
                                 <li>
                                     <p>
-                                        <span><img src="images/network_icon_black.png" alt="network"
-                                                class="img-fluid"></span>
+                                        <span><img src="{{ asset('frontend/assets/images/network_icon_black.png') }}"
+                                                alt="network" class="img-fluid"></span>
                                         Skill Level
                                     </p>
-                                    Medium
+                                    {{ $course->level->name }}
                                 </li>
                                 <li>
                                     <p>
-                                        <span><img src="images/user_icon_black_2.png" alt="User"
-                                                class="img-fluid"></span>
+                                        <span><img src="{{ asset('frontend/assets/images/user_icon_black_2.png') }}"
+                                                alt="User" class="img-fluid"></span>
                                         Student Enrolled
                                     </p>
                                     47
                                 </li>
                                 <li>
                                     <p>
-                                        <span><img src="images/language_icon_black.png" alt="Language"
-                                                class="img-fluid"></span>
+                                        <span><img src="{{ asset('frontend/assets/images/language_icon_black.png') }}"
+                                                alt="Language" class="img-fluid"></span>
                                         Language
                                     </p>
                                     English
@@ -569,24 +589,23 @@
                             <h3>This Course Includes</h3>
                             <ul>
                                 <li>
-                                    <span><img src="images/video_icon_black.png" alt="video" class="img-fluid"></span>
-                                    54 min 24 sec Video Lectures
+                                    <span><img src="{{ asset('frontend/assets/images/video_icon_black.png') }}"
+                                            alt="video" class="img-fluid"></span>
+                                    {{ convertMinutesToHours($course->duration) }} Video Lectures
                                 </li>
+                               @if ($course->certificate)
+                                    <li>
+                                        <span><img src="{{ asset('frontend/assets/images/certificate_icon_black.png') }}"
+                                                alt="Certificate" class="img-fluid"></span>
+                                        Certificate of Completion
+                                    </li>
+                                @endif
                                 <li>
-                                    <span><img src="images/file_download_icon_black.png" alt="download"
-                                            class="img-fluid"></span>
-                                    3 Downloadable Resources File
-                                </li>
-                                <li>
-                                    <span><img src="images/certificate_icon_black.png" alt="Certificate"
-                                            class="img-fluid"></span>
-                                    Certificate of Completion
-                                </li>
-                                <li>
-                                    <span><img src="images/life_time_icon.png" alt="Certificate"
-                                            class="img-fluid"></span>
+                                    <span><img src="{{ asset('frontend/assets/images/life_time_icon.png') }}"
+                                            alt="Certificate" class="img-fluid"></span>
                                     Course Lifetime Access
                                 </li>
+
                             </ul>
 
                         </div>
@@ -622,7 +641,6 @@
         </div>
     </section>
     <!--===========================
-        COURSES DETAILS END
-    ============================-->
+            COURSES DETAILS END
+        ============================-->
 @endsection
-
