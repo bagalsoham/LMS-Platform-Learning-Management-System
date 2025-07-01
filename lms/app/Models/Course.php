@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use League\CommonMark\Node\Query\OrExpr;
 
 class Course extends Model
 {
@@ -27,5 +28,10 @@ class Course extends Model
     }
     function language():HasOne{
         return $this->hasOne(CourseLanguage::class,'id','course_language_id');
+    }
+
+    function chapters():HasMany{
+
+        return $this->hasMany(CourseChapter::class,'course_id','id')->orderBy('order');
     }
 }
