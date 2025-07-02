@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Frontend\CartController;
+use App\Http\Controllers\Frontend\CheckoutController;
 use App\Http\Controllers\Frontend\CourseContentController;
 use App\Http\Controllers\Frontend\CourseController;
 use App\Http\Controllers\Frontend\CoursePageController;
@@ -22,6 +24,14 @@ use Illuminate\Support\Facades\Auth;
 Route::get('/',[FrontendController::class,'index'])->name('home');
 Route::get('/courses',[CoursePageController::class,'index'])->name('courses.index');
 Route::get('/course/{slug}',[CoursePageController::class,'show'])->name('courses.show');
+/* Cart route */
+Route::get('/cart',[CartController::class,'index'])->name('cart.index');
+Route::post('add-to-cart/{course}', [CartController::class, 'addToCart'])->name(name: 'add-to-cart')->middleware('auth');
+Route::get('remove-from-cart/{id}', [CartController::class, 'removeFromCart'])->name('remove-from-cart')->middleware('auth');
+
+/** Payment Routes */
+ Route::get('checkout', action: CheckoutController::class)->name('checkout.index');
+
 /*
 |--------------------------------------------------------------------------
 | Dashboard Redirect Route
@@ -128,6 +138,10 @@ Route::post('course-chapter/{chapter}/sort-lesson', [CourseContentController::cl
 Route::get('course-content/{course}/sort-chapter', [CourseContentController::class, 'sortChapter'])->name('course-content.sort-chapter'); // For loading the sorted chapter order
 
 Route::post('course-content/{course}/sort-chapter', [CourseContentController::class, 'updateSortChapter'])->name('course-content.update-sort-chapter'); // For updating the sorted chapter order
+
+
+
+
 
 //laravel filemanager routes
 Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']], function () {

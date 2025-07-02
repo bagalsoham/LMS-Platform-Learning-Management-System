@@ -2,6 +2,7 @@ const csrf_token = $('meta[name="csrf-token"]').attr("content");
 /* console.log(csrf_token); // Should now log the token
  */
 
+
 var notyf = new Notyf({
     duration: 5000,
     dismissible: true,

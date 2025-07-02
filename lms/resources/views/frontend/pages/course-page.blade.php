@@ -2,8 +2,8 @@
 
 @section('content')
     <!--===========================
-                BREADCRUMB START
-            ============================-->
+                    BREADCRUMB START
+                ============================-->
     <section class="wsus__breadcrumb" style="background: url({{ asset('frontend/assets/images/breadcrumb_bg.jpg') }});">
         <div class="wsus__breadcrumb_overlay">
             <div class="container">
@@ -22,13 +22,13 @@
         </div>
     </section>
     <!--===========================
-                BREADCRUMB END
-            ============================-->
+                    BREADCRUMB END
+                ============================-->
 
 
     <!--===========================
-                COURSES PAGE START
-            ============================-->
+                    COURSES PAGE START
+                ============================-->
     <section class="wsus__courses mt_120 xs_mt_100 pb_120 xs_pb_100">
         <div class="container">
             <div class="row">
@@ -243,22 +243,19 @@
                             <div class="wsus__sidebar_course_lavel">
                                 <h3>Difficulty Level</h3>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value=""
-                                        id="flexCheckDefault">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
                                     <label class="form-check-label" for="flexCheckDefault">
                                         Higher
                                     </label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value=""
-                                        id="flexCheckDefault2">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault2">
                                     <label class="form-check-label" for="flexCheckDefault2">
                                         Medium
                                     </label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value=""
-                                        id="flexCheckDefault3">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault3">
                                     <label class="form-check-label" for="flexCheckDefault3">
                                         Lowest
                                     </label>
@@ -268,36 +265,31 @@
                             <div class="wsus__sidebar_course_lavel rating">
                                 <h3>Rating</h3>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value=""
-                                        id="flexCheckDefaultr1">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefaultr1">
                                     <label class="form-check-label" for="flexCheckDefaultr1">
                                         <i class="fas fa-star"></i> 5 star
                                     </label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value=""
-                                        id="flexCheckDefaultr2">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefaultr2">
                                     <label class="form-check-label" for="flexCheckDefaultr2">
                                         <i class="fas fa-star"></i> 4 star or above
                                     </label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value=""
-                                        id="flexCheckDefaultr3">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefaultr3">
                                     <label class="form-check-label" for="flexCheckDefaultr3">
                                         <i class="fas fa-star"></i> 3 star or above
                                     </label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value=""
-                                        id="flexCheckDefaultr4">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefaultr4">
                                     <label class="form-check-label" for="flexCheckDefaultr4">
                                         <i class="fas fa-star"></i> 2 star or above
                                     </label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value=""
-                                        id="flexCheckDefaultr5">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefaultr5">
                                     <label class="form-check-label" for="flexCheckDefaultr5">
                                         <i class="fas fa-star"></i> 1 star or above
                                     </label>
@@ -307,29 +299,25 @@
                             <div class="wsus__sidebar_course_lavel duration">
                                 <h3>Duration</h3>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value=""
-                                        id="flexCheckDefaultd1">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefaultd1">
                                     <label class="form-check-label" for="flexCheckDefaultd1">
                                         Less Than 24 Hours
                                     </label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value=""
-                                        id="flexCheckDefaultd2">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefaultd2">
                                     <label class="form-check-label" for="flexCheckDefaultd2">
                                         24 to 36 Hours
                                     </label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value=""
-                                        id="flexCheckDefaultd3">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefaultd3">
                                     <label class="form-check-label" for="flexCheckDefaultd3">
                                         36 to 72 Hours
                                     </label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value=""
-                                        id="flexCheckDefaultd4">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefaultd4">
                                     <label class="form-check-label" for="flexCheckDefaultd4">
                                         Above 70 Hours
                                     </label>
@@ -339,22 +327,19 @@
                             <div class="wsus__sidebar_course_lavel duration">
                                 <h3>Language</h3>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value=""
-                                        id="flexCheckDefaulte1">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefaulte1">
                                     <label class="form-check-label" for="flexCheckDefaulte1">
                                         Bangla
                                     </label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value=""
-                                        id="flexCheckDefaulte2">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefaulte2">
                                     <label class="form-check-label" for="flexCheckDefaulte2">
                                         English
                                     </label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value=""
-                                        id="flexCheckDefaulte3">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefaulte3">
                                     <label class="form-check-label" for="flexCheckDefaulte3">
                                         Hindi
                                     </label>
@@ -423,33 +408,35 @@
                                             </p>
                                         </div>
 
-                                        <a class="title" href="{{ route('courses.show',$course->slug) }}">{{ $course->title }}</a>
+                                        <a class="title"
+                                            href="{{ route('courses.show', $course->slug) }}">{{ $course->title }}</a>
                                         <ul>
                                             <li>24 Lessons</li>
                                             <li>38 Student</li>
                                         </ul>
                                         <a class="author" href="#">
                                             <div class="img">
-                                                <img src="{{ asset($course->instructor->image) }}" alt="Author" class="img-fluid">
+                                                <img src="{{ asset($course->instructor->image) }}" alt="Author"
+                                                    class="img-fluid">
                                             </div>
                                             <h4>{{ $course->instructor->name }}</h4>
                                         </a>
                                     </div>
                                     <div class="wsus__single_courses_3_footer">
-                                        <a class="common_btn" href="#">Enroll <i
-                                                class="far fa-arrow-right"></i></a>
+                                        <a class="common_btn add_to_cart" href="javascript:;"
+                                            data-course-id="{{ $course->id }}">Add to Cart<i class="far fa-arrow-right"></i></a>
                                         <p>
-                                            @if ($course->discount > 0)
-                                                <del>₹{{ $course->discount }}</del>
+                                            @if($course->discount > 0)
+                                                <del>${{ $course->price }}</del> ${{ $course->discount }}
                                             @else
-                                                ₹ {{ $course->price }}
+                                                ${{ $course->price }}
                                             @endif
                                         </p>
                                     </div>
                                 </div>
                             </div>
                         @empty
-                        <p>No Data Found</p>
+                            <p>No Data Found</p>
                         @endforelse
                     </div>
                     <div class="wsus__pagination mt_50 wow fadeInUp">
@@ -476,6 +463,6 @@
         </div>
     </section>
     <!--===========================
-                COURSES PAGE END
-            ============================-->
+                    COURSES PAGE END
+                ============================-->
 @endsection

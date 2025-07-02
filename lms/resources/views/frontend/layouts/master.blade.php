@@ -6,8 +6,8 @@
     <meta name="viewport"
         content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
     <meta name="base_url" content="{{ url('/') }}">
-    <meta name="csrf_token" content="{{ csrf_token() }}">
-    @stack('meta')
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+@stack('meta')
     <title>EduCore - Online Courses & Education HTML Template</title>
     <link rel="icon" type="image/png" href="{{ asset(config('settings.site_favicon')) }}">
     <link rel="stylesheet" href="{{ asset('frontend/assets/css/all.min.css') }}">
@@ -35,7 +35,7 @@
     <link rel=" stylesheet" href="{{ asset('frontend/assets/css/spacing.css') }}">
     <link rel="stylesheet" href="{{ asset('frontend/assets/css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('frontend/assets/css/responsive.css') }}">
-    @vite(['resources/css/frontend.css', 'resources/js/frontend/frontend.js'])
+    @vite(['resources/css/frontend.css'])
     <!--dynamic js-->
     @stack('header_scripts')
 </head>
@@ -120,13 +120,18 @@
     <script src="/vendor/laravel-filemanager/js/stand-alone-button.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+    <script src="https://cdn.jsdelivr.net/gh/shakilahmed0369/ez-share/dist/ez-share.min.js"></script>
+
+    @stack('scripts')
+
     <script src="{{ asset('admin/assets/dist/libs/tinymce/tinymce.min.js') }}" defer></script>
 
     <!--main/custom js-->
     <script src="{{ asset('frontend/assets/js/main.js') }}"></script>
 
     <!--dynamic js-->
-    @stack('scripts')
+
+    @vite(['resources/js/frontend/frontend.js','resources/js/frontend/cart.js']);
 
     <script>
         var notyf = new Notyf({

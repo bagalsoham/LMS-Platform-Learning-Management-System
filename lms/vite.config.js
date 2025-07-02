@@ -14,6 +14,7 @@ export default defineConfig({
                 'resources/js/admin/course.js',
                 'resources/js/frontend/course.js',
                 'resources/js/frontend/frontend.js',
+                'resources/js/frontend/cart.js',
             ],
             refresh: true,
         }),
