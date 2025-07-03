@@ -141,6 +141,13 @@ Route::prefix('admin')->name('admin.')->middleware(['auth:admin'])->group(functi
     Route::post('course-content/{course}/sort-chapter', [CourseContentController::class, 'updateSortChapter'])->name('course-content.update-sort-chapter'); // Fixed the method name
 
 
+
+    /* Payment Setting routes */
+    Route::get('payment-setting', [PaymentSettingController::class, 'index'])->name('payment-setting.index');
+        Route::post('paypal-setting', [PaymentSettingController::class, 'paypalSetting'])->name('paypal-setting.update');
+
+
+
     // Laravel File Manager routes for admin and web
     Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth:admin']], function () {
         \UniSharp\LaravelFilemanager\Lfm::routes();

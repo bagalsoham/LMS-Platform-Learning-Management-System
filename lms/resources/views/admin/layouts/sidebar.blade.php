@@ -53,6 +53,17 @@
                         <span class="nav-link-title">Course Levels</span>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link {{ sidebarItemActive(['admin.payment-setting.*']) }}" href="{{ route('admin.payment-setting.index') }}">
+                        <span
+                            class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/home -->
+                           <i class="ti ti-adjustments"></i>
+                        </span>
+                        <span class="nav-link-title ">
+                            Payment Settings
+                        </span>
+                    </a>
+                </li>
             </ul>
         </div>
     </div>

@@ -20,7 +20,7 @@ class PaymentController extends Controller
     }
     function payWithPaypal()
     {
-        $provider = new PayPalClient; // created an instance for making payment request
+        $provider = new PayPalClient($this->paypalConfig()); // created an instance for making payment request
         $provider->setApiCredentials(config('paypal'));
         $paypalToken = $provider->getAccessToken();
         $provider->setAccessToken($paypalToken);
@@ -88,6 +88,28 @@ class PaymentController extends Controller
         }
 
         return redirect()->route('order.failed');
+    }
+    function paypalConfig(): array
+    {
+        return [
+            'mode'    => config('gateway_settings.paypal_mode'),
+            'sandbox' => [
+                'client_id'         => config('gateway_settings.paypal_client_id'),
+                'client_secret'     => config('gateway_settings.paypal_client_secret'),
+                'app_id'            => 'APP-80W284485P519543T',
+            ],
+            'live' => [
+                'client_id'         => config('gateway_settings.paypal_client_id'),
+                'client_secret'     => config('gateway_settings.paypal_client_secret'),
+                'app_id'            => config('gateway_settings.paypal_app_id'),
+            ],
+
+            'payment_action' => "Sale",
+            'currency'       => config('gateway_settings.paypal_currency'),
+            'notify_url'     => '',
+            'locale'         => 'en_US',
+            'validate_ssl'   => true,
+        ];
     }
 
 }
