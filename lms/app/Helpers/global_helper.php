@@ -34,23 +34,35 @@ if(!function_exists('cartCount')) {
     }
 }
 /** calculate cart total */
-if(!function_exists('cartTotal')) {
-    function cartTotal() {
+if (!function_exists('cartTotal')) {
+    function cartTotal()
+    {
+        $user = Auth::user();
+
+        // Ensure user is authenticated
+        if (!$user) {
+            return 0;
+        }
+
         $total = 0;
 
-        $cart = Cart::where('user_id', Auth::id())->get();
+        $cartItems = Cart::with('course')
+            ->where('user_id', $user->id)
+            ->get();
 
-        foreach($cart as $item) {
-            if($item->course->discount > 0) {
-                $total += $item->course->discount;
-            }else {
-                $total += $item->course->price;
+        foreach ($cartItems as $item) {
+            if ($item->course) {
+                $price = $item->course->discount > 0
+                    ? $item->course->discount
+                    : $item->course->price;
+                $total += $price;
             }
         }
 
-        return $total;
+        return number_format($total, 2, '.', ''); // Ensure consistent formatting
     }
 }
+
 
 /** calculate cart total */
 if(!function_exists('calculateCommission')) {

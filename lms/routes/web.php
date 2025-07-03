@@ -9,6 +9,7 @@ use App\Http\Controllers\Frontend\StudentDashboardController;
 use App\Http\Controllers\Frontend\InstructorDashboardController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Frontend\FrontendController;
+use App\Http\Controllers\Frontend\PaymentController;
 use App\Http\Controllers\Frontend\ProfileController;
 use Illuminate\Support\Facades\Auth;
 
@@ -31,6 +32,19 @@ Route::get('remove-from-cart/{id}', [CartController::class, 'removeFromCart'])->
 
 /** Payment Routes */
  Route::get('checkout', action: CheckoutController::class)->name('checkout.index');
+
+
+ /* Paypal payment routes 3 routes where success and cancel will be there  */
+
+
+ Route::get('papal/payment',[PaymentController::class,'payWithPaypal'])->name('paypal.payment');
+ Route::get('papal/success',[PaymentController::class,'paypalSuccess'])->name('paypal.success');
+ Route::get('papal/cancel',action: [PaymentController::class,'paypalCancel'])->name('paypal.cancel');
+
+Route::get('order-success', [PaymentController::class, 'orderSuccess'])->name('order.success');
+Route::get('order-failed', [PaymentController::class, 'orderFailed'])->name('order.failed');
+
+
 
 /*
 |--------------------------------------------------------------------------

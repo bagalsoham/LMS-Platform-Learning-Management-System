@@ -26,7 +26,7 @@
                 <div class="payment_area">
                     <div class="row">
                         <div class="col-xl-3 col-6 col-md-4 wow fadeInUp" style="visibility: visible; animation-name: fadeInUp;">
-                            <a href="{{-- {{ route('paypal.payment') }} --}}" class="payment_mathod">
+                            <a href="{{ route('paypal.payment') }}" class="payment_mathod">
                                 <img style="max-width: 100% !important;" src="{{ asset('default-files/paypal-logo.png') }}" alt="payment" class="img-fluid w-100">
                             </a>
                         </div>
