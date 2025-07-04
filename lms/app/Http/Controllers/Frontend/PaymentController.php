@@ -7,6 +7,8 @@ use App\Service\OrderService;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Srmklive\PayPal\Services\PayPal as PayPalClient;
+use Stripe\Checkout\Session as StripeSession;
+use Stripe\Stripe;
 
 class PaymentController extends Controller
 {
@@ -110,6 +112,67 @@ class PaymentController extends Controller
             'locale'         => 'en_US',
             'validate_ssl'   => true,
         ];
+    }
+
+    function payWithStripe()
+    {
+        Stripe::setApiKey(config('gateway_settings.stripe_secret'));
+
+        $payableAmount = (cartTotal() * 100) * config('gateway_settings.stripe_rate');//convert to cents 
+        $quantityCount = cartCount();
+
+        $response = StripeSession::create([
+            'line_items' => [
+                [
+                    'price_data' => [
+                        'currency' => config('gateway_settings.stripe_currency'),
+                        'product_data' => [
+                            'name' => 'Course'
+                        ],
+                        'unit_amount' => $payableAmount
+                    ],
+                    'quantity' => $quantityCount
+                ]
+            ],
+            'mode' => 'payment',
+            'success_url' => route('stripe.success') . '?session_id={CHECKOUT_SESSION_ID}',
+            'cancel_url' => route('stripe.cancel')
+        ]);
+
+        return redirect()->away($response->url);
+    }
+
+    function stripeSuccess(Request $request) {
+        Stripe::setApiKey(config('gateway_settings.stripe_secret'));
+
+        $response = StripeSession::retrieve($request->session_id);
+        if($response->payment_status === 'paid') {
+            $transactionId = $response->payment_intent;
+            $mainAmount = cartTotal();
+            $paidAmount = $response->amount_total / 100;
+            $currency = $response->currency;
+
+            try {
+                OrderService::storeOrder(
+                    $transactionId,
+                    Auth::user()->id,
+                    'approved',
+                    $mainAmount,
+                    $paidAmount,
+                    $currency,
+                    'stripe',
+                );
+
+                return redirect()->route('order.success');
+            } catch (\Throwable $th) {
+                throw $th;
+            }
+        }
+        return redirect()->route('order.failed');
+    }
+
+    function stripeCancel(Request $request) {
+        return redirect()->route('order.failed');
     }
 
 }

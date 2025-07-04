@@ -31,7 +31,7 @@
                             </a>
                         </div>
                         <div class="col-xl-3 col-6 col-md-4 wow fadeInUp" style="visibility: visible; animation-name: fadeInUp;">
-                            <a href="{{-- {{ route('stripe.payment') }} --}}" class="payment_mathod">
+                            <a href="{{ route('stripe.payment') }}" class="payment_mathod">
                                 <img src="{{ asset('default-files/stripe-logo.png') }}" alt="payment" class="img-fluid w-100">
                             </a>
                         </div>

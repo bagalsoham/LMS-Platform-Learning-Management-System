@@ -34,7 +34,7 @@ use Illuminate\Support\Facades\Route;
 
 /* Guest Routes: Accessible only when NOT logged in as admin */
 
-Route::prefix('admin')->name('admin.')->middleware(['guest:admin'])->group(function () {
+Route::prefix('admin')->name('admin.')->middleware(['auth:admin'])->group(function () {
     // Login
     Route::get('login', [AuthenticatedSessionController::class, 'create'])->name('login');
     Route::post('login', [AuthenticatedSessionController::class, 'store']);
@@ -144,9 +144,10 @@ Route::prefix('admin')->name('admin.')->middleware(['auth:admin'])->group(functi
 
     /* Payment Setting routes */
     Route::get('payment-setting', [PaymentSettingController::class, 'index'])->name('payment-setting.index');
-        Route::post('paypal-setting', [PaymentSettingController::class, 'paypalSetting'])->name('paypal-setting.update');
 
-
+    Route::post('paypal-setting', [PaymentSettingController::class, 'paypalSetting'])->name('paypal-setting.update');
+    Route::post('stripe-setting', [PaymentSettingController::class, 'stripeSetting'])->name('stripe-setting.update');
+        Route::post('razorpay-setting', [PaymentSettingController::class, 'razorpaySetting'])->name('razorpay-setting.update');
 
     // Laravel File Manager routes for admin and web
     Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth:admin']], function () {
