@@ -9,6 +9,8 @@ use Illuminate\Http\Request;
 use Srmklive\PayPal\Services\PayPal as PayPalClient;
 use Stripe\Checkout\Session as StripeSession;
 use Stripe\Stripe;
+use Razorpay\Api\Api as RazorpayApi;
+
 
 class PaymentController extends Controller
 {
@@ -118,7 +120,7 @@ class PaymentController extends Controller
     {
         Stripe::setApiKey(config('gateway_settings.stripe_secret'));
 
-        $payableAmount = (cartTotal() * 100) * config('gateway_settings.stripe_rate');//convert to cents 
+        $payableAmount = (cartTotal() * 100) * config('gateway_settings.stripe_rate');//convert to cents
         $quantityCount = cartCount();
 
         $response = StripeSession::create([
@@ -173,6 +175,43 @@ class PaymentController extends Controller
 
     function stripeCancel(Request $request) {
         return redirect()->route('order.failed');
+    }
+    function razorpayRedirect() {
+        return view('frontend.pages.razorpay-redirect');
+    }
+    function payWithRazorpay(Request $request) {
+        $api = new RazorpayApi(
+            config('gateway_settings.razorpay_key'),
+            config('gateway_settings.razorpay_secret')
+        );
+
+        $payableAmount = (cartTotal() * 100) * config('gateway_settings.razorpay_rate');
+
+       try {
+        $response = $api->payment->fetch($request->razorpay_payment_id)->capture(['amount' => $payableAmount]);
+
+        $transactionId = $response->id;
+        $mainAmount = cartTotal();
+        $paidAmount = $response->amount / 100;
+        $currency = $response->currency;
+
+        if($response['status'] === 'captured') {
+             OrderService::storeOrder(
+                    $transactionId,
+                    Auth::user()->id,
+                    'approved',
+                    $mainAmount,
+                    $paidAmount,
+                    $currency,
+                    'razorpay',
+                );
+                return redirect()->route('order.success');
+        }
+        return redirect()->route('order.failed');
+
+       } catch (\Throwable $th) {
+        throw $th;
+       }
     }
 
 }

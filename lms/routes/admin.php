@@ -34,7 +34,7 @@ use Illuminate\Support\Facades\Route;
 
 /* Guest Routes: Accessible only when NOT logged in as admin */
 
-Route::prefix('admin')->name('admin.')->middleware(['auth:admin'])->group(function () {
+Route::prefix('admin')->name('admin.')->middleware(['guest:admin'])->group(function () {
     // Login
     Route::get('login', [AuthenticatedSessionController::class, 'create'])->name('login');
     Route::post('login', [AuthenticatedSessionController::class, 'store']);
