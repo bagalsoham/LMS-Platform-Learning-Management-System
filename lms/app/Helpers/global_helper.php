@@ -1,16 +1,18 @@
 <?php
 
 
+
+/** convert minutes to hours */
+
 use App\Models\Cart;
-use Illuminate\Support\Facades\Auth;
 
-
-if (!function_exists('convertMinutesToHours')) {
-    function convertMinutesToHours(int $minutes): string {
+if(!function_exists('convertMinutesToHours')) {
+    function convertMinutesToHours(int $minutes) : string {
         $hours = floor($minutes / 60);
         $minutes = $minutes % 60;
-        return sprintf('%dh %02dm', $hours, $minutes); // ✅ Corrected: %02dm
+        return sprintf('%dh %02dm', $hours, $minutes); // Returns format : 1h 30m
     }
+
 }
 
 if(!function_exists('user')) {
@@ -26,43 +28,32 @@ if(!function_exists('adminUser')) {
     }
 }
 
-
-/* Cart count */
+/** calculate cart total */
 if(!function_exists('cartCount')) {
     function cartCount() {
-        return Cart::where('user_id', Auth::id())->count();
+        return Cart::where('user_id', user()?->id)->count();
     }
 }
+
+
 /** calculate cart total */
-if (!function_exists('cartTotal')) {
-    function cartTotal()
-    {
-        $user = Auth::user();
-
-        // Ensure user is authenticated
-        if (!$user) {
-            return 0;
-        }
-
+if(!function_exists('cartTotal')) {
+    function cartTotal() {
         $total = 0;
 
-        $cartItems = Cart::with('course')
-            ->where('user_id', $user->id)
-            ->get();
+        $cart = Cart::where('user_id', user()->id)->get();
 
-        foreach ($cartItems as $item) {
-            if ($item->course) {
-                $price = $item->course->discount > 0
-                    ? $item->course->discount
-                    : $item->course->price;
-                $total += $price;
+        foreach($cart as $item) {
+            if($item->course->discount > 0) {
+                $total += $item->course->discount;
+            }else {
+                $total += $item->course->price;
             }
         }
 
-        return number_format($total, 2, '.', ''); // Ensure consistent formatting
+        return $total;
     }
 }
-
 
 /** calculate cart total */
 if(!function_exists('calculateCommission')) {
@@ -82,5 +73,4 @@ if(!function_exists('sidebarItemActive')) {
         }
     }
 }
-
 

@@ -140,6 +140,9 @@ Route::prefix('admin')->name('admin.')->middleware(['auth:admin'])->group(functi
 
     Route::post('course-content/{course}/sort-chapter', [CourseContentController::class, 'updateSortChapter'])->name('course-content.update-sort-chapter'); // Fixed the method name
 
+    /* Order Controller */
+    Route::get('orders', [OrderController::class, 'index'])->name('orders.index');
+    Route::get('orders/{order}', [OrderController::class, 'show'])->name('orders.show');
 
 
     /* Payment Setting routes */
@@ -147,7 +150,21 @@ Route::prefix('admin')->name('admin.')->middleware(['auth:admin'])->group(functi
 
     Route::post('paypal-setting', [PaymentSettingController::class, 'paypalSetting'])->name('paypal-setting.update');
     Route::post('stripe-setting', [PaymentSettingController::class, 'stripeSetting'])->name('stripe-setting.update');
-        Route::post('razorpay-setting', [PaymentSettingController::class, 'razorpaySetting'])->name('razorpay-setting.update');
+    Route::post('razorpay-setting', [PaymentSettingController::class, 'razorpaySetting'])->name('razorpay-setting.update');
+
+     /** Site Settings Route */
+    Route::get('settings', [SettingController::class, 'index'])->name('settings.index');
+    Route::post('general-settings', [SettingController::class, 'updateGeneralSettings'])->name('general-settings.update');
+    Route::get('commission-settings', [SettingController::class, 'commissionSettingIndex'])->name('commission-settings.index');
+    Route::post('commission-settings', [SettingController::class, 'updateCommissionSetting'])->name('commission-settings.update');
+
+    Route::get('smtp-settings', [SettingController::class, 'smtpSetting'])->name('smtp-settings.index');
+    Route::post('smtp-settings', [SettingController::class, 'updateSmtpSetting'])->name('smtp-settings.update');
+
+    Route::get('logo-settings', [SettingController::class, 'logoSettingIndex'])->name('logo-settings.index');
+    Route::post('logo-settings', [SettingController::class, 'updateLogoSetting'])->name('logo-settings.update');
+    
+
 
     // Laravel File Manager routes for admin and web
     Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth:admin']], function () {
