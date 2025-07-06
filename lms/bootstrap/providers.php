@@ -2,5 +2,6 @@
 
 return [
     App\Providers\AppServiceProvider::class,
-    App\Providers\PaymentGatewayServiceProvider::class,//already registered here
+    App\Providers\PaymentGatewayServiceProvider::class,
+    App\Providers\SettingServiceProvider::class,
 ];
