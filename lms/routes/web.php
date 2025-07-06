@@ -13,6 +13,7 @@ use App\Http\Controllers\Frontend\FrontendController;
 use App\Http\Controllers\Frontend\OrderController as FrontendOrderController;
 use App\Http\Controllers\Frontend\PaymentController;
 use App\Http\Controllers\Frontend\ProfileController;
+use App\Http\Controllers\Frontend\WithdrawController;
 use Illuminate\Support\Facades\Auth;
 
 
@@ -24,31 +25,32 @@ use Illuminate\Support\Facades\Auth;
 | The main landing page of your application.
 |
 */
-Route::get('/',[FrontendController::class,'index'])->name('home');
-Route::get('/courses',[CoursePageController::class,'index'])->name('courses.index');
-Route::get('/course/{slug}',[CoursePageController::class,'show'])->name('courses.show');
+
+Route::get('/', [FrontendController::class, 'index'])->name('home');
+Route::get('/courses', [CoursePageController::class, 'index'])->name('courses.index');
+Route::get('/course/{slug}', [CoursePageController::class, 'show'])->name('courses.show');
 /* Cart route */
-Route::get('/cart',[CartController::class,'index'])->name('cart.index');
+Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
 Route::post('add-to-cart/{course}', [CartController::class, 'addToCart'])->name(name: 'add-to-cart')->middleware('auth');
 Route::get('remove-from-cart/{id}', [CartController::class, 'removeFromCart'])->name('remove-from-cart')->middleware('auth');
 
 /** Payment Routes */
- Route::get('checkout', action: CheckoutController::class)->name('checkout.index');
+Route::get('checkout', action: CheckoutController::class)->name('checkout.index');
 
 
- /* Paypal payment routes 3 routes where success and cancel will be there  */
+/* Paypal payment routes 3 routes where success and cancel will be there  */
 
 
- Route::get('papal/payment',[PaymentController::class,'payWithPaypal'])->name('paypal.payment');
- Route::get('papal/success',[PaymentController::class,'paypalSuccess'])->name('paypal.success');
- Route::get('papal/cancel',action: [PaymentController::class,'paypalCancel'])->name('paypal.cancel');
+Route::get('papal/payment', [PaymentController::class, 'payWithPaypal'])->name('paypal.payment');
+Route::get('papal/success', [PaymentController::class, 'paypalSuccess'])->name('paypal.success');
+Route::get('papal/cancel', action: [PaymentController::class, 'paypalCancel'])->name('paypal.cancel');
 
- Route::get('stripe/payment', [PaymentController::class, 'payWithStripe'])->name('stripe.payment');
- Route::get('stripe/success', [PaymentController::class, 'stripeSuccess'])->name('stripe.success');
- Route::get('stripe/cancel', [PaymentController::class, 'stripeCancel'])->name('stripe.cancel');
+Route::get('stripe/payment', [PaymentController::class, 'payWithStripe'])->name('stripe.payment');
+Route::get('stripe/success', [PaymentController::class, 'stripeSuccess'])->name('stripe.success');
+Route::get('stripe/cancel', [PaymentController::class, 'stripeCancel'])->name('stripe.cancel');
 
- Route::get('razorpay/redirect', [PaymentController::class, 'razorpayRedirect'])->name('razorpay.redirect');
- Route::post('razorpay/payment', [PaymentController::class, 'payWithRazorpay'])->name('razorpay.payment');
+Route::get('razorpay/redirect', [PaymentController::class, 'razorpayRedirect'])->name('razorpay.redirect');
+Route::post('razorpay/payment', [PaymentController::class, 'payWithRazorpay'])->name('razorpay.payment');
 
 Route::get('order-success', [PaymentController::class, 'orderSuccess'])->name('order.success');
 Route::get('order-failed', [PaymentController::class, 'orderFailed'])->name('order.failed');
@@ -128,49 +130,57 @@ Route::group([
     Route::post('/profile/update', [ProfileController::class, 'profileUpdate'])->name('profile.update');
     Route::post('/profile/update-password', [ProfileController::class, 'updatePassword'])->name('profile.update-password');
     Route::post('/profile/update-social', [ProfileController::class, 'updateSocial'])->name('profile.update-social');
+    Route::post('profile/update-gateway-info', [ProfileController::class, 'updateGatewayInfo'])->name('profile.update-gateway-info');
 
 
-/* Course routes */
-Route::get('courses',[CourseController::class,'index'])->name('course.index');
-Route::get('courses/create',[CourseController::class,'create'])->name('course.create');
-Route::post('courses/create',[CourseController::class,'storeBasicInfo'])->name('course.store-basic-info');
-Route::get('courses/{id}/edit',[CourseController::class,'edit'])->name('course.edit');
-Route::post('courses/{id}/update',[CourseController::class,'update'])->name('course.update');
 
-Route::get('course-content/{course}/create-chapter',[CourseContentController::class,'createChapterModal'])->name('course-content.create-chapter');
+    /* Course routes */
+    Route::get('courses', [CourseController::class, 'index'])->name('course.index');
+    Route::get('courses/create', [CourseController::class, 'create'])->name('course.create');
+    Route::post('courses/create', [CourseController::class, 'storeBasicInfo'])->name('course.store-basic-info');
+    Route::get('courses/{id}/edit', [CourseController::class, 'edit'])->name('course.edit');
+    Route::post('courses/{id}/update', [CourseController::class, 'update'])->name('course.update');
 
-Route::get('course-content/{chapterId}/edit-chapter',[CourseContentController::class,'editChapterModal'])->name('course-content.edit-chapter');
+    Route::get('course-content/{course}/create-chapter', [CourseContentController::class, 'createChapterModal'])->name('course-content.create-chapter');
 
-Route::put('course-content/{chapterId}/update-chapter',[CourseContentController::class,'updateChapterModal'])->name('course-content.update-chapter');
+    Route::get('course-content/{chapterId}/edit-chapter', [CourseContentController::class, 'editChapterModal'])->name('course-content.edit-chapter');
 
-Route::post('course-content/{course}/create-chapter',[CourseContentController::class,'storeChapter'])->name('course-content.store-chapter');
+    Route::put('course-content/{chapterId}/update-chapter', [CourseContentController::class, 'updateChapterModal'])->name('course-content.update-chapter');
 
-Route::delete('course-content/{chapter}/chapter',[CourseContentController::class,'destroyChapter'])->name('course-content.destroy-chapter');
+    Route::post('course-content/{course}/create-chapter', [CourseContentController::class, 'storeChapter'])->name('course-content.store-chapter');
 
-Route::get('course-content/create-lesson',[CourseContentController::class,'createLesson'])->name('course-content.create-lesson');
-Route::post('course-content/create-lesson', [CourseContentController::class, 'storeLesson'])
-    ->name('course-content.store-lesson');
+    Route::delete('course-content/{chapter}/chapter', [CourseContentController::class, 'destroyChapter'])->name('course-content.destroy-chapter');
 
-/* Lesson modal routes */
-Route::get('course-content/edit-lesson', [CourseContentController::class, 'editLesson'])->name('course-content.edit-lesson'); // For loading the edit modal via AJAX
-Route::post('course-content/{id}/update-lesson', [CourseContentController::class, 'updateLesson'])->name('course-content.update-lesson'); // For submitting the edit form
-Route::delete('course-content/{lesson}/lesson', [CourseContentController::class, 'destroyLesson'])->name('course-content.destroy-lesson');
+    Route::get('course-content/create-lesson', [CourseContentController::class, 'createLesson'])->name('course-content.create-lesson');
+    Route::post('course-content/create-lesson', [CourseContentController::class, 'storeLesson'])
+        ->name('course-content.store-lesson');
 
-Route::post('course-chapter/{chapter}/sort-lesson', [CourseContentController::class, 'sortLesson'])->name('course-content.sort-lesson'); // For submitting the sorted lesson order
+    /* Lesson modal routes */
+    Route::get('course-content/edit-lesson', [CourseContentController::class, 'editLesson'])->name('course-content.edit-lesson'); // For loading the edit modal via AJAX
+    Route::post('course-content/{id}/update-lesson', [CourseContentController::class, 'updateLesson'])->name('course-content.update-lesson'); // For submitting the edit form
+    Route::delete('course-content/{lesson}/lesson', [CourseContentController::class, 'destroyLesson'])->name('course-content.destroy-lesson');
 
-Route::get('course-content/{course}/sort-chapter', [CourseContentController::class, 'sortChapter'])->name('course-content.sort-chapter'); // For loading the sorted chapter order
+    Route::post('course-chapter/{chapter}/sort-lesson', [CourseContentController::class, 'sortLesson'])->name('course-content.sort-lesson'); // For submitting the sorted lesson order
 
-Route::post('course-content/{course}/sort-chapter', [CourseContentController::class, 'updateSortChapter'])->name('course-content.update-sort-chapter'); // For updating the sorted chapter order
+    Route::get('course-content/{course}/sort-chapter', [CourseContentController::class, 'sortChapter'])->name('course-content.sort-chapter'); // For loading the sorted chapter order
 
-
-/** Orders Routes */
-Route::get('orders', [FrontendOrderController::class, 'index'])->name('orders.index');
+    Route::post('course-content/{course}/sort-chapter', [CourseContentController::class, 'updateSortChapter'])->name('course-content.update-sort-chapter'); // For updating the sorted chapter order
 
 
-//laravel filemanager routes
-Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']], function () {
-     \UniSharp\LaravelFilemanager\Lfm::routes();
- });
+    /** Orders Routes */
+    Route::get('orders', [FrontendOrderController::class, 'index'])->name('orders.index');
+
+    /** Withdrawal routes */
+    Route::get('withdrawals', [WithdrawController::class, 'index'])->name('withdraw.index');
+    Route::get('withdrawals/request-payout', [WithdrawController::class, 'requestPayoutIndex'])->name('withdraw.request-payout');
+    Route::post('withdrawals/request-payout', [WithdrawController::class, 'requestPayout'])->name('withdraw.request-payout.create');
+
+
+
+    //laravel filemanager routes
+    Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']], function () {
+        \UniSharp\LaravelFilemanager\Lfm::routes();
+    });
 });
 
 /*
@@ -178,5 +188,5 @@ Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']
 | Authentication Route Files
 |--------------------------------------------------------------------------
 */
-require __DIR__.'/auth.php';   // For default web users
-require __DIR__.'/admin.php';  // For admin-specific routes
+require __DIR__ . '/auth.php';   // For default web users
+require __DIR__ . '/admin.php';  // For admin-specific routes

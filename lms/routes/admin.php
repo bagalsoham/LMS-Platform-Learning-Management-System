@@ -163,7 +163,9 @@ Route::prefix('admin')->name('admin.')->middleware(['auth:admin'])->group(functi
 
     Route::get('logo-settings', [SettingController::class, 'logoSettingIndex'])->name('logo-settings.index');
     Route::post('logo-settings', [SettingController::class, 'updateLogoSetting'])->name('logo-settings.update');
-    
+
+    /* Payout routes */
+    Route::resource('payout-gateway', PayoutGatewayController::class);
 
 
     // Laravel File Manager routes for admin and web

@@ -75,17 +75,20 @@ $(document).on("click", ".delete-item", function (e) {
     e.preventDefault();
 
     const itemId = $(this).data("id");
-    const itemType = $(this).data("type"); // 'chapter' or 'lesson'
+    const itemType = $(this).data("type"); // 'chapter', 'lesson', 'gateway', etc.
 
     if (!itemId || !itemType) {
         notyf.error("No item ID or type found for deletion");
         return;
     }
 
+    // Handle different item types
     if (itemType === "chapter") {
         delete_url = `${base_url}/admin/course-content/${itemId}/chapter`;
     } else if (itemType === "lesson") {
         delete_url = `${base_url}/admin/course-content/${itemId}/lesson`;
+    } else if (itemType === "gateway") {
+        delete_url = `${base_url}/admin/payout-gateway/${itemId}`;
     } else {
         notyf.error("Unknown item type for deletion");
         return;
@@ -206,3 +209,5 @@ $(function () {
         });
     });
 });
+
+

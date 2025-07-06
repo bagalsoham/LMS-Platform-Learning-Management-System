@@ -344,7 +344,7 @@
                 </li>
 
                 <li class="nav-item {{ sidebarItemActive(['admin.payout-gateway.*']) }}">
-                    <a class="nav-link" href="{{-- {{ route('admin.payout-gateway.index') }} --}}">
+                    <a class="nav-link" href=" {{ route('admin.payout-gateway.index') }} ">
 
                         <span
                             class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/home -->

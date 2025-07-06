@@ -36,7 +36,7 @@
                 </a>
             </li>
             <li>
-                <a href="#" class="{{ sidebarItemActive(['instructor.withdraw.index']) }}">
+                <a href="{{ route('instructor.withdraw.index') }}" class="{{ sidebarItemActive(['instructor.withdraw.index']) }}">
                     <i class="ti ti-cash me-2"></i>
                     Withdrawals
                 </a>
