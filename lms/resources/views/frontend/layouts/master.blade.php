@@ -7,11 +7,12 @@
         content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
     <meta name="base_url" content="{{ url('/') }}">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-@stack('meta')
+    @stack('meta')
     <title>EduCore - Online Courses & Education HTML Template</title>
     <link rel="icon" type="image/png" href="{{ asset(config('settings.site_favicon')) }}">
     <link rel="stylesheet" href="{{ asset('frontend/assets/css/all.min.css') }}">
     <link rel="stylesheet" href="{{ asset('frontend/assets/css/bootstrap.min.css') }}">
+
     <link rel="stylesheet" href="{{ asset('frontend/assets/css/animated_barfiller.css') }}">
     <link rel="stylesheet" href="{{ asset('frontend/assets/css/slick.css') }}">
     <link rel="stylesheet" href="{{ asset('frontend/assets/css/venobox.min.css') }}">
@@ -30,6 +31,9 @@
 
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.36.0/tabler-icons.min.css">
+
 
 
     <link rel=" stylesheet" href="{{ asset('frontend/assets/css/spacing.css') }}">
@@ -54,7 +58,8 @@
 
 
     <!-- Modal -->
-    <div class="modal fade" id="dynamic-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
+    <div class="modal fade" id="dynamic-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
+        data-bs-backdrop="static">
         <div class="modal-dialog  modal-dialog-centered modal-lg dynamic-modal-content">
 
         </div>
@@ -131,7 +136,7 @@
 
     <!--dynamic js-->
 
-    @vite(['resources/js/frontend/frontend.js','resources/js/frontend/cart.js']);
+    @vite(['resources/js/frontend/frontend.js', 'resources/js/frontend/cart.js']);
 
     <script>
         var notyf = new Notyf({

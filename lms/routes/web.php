@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\CheckoutController;
 use App\Http\Controllers\Frontend\CourseContentController;
@@ -9,6 +10,7 @@ use App\Http\Controllers\Frontend\StudentDashboardController;
 use App\Http\Controllers\Frontend\InstructorDashboardController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Frontend\FrontendController;
+use App\Http\Controllers\Frontend\OrderController as FrontendOrderController;
 use App\Http\Controllers\Frontend\PaymentController;
 use App\Http\Controllers\Frontend\ProfileController;
 use Illuminate\Support\Facades\Auth;
@@ -161,7 +163,8 @@ Route::get('course-content/{course}/sort-chapter', [CourseContentController::cla
 Route::post('course-content/{course}/sort-chapter', [CourseContentController::class, 'updateSortChapter'])->name('course-content.update-sort-chapter'); // For updating the sorted chapter order
 
 
-
+/** Orders Routes */
+Route::get('orders', [FrontendOrderController::class, 'index'])->name('orders.index');
 
 
 //laravel filemanager routes

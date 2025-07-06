@@ -50,9 +50,9 @@ class OrderService
                 $enrollment->save();
 
                 /** add commission to instructor wallet */
-                /* $instructorWallet = $item->course->instructor;
+                $instructorWallet = $item->course->instructor;
                 $instructorWallet->wallet += calculateCommission($item->course->discount > 0 ? $item->course->discount : $item->course->price, config('settings.commission_rate'));
-                $instructorWallet->save(); */
+                $instructorWallet->save();
             }
 
 

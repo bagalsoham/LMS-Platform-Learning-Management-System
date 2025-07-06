@@ -1,7 +1,5 @@
 <?php
 
-
-
 /** convert minutes to hours */
 
 use App\Models\Cart;

@@ -38,4 +38,27 @@ class SettingController extends Controller
         notyf()->success('Update Successfully!');
         return redirect()->back();
     }
+    function commissionSettingIndex(): View
+    {
+        return view('admin.setting.commission-settings');
+    }
+    function updateCommissionSetting(Request $request): RedirectResponse
+    {
+        $validatedData = $request->validate([
+            'commission_rate' => ['required', 'numeric'],
+        ]);
+
+        foreach ($validatedData as $key => $value) {
+            Setting::updateOrCreate([
+                'key' => $key
+            ], [
+                'value' => $value
+            ]);
+        }
+
+        Cache::forget('settings');
+
+        notyf()->success('Update Successfully!');
+        return redirect()->back();
+    }
 }
