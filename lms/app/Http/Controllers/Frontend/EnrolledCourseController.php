@@ -78,8 +78,22 @@ class EnrolledCourseController extends Controller
     }
 
     function fileDownload(string $id)
-    {
-        $lesson = CourseChapterLesson::findOrFail($id);
-        return response()->download(public_path($lesson->file_path));
+{
+    $lesson = CourseChapterLesson::findOrFail($id);
+
+    // Remove the domain from the stored file path (keep only the path after /storage/)
+    $relativePath = str_replace(url('/') . '/', '', $lesson->file_path); // e.g., 'storage/files/...'
+
+    // Convert to absolute path
+    $absolutePath = public_path($relativePath);
+
+    // Check if file exists
+    if (!file_exists($absolutePath)) {
+        abort(404, 'File not found at ' . $absolutePath);
     }
+
+    // Return file for download
+    return response()->download($absolutePath);
+}
+
 }
