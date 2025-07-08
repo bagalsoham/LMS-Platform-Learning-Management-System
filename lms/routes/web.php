@@ -6,6 +6,7 @@ use App\Http\Controllers\Frontend\CheckoutController;
 use App\Http\Controllers\Frontend\CourseContentController;
 use App\Http\Controllers\Frontend\CourseController;
 use App\Http\Controllers\Frontend\CoursePageController;
+use App\Http\Controllers\Frontend\EnrolledCourseController;
 use App\Http\Controllers\Frontend\StudentDashboardController;
 use App\Http\Controllers\Frontend\InstructorDashboardController;
 use Illuminate\Support\Facades\Route;
@@ -15,6 +16,8 @@ use App\Http\Controllers\Frontend\PaymentController;
 use App\Http\Controllers\Frontend\ProfileController;
 use App\Http\Controllers\Frontend\WithdrawController;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
+
 
 
 /*
@@ -107,6 +110,15 @@ Route::group([
     Route::post('/profile/update', [ProfileController::class, 'profileUpdate'])->name('profile.update');
     Route::post('/profile/update-password', [ProfileController::class, 'updatePassword'])->name('profile.update-password');
     Route::post('/profile/update-social', [ProfileController::class, 'updateSocial'])->name('profile.update-social');
+
+    /** Enroll Courses Routes */
+    Route::get('enrolled-courses', [EnrolledCourseController::class, 'index'])->name('enrolled-courses.index');
+    Route::get('course-player/{slug}', [EnrolledCourseController::class, 'playerIndex'])->name('course-player.index');
+    Route::get('get-lesson-content', [EnrolledCourseController::class, 'getLessonContent'])->name('get-lesson-content');
+    Route::post('update-watch-history', [EnrolledCourseController::class, 'updateWatchHistory'])->name('update-watch-history');
+    Route::post('update-lesson-completion', [EnrolledCourseController::class, 'updateLessonCompletion'])->name('update-lesson-completion');
+    Route::get('file-download/{id}', [EnrolledCourseController::class, 'fileDownload'])->name('file-download');
+
 });
 
 /*
@@ -181,6 +193,23 @@ Route::group([
     Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']], function () {
         \UniSharp\LaravelFilemanager\Lfm::routes();
     });
+});
+
+
+// Add this to a test route or controller to debug
+Route::get('/debug-structure', function() {
+    $publicStorage = public_path('storage');
+    $storageAppPublic = storage_path('app/public');
+
+    return [
+        'public_path' => public_path(),
+        'public_storage_path' => $publicStorage,
+        'storage_app_public_path' => $storageAppPublic,
+        'public_storage_contents' => is_dir($publicStorage) ? scandir($publicStorage) : 'Directory not found',
+        'storage_app_public_contents' => is_dir($storageAppPublic) ? scandir($storageAppPublic) : 'Directory not found',
+        'app_url' => config('app.url'),
+        'current_url' => request()->getSchemeAndHttpHost(),
+    ];
 });
 
 /*

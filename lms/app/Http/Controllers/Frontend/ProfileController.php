@@ -14,6 +14,8 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use App\Traits\FileUpload;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+
 
 class ProfileController extends Controller
 {
@@ -50,16 +52,16 @@ class ProfileController extends Controller
 
     function updatePassword(PasswordUpdateRequest $request) : RedirectResponse {
 
-        /** @var User $user */
-        $user = Auth::user();
-        $user->password = bcrypt($request->password);
-        $user->save();
+    /** @var User $user */
+    $user = Auth::user();
+    $user->password = Hash::make($request->password);
+    $user->save();
 
-        notyf()->success('Updated Successfully');
+    notyf()->success('Updated Successfully');
 
-        return redirect()->back();
+    return redirect()->back();
+}
 
-    }
 
     function updateSocial(SocialUpdateRequest $request) : RedirectResponse {
         /** @var User $user */

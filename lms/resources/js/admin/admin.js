@@ -1,110 +1,111 @@
-console.log("Admin JS Loaded");
-
-// jQuery is already loaded globally, no need to import
-// Use the globally available jQuery
-const $ = window.jQuery;
-
+console.log("Admin.js loaded");
 import { Notyf } from "notyf";
-import "notyf/notyf.min.css";
 
+window.$ = window.jQuery = $;
 /** Notyf init */
-const notyf = new Notyf({
+var notyf = new Notyf({
     duration: 8000,
     dismissible: true,
 });
+window.$ = window.jQuery = $;
 
-/** Read CSRF and base URL from meta tags */
-const csrf_token = document.querySelector('meta[name="csrf-token"]')?.getAttribute("content");
-const base_url = document.querySelector('meta[name="base-url"]')?.getAttribute("content");
+import "select2";
+import "select2/dist/css/select2.css";
 
-// Make notyf globally available
-window.notyf = notyf;
+$(function () {
+    $(".select2").select2();
+});
+
+const csrf_token = $(`meta[name="csrf-token"]`).attr("content");
+const base_url = $(`meta[name="base-url"]`).attr("content");
 
 document.addEventListener("DOMContentLoaded", function () {
     var el;
-
-    // TomSelect
-    if (window.TomSelect) {
-        const selectElement = document.getElementById("select-users");
-        if (selectElement) {
-            new TomSelect(selectElement, {
-                copyClassesToDropdown: false,
-                dropdownParent: "body",
-                controlInput: "<input>",
-                render: {
-                    item: function (data, escape) {
-                        return `<div><span class="dropdown-item-indicator">${data.customProperties || ""}</span>${escape(data.text)}</div>`;
-                    },
-                    option: function (data, escape) {
-                        return `<div><span class="dropdown-item-indicator">${data.customProperties || ""}</span>${escape(data.text)}</div>`;
-                    },
+    window.TomSelect &&
+        new TomSelect((el = document.getElementById("select-users")), {
+            copyClassesToDropdown: false,
+            dropdownParent: "body",
+            controlInput: "<input>",
+            render: {
+                item: function (data, escape) {
+                    if (data.customProperties) {
+                        return (
+                            '<div><span class="dropdown-item-indicator">' +
+                            data.customProperties +
+                            "</span>" +
+                            escape(data.text) +
+                            "</div>"
+                        );
+                    }
+                    return "<div>" + escape(data.text) + "</div>";
                 },
-            });
-        }
-    }
-
-    // TinyMCE
-    if (window.tinymce) {
-        tinymce.init({
-            selector: ".editor",
-            height: 500,
-            menubar: false,
-            plugins: [
-                "advlist", "autolink", "lists", "link", "charmap", "anchor",
-                "searchreplace", "visualblocks", "fullscreen", "insertdatetime",
-                "media", "table", "help", "wordcount"
-            ],
-            toolbar:
-                "undo redo | blocks | bold italic backcolor | " +
-                "alignleft aligncenter alignright alignjustify | " +
-                "bullist numlist outdent indent | removeformat | help",
-            content_style: "body { font-family:Helvetica,Arial,sans-serif; font-size:16px }",
+                option: function (data, escape) {
+                    if (data.customProperties) {
+                        return (
+                            '<div><span class="dropdown-item-indicator">' +
+                            data.customProperties +
+                            "</span>" +
+                            escape(data.text) +
+                            "</div>"
+                        );
+                    }
+                    return "<div>" + escape(data.text) + "</div>";
+                },
+            },
         });
-    }
-
-    // Select2 initialization
-    if (window.$ && $.fn.select2) {
-        $(".select2").select2();
-    }
 });
 
+document.addEventListener("DOMContentLoaded", function () {
+    tinymce.init({
+        selector: ".editor",
+        height: 500,
+        menubar: false,
+        plugins: [
+            "advlist",
+            "autolink",
+            "lists",
+            "link",
+            "charmap",
+            "anchor",
+            "searchreplace",
+            "visualblocks",
+            "fullscreen",
+            "insertdatetime",
+            "media",
+            "table",
+            "help",
+            "wordcount",
+        ],
+        toolbar:
+            "undo redo | blocks | " +
+            "bold italic backcolor | alignleft aligncenter " +
+            "alignright alignjustify | bullist numlist outdent indent | " +
+            "removeformat | help",
+        content_style:
+            "body { font-family:Helvetica,Arial,sans-serif; font-size:16px }",
+    });
+});
+
+var delete_url = null;
+var delete_row = null;
+
 /** Delete Item with confirmation */
-let delete_url = "";
 
 $(document).on("click", ".delete-item", function (e) {
     e.preventDefault();
 
-    const itemId = $(this).data("id");
-    const itemType = $(this).data("type"); // 'chapter', 'lesson', 'gateway', etc.
+    let url = $(this).data("delete-url");
+    delete_row = $(this).closest("tr"); // Store the row to remove later
 
-    if (!itemId || !itemType) {
-        notyf.error("No item ID or type found for deletion");
-        return;
-    }
-
-    // Handle different item types
-    if (itemType === "chapter") {
-        delete_url = `${base_url}/admin/course-content/${itemId}/chapter`;
-    } else if (itemType === "lesson") {
-        delete_url = `${base_url}/admin/course-content/${itemId}/lesson`;
-    } else if (itemType === "gateway") {
-        delete_url = `${base_url}/admin/payout-gateway/${itemId}`;
-    } else {
-        notyf.error("Unknown item type for deletion");
-        return;
-    }
+    delete_url = url;
 
     $("#modal-danger").modal("show");
 });
 
-$(document).on("click", ".delete-confirm", function (e) {
+$(".delete-confirm").on("click", function (e) {
     e.preventDefault();
 
-    // Check if delete_url is set
-    if (!delete_url) {
-        notyf.error("No delete URL specified");
-        return;
-    }
+    console.log("Sending DELETE to:", delete_url);
 
     $.ajax({
         method: "DELETE",
@@ -115,13 +116,15 @@ $(document).on("click", ".delete-confirm", function (e) {
         beforeSend: function () {
             $(".delete-confirm").text("Deleting...");
         },
-        success: function () {
-            window.location.reload();
+        success: function (response) {
+            notyf.success(response.message); // ✅ Show Notyf success
+            setTimeout(() => {
+                window.location.reload(); // Refresh after short delay
+            }, 1000);
         },
         error: function (xhr) {
-            const message = xhr.responseJSON?.message || "Delete failed.";
-            notyf.error(message);
-            console.error('Delete error:', xhr);
+            let message = xhr.responseJSON?.message || 'Unexpected error';
+            notyf.error(message); // ✅ Show Notyf error
         },
         complete: function () {
             $(".delete-confirm").text("Delete");
@@ -129,31 +132,37 @@ $(document).on("click", ".delete-confirm", function (e) {
     });
 });
 
+
+
 /** Database Clear with confirmation */
-$(document).on("click", ".db-clear", function (e) {
+
+$(".db-clear").on("click", function (e) {
     e.preventDefault();
-    delete_url = $(this).attr("href");
+
+    let url = $(this).attr("href");
+    delete_url = url;
+
     $("#modal-database-clear").modal("show");
 });
 
-$(document).on("submit", ".db-clear-submit", function (e) {
+$(".db-clear-submit").on("submit", function (e) {
     e.preventDefault();
 
     $.ajax({
         method: "DELETE",
-        url: `${base_url}/admin/database-clear`,
+        url: base_url + "/admin/database-clear",
         data: {
             _token: csrf_token,
         },
         beforeSend: function () {
             $(".db-clear-btn").text("Wiping...");
         },
-        success: function () {
+        success: function (data) {
             window.location.reload();
         },
-        error: function (xhr) {
-            const message = xhr.responseJSON?.message || "Database clear failed.";
-            notyf.error(message);
+        error: function (xhr, status, error) {
+            let errorMessage = xhr.responseJSON;
+            notyf.error(errorMessage.message);
         },
         complete: function () {
             $(".db-clear-btn").text("Delete");
@@ -161,53 +170,52 @@ $(document).on("submit", ".db-clear-submit", function (e) {
     });
 });
 
-/** Certificate Position Save */
-$(function () {
-    if ($.fn.draggable) {
-        $(".draggable-element").draggable({
-            containment: ".certificate-body",
-            stop: function (event, ui) {
-                const elementId = $(this).attr("id");
-                const x = ui.position.left;
-                const y = ui.position.top;
+/** Certificate js */
 
-                $.ajax({
-                    method: "POST",
-                    url: `${base_url}/admin/certificate-item`,
-                    data: {
-                        _token: csrf_token,
-                        element_id: elementId,
-                        x_position: x,
-                        y_position: y,
-                    },
-                });
-            },
-        });
-    }
+$(function () {
+    $(".draggable-element").draggable({
+        containment: ".certificate-body",
+        stop: function (event, ui) {
+            var elementId = $(this).attr("id");
+            var xPosition = ui.position.left;
+            var yPosition = ui.position.top;
+
+            $.ajax({
+                method: "POST",
+                url: `${base_url}/admin/certificate-item`,
+                data: {
+                    _token: csrf_token,
+                    element_id: elementId,
+                    x_position: xPosition,
+                    y_position: yPosition,
+                },
+                success: function (data) {},
+                error: function (xhr, status, error) {},
+            });
+        },
+    });
 });
 
-/** Featured Instructor AJAX */
+/** Featured Instructor js */
 $(function () {
-    $(document).on("change", ".select_instructor", function () {
-        const id = $(this).val();
+    $(".select_instructor").on("change", function () {
+        let id = $(this).val();
 
         $.ajax({
-            method: "GET",
+            method: "get",
             url: `${base_url}/admin/get-instructor-courses/${id}`,
             beforeSend: function () {
                 $(".instructor_courses").empty();
             },
             success: function (data) {
                 $.each(data.courses, function (key, value) {
-                    $(".instructor_courses").append(`<option value="${value.id}">${value.title}</option>`);
+                    let option = `<option value="${value.id}">${value.title}</option>`;
+                    $(".instructor_courses").append(option);
                 });
             },
-            error: function (xhr) {
-                const message = xhr.responseJSON?.error || "Could not load courses.";
-                notyf.error(message);
+            error: function (xhr, status, error) {
+                notyf.error(data.error);
             },
         });
     });
 });
-
-

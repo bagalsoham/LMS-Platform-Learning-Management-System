@@ -1,33 +1,53 @@
 <?php
-// Define the namespace for better organization and autoloading
+
 namespace App\Traits;
 
+use Exception;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\File;
 
-/**
- * Trait FileUpload
- *
- * This trait will contain reusable methods related to file uploading,
- * such as moving uploaded files, validating file types or sizes, and
- * generating unique file names.
- *
- * It can be included in any class using `use FileUpload;`.
- */
 trait FileUpload
 {
     public function uploadFile(UploadedFile $file, string $directory = 'uploads'): string
     {
-        $filename = 'educore-' . uniqid() . '.' . $file->getClientOriginalExtension();
+        try {
+            $filename = 'educore_' . uniqid() . '.' . $file->getClientOriginalExtension();
 
-        //move the file to storage
-        $file->move(public_path($directory), $filename);
+            // Store directly in public/storage directory
+            $targetDirectory = public_path('storage/' . $directory);
 
-        return '/' . $directory . '/' . $filename; //uploads/ file.ext
+            // Create directory if it doesn't exist
+            if (!File::exists($targetDirectory)) {
+                File::makeDirectory($targetDirectory, 0755, true);
+            }
+
+            // Move the uploaded file
+            $file->move($targetDirectory, $filename);
+
+            // Verify file was moved successfully
+            $filePath = $targetDirectory . '/' . $filename;
+            if (!file_exists($filePath)) {
+                throw new Exception('File was not uploaded successfully');
+            }
+
+            // Return the correct URL using asset() helper
+            return asset('storage/' . $directory . '/' . $filename);
+
+        } catch (Exception $e) {
+            throw new Exception('File upload failed: ' . $e->getMessage());
+        }
     }
+
     public function deleteFile(?string $path): bool
     {
-        if ($path && file_exists(public_path($path))) {
-            unlink(public_path($path));
+        if ($path) {
+            // Extract the relative path from the asset URL
+            $relativePath = str_replace(asset(''), '', $path);
+            $fullPath = public_path(ltrim($relativePath, '/'));
+
+            if (File::exists($fullPath)) {
+                return File::delete($fullPath);
+            }
         }
         return false;
     }

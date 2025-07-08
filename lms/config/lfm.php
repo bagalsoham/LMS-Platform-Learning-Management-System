@@ -16,6 +16,7 @@ return [
      */
 
     'use_package_routes'       => true,
+
     /*
     |--------------------------------------------------------------------------
     | Shared folder / Private folder
@@ -48,17 +49,27 @@ return [
         'file'  => [
             'folder_name'  => 'files',
             'startup_view' => 'list',
-            'max_size'     => 50000, // size in KB
+            'max_size'     => 1024000, // size in KB
             'thumb' => true,
             'thumb_width' => 80,
             'thumb_height' => 80,
             'valid_mime'   => [
-                'image/jpeg',
-                'image/pjpeg',
-                'image/png',
-                'image/gif',
                 'application/pdf',
                 'text/plain',
+                'video/mp4',
+                'video/mpeg',
+                'audio/mp3',
+                'audio/mpeg',
+                'audio/wav',
+                'audio/webm',
+                'application/doc',
+                'application/docx',
+                'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+                'application/zip',
+                'application/x-rar-compressed',
+                'application/x-zip-compressed',
+
+
             ],
         ],
         'image' => [

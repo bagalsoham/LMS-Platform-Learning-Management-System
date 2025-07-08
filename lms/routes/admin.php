@@ -178,3 +178,4 @@ Route::prefix('admin')->name('admin.')->middleware(['auth:admin'])->group(functi
         \UniSharp\LaravelFilemanager\Lfm::routes();
     });
 });
+

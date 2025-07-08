@@ -59,6 +59,7 @@
                                                 data-delete-url="{{ route('admin.course-category.destroy', $category->id) }}">
                                                 <i class="ti ti-trash-x" style="font-size: 18px;"></i>
                                             </a>
+
                                         </td>
                                     </tr>
                                 @empty

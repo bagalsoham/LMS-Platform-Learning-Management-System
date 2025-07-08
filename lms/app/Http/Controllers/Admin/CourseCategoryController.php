@@ -35,18 +35,18 @@ class CourseCategoryController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(CourseCategoryStoreRequest $request):RedirectResponse
+    public function store(CourseCategoryStoreRequest $request): RedirectResponse
     {
 
-        $imagePath =$this->uploadFile($request->file('image'));
+        $imagePath = $this->uploadFile($request->file('image'));
         $category = new CourseCategory();
-        $category ->image=$imagePath;
-        $category ->icon =$request->icon;
-        $category ->name =$request->name;
-        $category ->slug =Str::slug($request->name);
-        $category ->show_at_trending =$request->show_at_trending ?? 0;
-        $category ->status =$request->status ?? 0;
-        $category ->save();
+        $category->image = $imagePath;
+        $category->icon = $request->icon;
+        $category->name = $request->name;
+        $category->slug = Str::slug($request->name);
+        $category->show_at_trending = $request->show_at_trending ?? 0;
+        $category->status = $request->status ?? 0;
+        $category->save();
 
         notyf()->success('Created successfully');
 
@@ -66,25 +66,26 @@ class CourseCategoryController extends Controller
      */
     public function edit(CourseCategory $course_category)
     {
-        return view('admin.course.course-category.edit',compact('course_category'));
+        return view('admin.course.course-category.edit', compact('course_category'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(CourseCategoryUpdateRequest $request , CourseCategory $course_category)
-    {   $category = $course_category;
-        if($request->hasFile('image')){
-            $imagePath =$this->uploadFile($request->file('image'));
+    public function update(CourseCategoryUpdateRequest $request, CourseCategory $course_category)
+    {
+        $category = $course_category;
+        if ($request->hasFile('image')) {
+            $imagePath = $this->uploadFile($request->file('image'));
             $this->deleteFile($category->image);
-            $category ->image =$imagePath;
+            $category->image = $imagePath;
         }
-        $category ->icon =$request->icon;
-        $category ->name =$request->name;
-        $category ->slug =Str::slug($request->name);
-        $category ->show_at_trending =$request->show_at_trending ?? 0;
-        $category ->status =$request->status ?? 0;
-        $category ->save();
+        $category->icon = $request->icon;
+        $category->name = $request->name;
+        $category->slug = Str::slug($request->name);
+        $category->show_at_trending = $request->show_at_trending ?? 0;
+        $category->status = $request->status ?? 0;
+        $category->save();
 
         notyf()->success('Updated successfully');
 
@@ -96,16 +97,17 @@ class CourseCategoryController extends Controller
      */
     public function destroy(CourseCategory $course_category)
     {
-        if(CourseCategory::where('parent_id', $course_category->id)->exists()){
-             return response(['message'=> 'Cannot delete a category having a sub category'],422);
+        if(CourseCategory::where('parent_id', $course_category->id)->exists()) {
+            return response(['message' => 'Cannot delete a category with subcategory!'], 422);
         }
-        try{
-            $course_category ->delete();
-            notyf()->error('Deleted Successfully');
-        }catch(Exception $e){
-            logger($e);
-            return response(['message'=> 'Something went wrong'],500);
-
+        try {
+            $this->deleteFile($course_category->image);
+            $course_category->delete();
+            notyf()->success('Deleted Successfully!');
+            return response(['message' => 'Deleted Successfully!'], 200);
+        }catch(Exception $e) {
+            logger("Course Language Error >> ".$e);
+            return response(['message' => 'Something went wrong!'], 500);
         }
     }
 }
