@@ -36,10 +36,16 @@ yarn-error.log
 # Custom folder to ignore
 /resources/views/edu-core-frontend/
 
-
-
-*.png
+# Images - Ignore all image files EXCEPT screenshots folder
 *.jpg
 *.jpeg
+*.png
 *.gif
+*.bmp
 *.svg
+*.webp
+*.ico
+
+# But keep screenshots folder and its contents
+!/screenshots/
+!/screenshots/**

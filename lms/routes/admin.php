@@ -14,6 +14,7 @@ use App\Http\Controllers\Admin\CourseCategoryController;
 use App\Http\Controllers\Admin\CourseLanguageController;
 use App\Http\Controllers\Admin\CourseSubCategoryController;
 use App\Http\Controllers\Admin\ProfileController;
+use App\Http\Controllers\Admin\CertificateBuilderController;
 use App\Http\Controllers\Admin\CourseController;
 use App\Http\Controllers\Admin\CourseContentController; // Missing import added here
 use App\Http\Controllers\Admin\DashboardController;
@@ -171,6 +172,12 @@ Route::prefix('admin')->name('admin.')->middleware(['auth:admin'])->group(functi
     Route::get('withdraw-requests', [WithdrawRequestController::class, 'index'])->name('withdraw-request.index');
     Route::get('withdraw-requests/{withdraw}/details', [WithdrawRequestController::class, 'show'])->name('withdraw-request.show');
     Route::post('withdraw-requests/{withdraw}/status', [WithdrawRequestController::class, 'updateStatus'])->name('withdraw-request.status.update');
+
+
+    /** Certificate Builder Routes */
+    Route::get('certificate-builder', [CertificateBuilderController::class, 'index'])->name('certificate-builder.index');
+    Route::post('certificate-builder', [CertificateBuilderController::class, 'update'])->name('certificate-builder.update');
+    Route::post('certificate-item', [CertificateBuilderController::class, 'itemUpdate'])->name('certificate-item.update');
 
 
     // Laravel File Manager routes for admin and web

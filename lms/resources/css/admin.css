@@ -158,16 +158,19 @@ textarea {
     }
 }
 
-
 .certificate-body {
     height: 600px;
     width: 930px;
     background: gray;
     background-repeat: no-repeat;
+    background-size: 930px 600px; /* Exact dimensions for perfect fit */
+    background-position: center;
     text-align: center;
+    position: relative;
 }
+
 .certificate-body div {
-    /* display: inline-block; */
+    /* display: inline-block; */ /* Keep this commented out */
 }
 
 .certificate-body .title {
@@ -176,39 +179,36 @@ textarea {
 }
 
 .certificate-body .subtitle {
-  font-size: 18px;
-  font-weight: 400;
+    font-size: 18px;
+    font-weight: 400;
 }
+
 .certificate-body .signature img {
     width: auto;
     height: 100px;
     max-width: 300px;
-
-  }
+}
 
 .certificate-body .draggable-element {
     cursor: move;
+    position: absolute; /* Add this - this is the key fix! */
+    z-index: 1; /* Optional: ensures elements stack properly */
 }
 
-/* .nav-item.dropdown.active > .dropdown-menu {
+.nav-item.dropdown.active > .dropdown-menu {
     display: block !important;
-} */
+}
 
 .dropdown-item.active {
     color: white !important;
     background: #0000004a !important;
 }
 
-.nav-item .nav-link.active{
+.nav-item .nav-link.active {
     background: #0000004a !important;
     color: white !important;
-
 }
+
 label {
     margin-bottom: 6px;
-  }
-
-/* Fix for dropdown z-index in case of overlap issues */
-.dropdown-menu {
-    z-index: 1050 !important;
 }

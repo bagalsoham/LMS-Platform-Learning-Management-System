@@ -180,6 +180,8 @@ $(function () {
             var xPosition = ui.position.left;
             var yPosition = ui.position.top;
 
+            console.log("Dragged:", elementId, "X:", xPosition, "Y:", yPosition);
+
             $.ajax({
                 method: "POST",
                 url: `${base_url}/admin/certificate-item`,
@@ -189,8 +191,12 @@ $(function () {
                     x_position: xPosition,
                     y_position: yPosition,
                 },
-                success: function (data) {},
-                error: function (xhr, status, error) {},
+                success: function (data) {
+                    console.log("Position updated:", data);
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error updating position:", xhr.responseText);
+                },
             });
         },
     });

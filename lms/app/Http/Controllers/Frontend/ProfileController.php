@@ -22,12 +22,12 @@ class ProfileController extends Controller
     use FileUpload;
 
     function index() : View {
-       return view('frontend.student-dashboard.profile.index');
+       return view('frontend.student.profile.index');
     }
 
     function instructorIndex() : View {
         $gateways = PayoutGateway::where('status', 1)->get();
-       return view('frontend.instructor-dashboard.profile.index', compact('gateways'));
+       return view('frontend.instructor.profile.index', compact('gateways'));
     }
 
     function profileUpdate(ProfileUpdateRequest $request) : RedirectResponse {

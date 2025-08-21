@@ -279,7 +279,7 @@
                 </li>
 
                 <li class="nav-item {{ sidebarItemActive(['admin.certificate-builder.*']) }}">
-                    <a class="nav-link" href="{{-- {{ route('admin.certificate-builder.index') }} --}}">
+                    <a class="nav-link" href="{{ route('admin.certificate-builder.index') }}">
 
                         <span
                             class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/home -->
