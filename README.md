@@ -5,17 +5,129 @@
 </p>
 
 <p align="center">
-<a href="https://github.com/yourusername/lms-platform/actions"><img src="https://github.com/yourusername/lms-platform/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/yourusername/lms-platform"><img src="https://img.shields.io/packagist/dt/yourusername/lms-platform" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/yourusername/lms-platform"><img src="https://img.shields.io/packagist/v/yourusername/lms-platform" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/yourusername/lms-platform"><img src="https://img.shields.io/packagist/l/yourusername/lms-platform" alt="License"></a>
+<a href="https://github.com/bagalsoham/lms-platform"><img src="https://img.shields.io/badge/laravel-10+-red.svg" alt="Laravel 10+"></a>
+<a href="https://github.com/bagalsoham/lms-platform"><img src="https://img.shields.io/badge/php-8.1+-blue.svg" alt="PHP 8.1+"></a>
+<a href="https://github.com/bagalsoham/lms-platform"><img src="https://img.shields.io/badge/license-MIT-green.svg" alt="MIT License"></a>
+<a href="https://github.com/bagalsoham/lms-platform"><img src="https://img.shields.io/badge/build-passing-brightgreen.svg" alt="Build Status"></a>
 </p>
+
+<p align="center">
+    <strong>Developed by <a href="https://github.com/bagalsoham">Soham Bagal</a></strong><br>
+    <a href="https://www.linkedin.com/in/soham-bagal-4343bb284/">🔗 LinkedIn</a> • 
+    <a href="https://github.com/bagalsoham">🔗 GitHub</a> • 
+    <a href="mailto:bagalsoham1717@gmail.com">📧 Email</a>
+</p>
+
+---
 
 ## About LMS Platform
 
-LMS Platform is a comprehensive Learning Management System built with Laravel, designed to provide a seamless educational experience for administrators, instructors, and students. Our platform bridges the gap between educators and learners by offering powerful tools for course creation, content delivery, and educational management.
+LMS Platform is a comprehensive Learning Management System built with Laravel, designed to provide a seamless educational experience for administrators, instructors, and students. This platform bridges the gap between educators and learners by offering powerful tools for course creation, content delivery, and educational management.
 
-The platform features an intuitive interface and robust backend that handles everything from user management to payment processing, making it the perfect solution for educational institutions, online course creators, and learning communities.
+**Project developed by Soham Bagal as a full-stack Laravel application demonstrating advanced web development skills and real-world business logic implementation.**
+
+## 📸 Screenshots
+
+### 🎓 Student Experience
+
+#### Student Dashboard & Authentication
+<p align="center">
+    <img src="screenshots/student-loginpage.png" width="800" alt="Student Login Page">
+    <br><em>Clean and secure student authentication interface</em>
+</p>
+
+<p align="center">
+    <img src="screenshots/student-dashboard.png" width="800" alt="Student Dashboard">
+    <br><em>Comprehensive student dashboard with course overview</em>
+</p>
+
+#### Course Discovery & Enrollment
+<p align="center">
+    <img src="screenshots/Course-listing.png" width="800" alt="Course Listing">
+    <br><em>Browse and discover courses with detailed information</em>
+</p>
+
+<p align="center">
+    <img src="screenshots/student-enrolledCources.png" width="800" alt="Enrolled Courses">
+    <br><em>Student's enrolled courses with progress tracking</em>
+</p>
+
+#### Payment & Checkout Process
+<p align="center">
+    <img src="screenshots/student-checkoutPayment.png" width="800" alt="Checkout Process">
+    <br><em>Streamlined checkout process for course purchases</em>
+</p>
+
+<p align="center">
+    <img src="screenshots/Payment-process.png" width="800" alt="Payment Processing">
+    <br><em>Secure payment processing interface</em>
+</p>
+
+#### Multiple Payment Gateways
+<p align="center">
+    <img src="screenshots/Paymentgateways.png" width="800" alt="Payment Gateway Options">
+    <br><em>Multiple payment gateway options for user convenience</em>
+</p>
+
+<p align="center">
+    <img src="screenshots/Payment-Stripe.png" width="800" alt="Stripe Payment">
+    <br><em>Stripe payment integration</em>
+</p>
+
+<p align="center">
+    <img src="screenshots/payment-Razorpay.png" width="800" alt="Razorpay Payment">
+    <br><em>Razorpay payment gateway integration</em>
+</p>
+
+<p align="center">
+    <img src="screenshots/Paymet-successful.png" width="800" alt="Payment Success">
+    <br><em>Payment confirmation and success page</em>
+</p>
+
+#### Profile Management
+<p align="center">
+    <img src="screenshots/student-profileUpdate.png" width="800" alt="Student Profile">
+    <br><em>Easy-to-use profile management for students</em>
+</p>
+
+### 👨‍🏫 Instructor Features
+
+#### Course Creation & Management
+<p align="center">
+    <img src="screenshots/Instructor-courseCreation.png" width="800" alt="Course Creation">
+    <br><em>Comprehensive course creation interface for instructors</em>
+</p>
+
+<p align="center">
+    <img src="screenshots/Instructor-course.png" width="800" alt="Instructor Course Management">
+    <br><em>Instructor dashboard for managing created courses</em>
+</p>
+
+#### Sales & Revenue Tracking
+<p align="center">
+    <img src="screenshots/Instructor-course-purchase.png" width="800" alt="Course Purchase Analytics">
+    <br><em>Track course sales and student enrollments</em>
+</p>
+
+### 🛠️ Admin Panel
+
+#### Instructor Management
+<p align="center">
+    <img src="screenshots/admin-instructor-request.png" width="800" alt="Instructor Requests">
+    <br><em>Admin panel for managing instructor applications</em>
+</p>
+
+#### Course Approval System
+<p align="center">
+    <img src="screenshots/admin-courseRequest.png" width="800" alt="Course Approval">
+    <br><em>Course approval and moderation system</em>
+</p>
+
+#### Payment Gateway Configuration
+<p align="center">
+    <img src="screenshots/admin-paymentGateway.png" width="800" alt="Payment Gateway Admin">
+    <br><em>Admin configuration for payment gateways and commission settings</em>
+</p>
 
 ## Key Features
 
@@ -51,21 +163,22 @@ The platform features an intuitive interface and robust backend that handles eve
 - **Profile Management**: Customize personal learning profile
 - **Instructor Application**: Apply to become an instructor when ready
 
-## Technology Stack
+## 🛠️ Technology Stack
 
 - **Backend**: Laravel 10+ (PHP 8.1+)
-- **Frontend**: Blade Templates with Alpine.js
+- **Frontend**: Blade Templates with Alpine.js, Tailwind CSS
 - **Database**: MySQL/PostgreSQL
-- **Video Integration**: Zoom API for live sessions
-- **Payment Processing**: Stripe/PayPal integration
-- **File Storage**: AWS S3 or local storage
 - **Authentication**: Laravel Sanctum
+- **Payment**: Stripe, PayPal API Integration
+- **Video**: Zoom API for live sessions
+- **Storage**: AWS S3, Local Storage Support
+- **Testing**: PHPUnit, Feature & Unit Tests
 
-## Installation
+## 🚀 Installation
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/yourusername/lms-platform.git
+   git clone https://github.com/bagalsoham/lms-platform.git
    cd lms-platform
    ```
 
@@ -98,7 +211,7 @@ The platform features an intuitive interface and robust backend that handles eve
    php artisan serve
    ```
 
-## Configuration
+## ⚙️ Configuration
 
 ### Payment Gateways
 Configure your preferred payment methods in the `.env` file:
@@ -124,34 +237,30 @@ AWS_DEFAULT_REGION=your_region
 AWS_BUCKET=your_bucket_name
 ```
 
-## Usage
+## 📱 Usage
 
-### Admin Panel
-Access the admin dashboard at `/admin` to manage:
+### Admin Panel (`/admin`)
+Access the admin dashboard to manage:
 - User approvals and role assignments
 - Commission rate settings
 - Platform analytics and reporting
 - Course content moderation
 
-### Instructor Dashboard
-Instructors can access their dashboard at `/instructor` to:
+### Instructor Dashboard (`/instructor`)
+Instructors can access their dashboard to:
 - Create and manage courses
 - View sales analytics
 - Configure payout methods
 - Interact with students
 
-### Student Portal
-Students can access their learning portal at `/student` for:
+### Student Portal (`/student`)
+Students can access their learning portal for:
 - Course browsing and purchasing
 - Accessing learning materials
 - Tracking progress
 - Managing profile settings
 
-## API Documentation
-
-The platform includes a comprehensive RESTful API for mobile app integration and third-party services. API documentation is available at `/api/documentation` when in development mode.
-
-## Testing
+## 🧪 Testing
 
 Run the test suite to ensure everything is working correctly:
 
@@ -164,7 +273,7 @@ php artisan test --testsuite=Feature
 php artisan test --testsuite=Unit
 ```
 
-## Future Roadmap
+## 🚧 Future Roadmap
 
 - **Certification System**: Digital certificates upon course completion
 - **Advanced Analytics**: Enhanced reporting and student progress tracking
@@ -175,13 +284,13 @@ php artisan test --testsuite=Unit
 - **Gamification**: Achievement badges and learning streaks
 - **Multi-language Support**: Internationalization for global reach
 
-## Contributing
+## 🤝 Contributing
 
 We welcome contributions from the community! Please read our [Contributing Guidelines](CONTRIBUTING.md) before submitting pull requests.
 
 ### Development Setup
 
-1. Fork the repository
+1. Fork the repository from [https://github.com/bagalsoham/lms-platform](https://github.com/bagalsoham/lms-platform)
 2. Create a feature branch (`git checkout -b feature/amazing-feature`)
 3. Make your changes
 4. Run tests (`php artisan test`)
@@ -189,22 +298,23 @@ We welcome contributions from the community! Please read our [Contributing Guide
 6. Push to the branch (`git push origin feature/amazing-feature`)
 7. Open a Pull Request
 
-## Security
+## 🔒 Security
 
-If you discover any security vulnerabilities within the LMS Platform, please send an email to [security@lmsplatform.com](mailto:security@lmsplatform.com). All security vulnerabilities will be promptly addressed.
+If you discover any security vulnerabilities within the LMS Platform, please send an email to [bagalsoham1717@gmail.com](mailto:bagalsoham1717@gmail.com). All security vulnerabilities will be promptly addressed.
 
-## License
+## 📝 License
 
 The LMS Platform is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
 
-## Support
+## 📞 Support & Contact
 
-- **Documentation**: [https://docs.lmsplatform.com](https://docs.lmsplatform.com)
-- **Community Forum**: [https://community.lmsplatform.com](https://community.lmsplatform.com)
-- **Email Support**: [support@lmsplatform.com](mailto:support@lmsplatform.com)
-- **GitHub Issues**: [Report bugs and request features](https://github.com/yourusername/lms-platform/issues)
+- **Developer**: Soham Bagal
+- **Email**: [bagalsoham1717@gmail.com](mailto:bagalsoham1717@gmail.com)
+- **LinkedIn**: [Soham Bagal](https://www.linkedin.com/in/soham-bagal-4343bb284/)
+- **GitHub**: [bagalsoham](https://github.com/bagalsoham)
+- **Issues**: [Report bugs and request features](https://github.com/bagalsoham/lms-platform/issues)
 
-## Acknowledgments
+## 🙏 Acknowledgments
 
 - Built with [Laravel](https://laravel.com) - The PHP Framework for Web Artisans
 - UI components powered by [Tailwind CSS](https://tailwindcss.com)
@@ -213,4 +323,6 @@ The LMS Platform is open-sourced software licensed under the [MIT license](https
 
 ---
 
-**Made with ❤️ for educators and learners worldwide**
+**Developed with ❤️ by [Soham Bagal](https://github.com/bagalsoham) for the global education community**
+
+*Full Stack Laravel Developer | Building scalable web applications with modern technologies*
