@@ -32,61 +32,61 @@ LMS Platform is a comprehensive Learning Management System built with Laravel, d
 
 #### Student Dashboard & Authentication
 <p align="center">
-    <img src="screenshots/student-loginpage.png" width="800" alt="Student Login Page">
+    <img src="lms/screenshots/student-loginpage.png" width="800" alt="Student Login Page">
     <br><em>Clean and secure student authentication interface</em>
 </p>
 
 <p align="center">
-    <img src="screenshots/student-dashboard.png" width="800" alt="Student Dashboard">
+    <img src="lms/screenshots/student-dashboard.png" width="800" alt="Student Dashboard">
     <br><em>Comprehensive student dashboard with course overview</em>
 </p>
 
 #### Course Discovery & Enrollment
 <p align="center">
-    <img src="screenshots/Course-listing.png" width="800" alt="Course Listing">
+    <img src="lms/screenshots/Course-listing.png" width="800" alt="Course Listing">
     <br><em>Browse and discover courses with detailed information</em>
 </p>
 
 <p align="center">
-    <img src="screenshots/student-enrolledCources.png" width="800" alt="Enrolled Courses">
+    <img src="lms/screenshots/student-enrolledCources.png" width="800" alt="Enrolled Courses">
     <br><em>Student's enrolled courses with progress tracking</em>
 </p>
 
 #### Payment & Checkout Process
 <p align="center">
-    <img src="screenshots/student-checkoutPayment.png" width="800" alt="Checkout Process">
+    <img src="lms/screenshots/student-checkoutPayment.png" width="800" alt="Checkout Process">
     <br><em>Streamlined checkout process for course purchases</em>
 </p>
 
 <p align="center">
-    <img src="screenshots/Payment-process.png" width="800" alt="Payment Processing">
+    <img src="lms/screenshots/Payment-process.png" width="800" alt="Payment Processing">
     <br><em>Secure payment processing interface</em>
 </p>
 
 #### Multiple Payment Gateways
 <p align="center">
-    <img src="screenshots/Paymentgateways.png" width="800" alt="Payment Gateway Options">
+    <img src="lms/screenshots/Paymentgateways.png" width="800" alt="Payment Gateway Options">
     <br><em>Multiple payment gateway options for user convenience</em>
 </p>
 
 <p align="center">
-    <img src="screenshots/Payment-Stripe.png" width="800" alt="Stripe Payment">
+    <img src="lms/screenshots/Payment-Stripe.png" width="800" alt="Stripe Payment">
     <br><em>Stripe payment integration</em>
 </p>
 
 <p align="center">
-    <img src="screenshots/payment-Razorpay.png" width="800" alt="Razorpay Payment">
+    <img src="lms/screenshots/payment-Razorpay.png" width="800" alt="Razorpay Payment">
     <br><em>Razorpay payment gateway integration</em>
 </p>
 
 <p align="center">
-    <img src="screenshots/Paymet-successful.png" width="800" alt="Payment Success">
+    <img src="lms/screenshots/Paymet-successful.png" width="800" alt="Payment Success">
     <br><em>Payment confirmation and success page</em>
 </p>
 
 #### Profile Management
 <p align="center">
-    <img src="screenshots/student-profileUpdate.png" width="800" alt="Student Profile">
+    <img src="lms/screenshots/student-profileUpdate.png" width="800" alt="Student Profile">
     <br><em>Easy-to-use profile management for students</em>
 </p>
 
@@ -94,18 +94,18 @@ LMS Platform is a comprehensive Learning Management System built with Laravel, d
 
 #### Course Creation & Management
 <p align="center">
-    <img src="screenshots/Instructor-courseCreation.png" width="800" alt="Course Creation">
+    <img src="lms/screenshots/Instructor-courseCreation.png" width="800" alt="Course Creation">
     <br><em>Comprehensive course creation interface for instructors</em>
 </p>
 
 <p align="center">
-    <img src="screenshots/Instructor-course.png" width="800" alt="Instructor Course Management">
+    <img src="lms/screenshots/Instructor-course.png" width="800" alt="Instructor Course Management">
     <br><em>Instructor dashboard for managing created courses</em>
 </p>
 
 #### Sales & Revenue Tracking
 <p align="center">
-    <img src="screenshots/Instructor-course-purchase.png" width="800" alt="Course Purchase Analytics">
+    <img src="lms/screenshots/Instructor-course-purchase.png" width="800" alt="Course Purchase Analytics">
     <br><em>Track course sales and student enrollments</em>
 </p>
 
@@ -113,19 +113,19 @@ LMS Platform is a comprehensive Learning Management System built with Laravel, d
 
 #### Instructor Management
 <p align="center">
-    <img src="screenshots/admin-instructor-request.png" width="800" alt="Instructor Requests">
+    <img src="lms/screenshots/admin-instructor-request.png" width="800" alt="Instructor Requests">
     <br><em>Admin panel for managing instructor applications</em>
 </p>
 
 #### Course Approval System
 <p align="center">
-    <img src="screenshots/admin-courseRequest.png" width="800" alt="Course Approval">
+    <img src="lms/screenshots/admin-courseRequest.png" width="800" alt="Course Approval">
     <br><em>Course approval and moderation system</em>
 </p>
 
 #### Payment Gateway Configuration
 <p align="center">
-    <img src="screenshots/admin-paymentGateway.png" width="800" alt="Payment Gateway Admin">
+    <img src="lms/screenshots/admin-paymentGateway.png" width="800" alt="Payment Gateway Admin">
     <br><em>Admin configuration for payment gateways and commission settings</em>
 </p>
 
