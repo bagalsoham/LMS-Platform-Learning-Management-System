@@ -196,7 +196,7 @@ Route::group([
 });
 
 
-// Add this to a test route or controller to debug
+/* // Add this to a test route or controller to debug
 Route::get('/debug-structure', function() {
     $publicStorage = public_path('storage');
     $storageAppPublic = storage_path('app/public');
@@ -210,7 +210,7 @@ Route::get('/debug-structure', function() {
         'app_url' => config('app.url'),
         'current_url' => request()->getSchemeAndHttpHost(),
     ];
-});
+}); */
 
 /*
 |--------------------------------------------------------------------------
