@@ -1,0 +1,72 @@
+# Dockerfile
+
+# Use PHP 8.2 FPM image
+FROM php:8.2-fpm
+
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    git \
+    unzip \
+    libzip-dev \
+    libpng-dev \
+    libonig-dev \
+    libxml2-dev \
+    libfreetype6-dev \
+    libjpeg62-turbo-dev \
+    curl \
+    nginx \
+    supervisor \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install pdo_mysql mbstring zip gd xml \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install Composer
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
+# Create application user
+RUN groupadd -g 1000 www && \
+    useradd -u 1000 -ms /bin/bash -g www www
+
+# Set working directory
+WORKDIR /var/www/html
+
+# Copy composer files first (for better Docker caching)
+COPY composer.json composer.lock ./
+
+# Install PHP dependencies
+RUN composer install --no-dev --no-scripts --no-autoloader --optimize-autoloader
+
+# Copy project files
+COPY . .
+
+# Complete composer installation
+RUN composer dump-autoloader --no-dev --optimize
+
+# Copy configuration files
+COPY docker/nginx/nginx.conf /etc/nginx/nginx.conf
+COPY docker/supervisor/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+
+# Create necessary directories and set permissions
+RUN mkdir -p /var/www/html/storage/logs \
+    && mkdir -p /var/www/html/storage/framework/cache \
+    && mkdir -p /var/www/html/storage/framework/sessions \
+    && mkdir -p /var/www/html/storage/framework/views \
+    && mkdir -p /var/log/supervisor \
+    && chown -R www:www /var/www/html \
+    && chmod -R 775 /var/www/html/storage \
+    && chmod -R 775 /var/www/html/bootstrap/cache
+
+# Generate optimized autoloader and cache config
+RUN php artisan config:cache || echo "Config cache skipped" \
+    && php artisan route:cache || echo "Route cache skipped" \
+    && php artisan view:cache || echo "View cache skipped"
+
+# Remove default nginx config
+RUN rm -f /etc/nginx/sites-enabled/default
+
+# Expose port for Render
+EXPOSE ${PORT:-8000}
+
+# Start supervisor
+CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
