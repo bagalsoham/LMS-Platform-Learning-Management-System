@@ -6,8 +6,7 @@
         </button>
         <h1 class="navbar-brand navbar-brand-autodark">
             <a href=".">
-                <img src="{{ asset(config('settings.site_logo')) }}" width="110" height="32" alt=""
-                    class="navbar-brand-image">
+               <img src="{{ asset(config('settings.site_logo')) }}" width="110" height="32" alt="Logo">
             </a>
         </h1>
         <div class="navbar-nav flex-row d-lg-none">
@@ -382,28 +381,28 @@
 
                             <div class="dropdown-menu-column">
                                 <a class="dropdown-item {{ sidebarItemActive(['admin.hero.*']) }}"
-                                    href="{{-- {{ route('admin.hero.index') }} --}}">
+                                    href="{{ route('admin.hero.index') }}">
                                     Hero
                                 </a>
-
                             </div>
+
                             <div class="dropdown-menu-column">
                                 <a class="dropdown-item {{ sidebarItemActive(['admin.feature.*']) }}"
-                                    href="{{-- {{ route('admin.feature.index') }} --}}">
+                                    href="{{ route('admin.feature.index') }}">
                                     Features
                                 </a>
 
                             </div>
                             <div class="dropdown-menu-column">
                                 <a class="dropdown-item {{ sidebarItemActive(['admin.about-section.*']) }}"
-                                    href="{{-- {{ route('admin.about-section.index') }} --}}">
+                                    href="{{ route('admin.about-section.index') }}">
                                     About Us
                                 </a>
 
                             </div>
                             <div class="dropdown-menu-column">
                                 <a class="dropdown-item {{ sidebarItemActive(['admin.latest-courses-section.*']) }}"
-                                    href="{{-- {{ route('admin.latest-courses-section.index') }} --}}">
+                                    href=" {{ route('admin.latest-courses-section.index') }} ">
                                     Latest Courses
                                 </a>
                             </div>
@@ -504,31 +503,31 @@
                         <div class="dropdown-menu-columns">
                             <div class="dropdown-menu-column">
                                 <a class="dropdown-item {{ sidebarItemActive(['admin.top-bar.*']) }}"
-                                    href="{{-- {{ route('admin.top-bar.index') }} --}}">
+                                    href=" {{ route('admin.top-bar.index') }}">
                                     Top Bar
                                 </a>
                             </div>
                             <div class="dropdown-menu-column">
                                 <a class="dropdown-item {{ sidebarItemActive(['admin.footer.*']) }}"
-                                    href="{{-- {{ route('admin.footer.index') }} --}}">
+                                    href="{{ route('admin.footer.index') }}">
                                     Footer Content
                                 </a>
                             </div>
                             <div class="dropdown-menu-column">
                                 <a class="dropdown-item {{ sidebarItemActive(['admin.footer-column-one.index']) }}"
-                                    href="{{-- {{ route('admin.footer-column-one.index') }} --}}">
+                                    href=" {{ route('admin.footer-column-one.index') }} ">
                                     Footer Column One
                                 </a>
                             </div>
                             <div class="dropdown-menu-column ">
                                 <a class="dropdown-item {{ sidebarItemActive(['admin.footer-column-two.*']) }}"
-                                    href="{{-- {{ route('admin.footer-column-two.index') }} --}}">
+                                    href=" {{ route('admin.footer-column-two.index') }} ">
                                     Footer Column Two
                                 </a>
                             </div>
                             <div class="dropdown-menu-column ">
                                 <a class="dropdown-item {{ sidebarItemActive(['admin.social-links.*']) }}"
-                                    href="{{-- {{ route('admin.social-links.index') }} --}}">
+                                    href=" {{ route('admin.social-links.index') }} ">
                                     Social Links
                                 </a>
                             </div>

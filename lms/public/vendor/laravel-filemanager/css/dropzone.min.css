@@ -412,7 +412,7 @@
 }
 
 .dropzone .dz-preview .dz-success-mark, .dropzone .dz-preview .dz-error-mark {
-    pointer-events: none;
+
     opacity: 0;
     z-index: 500;
     position: absolute;
@@ -458,7 +458,7 @@
 .dropzone .dz-preview .dz-progress {
     opacity: 1;
     z-index: 1000;
-    pointer-events: none;
+
     position: absolute;
     height: 16px;
     left: 50%;
@@ -497,7 +497,7 @@
 }
 
 .dropzone .dz-preview .dz-error-message {
-    pointer-events: none;
+
     z-index: 1000;
     position: absolute;
     display: block;

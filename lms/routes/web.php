@@ -1,12 +1,14 @@
 <?php
 
 use App\Http\Controllers\Admin\OrderController;
+use App\Http\Controllers\Frontend\BlogController;
 use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\CheckoutController;
 use App\Http\Controllers\Frontend\CourseContentController;
 use App\Http\Controllers\Frontend\CourseController;
 use App\Http\Controllers\Frontend\CoursePageController;
 use App\Http\Controllers\Frontend\EnrolledCourseController;
+use App\Http\Controllers\Frontend\FrontendContactController;
 use App\Http\Controllers\Frontend\StudentDashboardController;
 use App\Http\Controllers\Frontend\InstructorDashboardController;
 use Illuminate\Support\Facades\Route;
@@ -57,6 +59,15 @@ Route::post('razorpay/payment', [PaymentController::class, 'payWithRazorpay'])->
 
 Route::get('order-success', [PaymentController::class, 'orderSuccess'])->name('order.success');
 Route::get('order-failed', [PaymentController::class, 'orderFailed'])->name('order.failed');
+
+ Route::get('about', [FrontendController::class, 'about'])->name('about.index');
+/** Blog Routes */
+ Route::get('blog', [BlogController::class, 'index'])->name('blog.index');
+ Route::get('blog/{slug}', [BlogController::class, 'show'])->name('blog.show');
+ Route::post('blog/comment/{id}', [BlogController::class, 'storeComment'])->name('blog.comment.store');
+
+ Route::get('contact', [FrontendContactController::class, 'index'])->name('contact.index');
+ Route::post('contact', [FrontendContactController::class, 'sendMail'])->name('send.contact');
 
 
 

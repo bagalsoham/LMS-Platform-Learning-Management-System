@@ -60,7 +60,7 @@
   font-size: 14px;
   left: 62px;
   opacity: 0;
-  pointer-events: none;
+
   position: absolute;
   top: 20px;
   display: flex;
@@ -198,7 +198,7 @@
 
 .apexcharts-xaxistooltip,.apexcharts-yaxistooltip {
   opacity: 0;
-  pointer-events: none;
+
   color: #373d3f;
   font-size: 13px;
   text-align: center;
@@ -352,7 +352,7 @@
 }
 
 .apexcharts-xcrosshairs,.apexcharts-ycrosshairs {
-  pointer-events: none;
+
   opacity: 0;
   transition: .15s ease all
 }
@@ -371,7 +371,7 @@
 }
 
 .svg_select_boundingRect,.svg_select_points_rot {
-  pointer-events: none;
+
   opacity: 0;
   visibility: hidden
 }

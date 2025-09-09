@@ -6,7 +6,7 @@
     border: 2.5px solid var(--colorPrimary) !important;
     position: fixed;
     z-index: 9999;
-    pointer-events: none;
+
     transition: border-color 0.5s;
     -webkit-transition: border-color 0.5s;
     -moz-transition: border-color 0.5s;
@@ -28,7 +28,7 @@
     border: 1px solid var(--colorPrimary) !important;
     position: fixed;
     z-index: 9999;
-    pointer-events: none;
+
     border-radius: 50% !important;
     -webkit-border-radius: 50% !important;
     -moz-border-radius: 50% !important;

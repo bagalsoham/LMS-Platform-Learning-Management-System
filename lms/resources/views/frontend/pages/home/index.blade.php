@@ -1,90 +1,106 @@
 @extends('frontend.layouts.master')
 
 @section('content')
-    <!--===========================
-        HERO SECTION START
+<!--===========================
+        BANNER 3 START
     ============================-->
     @include('frontend.pages.home.sections.hero-section')
     <!--===========================
-        HERO SECTION END
+        BANNER 3 END
     ============================-->
 
-    <!--===========================
-        CATEGORY SECTION START
-    ============================-->
-<!--     @include('frontend.pages.home.sections.category-section')
- -->    <!--===========================
-        CATEGORY SECTION END
-    ============================-->
 
     <!--===========================
-        ABOUT SECTION START
+        CATEGORY 4 START
     ============================-->
-<!--     @include('frontend.pages.home.sections.about-section')
- -->    <!--===========================
-        ABOUT SECTION END
+    @include('frontend.pages.home.sections.category-section')
+    <!--===========================
+        CATEGORY 4 END
     ============================-->
 
-    <!--===========================
-        COURSES SECTION START
-    ============================-->
-<!--     @include('frontend.pages.home.sections.courses-section')
- -->    <!--===========================
-        COURSES SECTION END
-    ============================-->
 
     <!--===========================
-        OFFER SECTION START
+        ABOUT 3 START
     ============================-->
-<!--     @include('frontend.pages.home.sections.offer-section')
- -->    <!--===========================
-        OFFER SECTION END
+    @include('frontend.pages.home.sections.about-section')
+    <!--===========================
+        ABOUT 3 END
     ============================-->
 
-    <!--===========================
-        BECOME INSTRUCTOR SECTION START
-    ============================-->
-<!--     @include('frontend.pages.home.sections.become-instructor-section')
- -->    <!--===========================
-        BECOME INSTRUCTOR SECTION END
-    ============================-->
 
     <!--===========================
-        VIDEO SECTION START
+        COURSES 3 START
     ============================-->
-<!--     @include('frontend.pages.home.sections.video-section')
- -->    <!--===========================
-        VIDEO SECTION END
+    @include('frontend.pages.home.sections.courses-section')
+    <!--===========================
+        COURSES 3 END
     ============================-->
 
-    <!--===========================
-        BRAND SECTION START
-    ============================-->
-<!--     @include('frontend.pages.home.sections.brand-section')
- -->    <!--===========================
-        BRAND SECTION END
-    ============================-->
 
     <!--===========================
-        QUALITY COURSES SECTION START
+        OFFER START
     ============================-->
-<!--     @include('frontend.pages.home.sections.quality-course-section')
- -->    <!--===========================
-        QUALITY COURSES SECTION END
-    ============================-->
-
-    <!--===========================
-        TESTIMONIAL SECTION START
-    ============================-->
-<!--     @include('frontend.pages.home.sections.testimonial-section')
- -->    <!--===========================
-        TESTIMONIAL SECTION END
+{{--     @include('frontend.pages.home.sections.offer-section')
+ --}}    <!--===========================
+        OFFER END
     ============================-->
 
+
     <!--===========================
-        BLOG SECTION START
+        BECOME INSTRUCTOR START
     ============================-->
-<!--  -->    <!--===========================
-        BLOG SECTION END
+{{--     @include('frontend.pages.home.sections.become-instructor-section')
+ --}}
+    <!--===========================
+        BECOME INSTRUCTOR END
     ============================-->
+
+
+    <!--===========================
+        VIDEO START
+    ============================-->
+{{--     @include('frontend.pages.home.sections.video-section')
+ --}}    <!--===========================
+        VIDEO END
+    ============================-->
+
+
+    <!--===========================
+        BRAND START
+    ============================-->
+{{--     @include('frontend.pages.home.sections.brand-section')
+ --}}    <!--===========================
+        BRAND END
+    ============================-->
+
+
+    <!--===========================
+        QUALITY COURSES START
+    ============================-->
+{{--     @include('frontend.pages.home.sections.quality-course-section')
+ --}}    <!--===========================
+        QUALITY COURSES END
+    ============================-->
+
+
+    <!--===========================
+        TESTIMONIAL START
+    ============================-->
+    @include('frontend.pages.home.sections.testimonial-section')
+
+    <!--===========================
+        TESTIMONIAL END
+    ============================-->
+
+
+    <!--===========================
+        BLOG 4 START
+    ============================-->
+{{--     @include('frontend.pages.home.sections.blog-section')
+ --}}    <!--===========================
+        BLOG 4 END
+    ============================-->
+
+
+
 @endsection

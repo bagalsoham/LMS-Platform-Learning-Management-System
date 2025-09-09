@@ -299,7 +299,7 @@ button::-moz-focus-inner {
   content: '';
   left: -1px;
   opacity: 0;
-  pointer-events: none;
+
   position: absolute;
   right: -1px;
   top: -1px;
@@ -1664,7 +1664,7 @@ body.tox-dialog__disable-scroll {
   content: '';
   inset: 0;
   opacity: 0;
-  pointer-events: none;
+
   position: absolute;
   transition: opacity 0.15s;
   z-index: 1;
@@ -2077,7 +2077,7 @@ body.tox-dialog__disable-scroll {
   outline: none;
 }
 .tox .tox-selectfield svg {
-  pointer-events: none;
+
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
@@ -3024,7 +3024,7 @@ body.tox-dialog__disable-scroll {
 .tox .tox-number-input .tox-input-wrapper {
   background: #f7f7f7;
   display: flex;
-  pointer-events: none;
+
   text-align: center;
 }
 .tox .tox-number-input .tox-input-wrapper:focus {

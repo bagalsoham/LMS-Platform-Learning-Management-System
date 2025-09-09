@@ -20,6 +20,7 @@ use App\Http\Controllers\Admin\CourseContentController; // Missing import added 
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\InstructorRequestController;
 use App\Http\Controllers\Admin\CourseLevelController;
+use App\Http\Controllers\Frontend\HeroController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -178,6 +179,28 @@ Route::prefix('admin')->name('admin.')->middleware(['auth:admin'])->group(functi
     Route::get('certificate-builder', [CertificateBuilderController::class, 'index'])->name('certificate-builder.index');
     Route::post('certificate-builder', [CertificateBuilderController::class, 'update'])->name('certificate-builder.update');
     Route::post('certificate-item', [CertificateBuilderController::class, 'itemUpdate'])->name('certificate-item.update');
+
+    /** Hero Routes */
+    Route::resource('hero', HeroController::class);
+    /** Feature Routes */
+    Route::resource('feature', FeatureController::class);
+
+    /** Feature Routes */
+    Route::resource('about-section', AboutUsSectionController::class);
+    /** Latest Courses Routes */
+    Route::resource('latest-courses-section', LatestCourseSectionController::class);
+    Route::resource('footer', FooterController::class);
+    Route::resource('top-bar', TopBarController::class);
+
+    /** Social links routes */
+    Route::resource('social-links', SocialLinkController::class);
+
+    /** footer column one routes */
+    Route::resource('footer-column-one', FooterColumnOneController::class);
+
+    /** footer column one routes */
+    Route::resource('footer-column-two', FooterColumnTwoController::class);
+
 
 
     // Laravel File Manager routes for admin and web

@@ -219,7 +219,7 @@
     width: 7px;
     height: 7px;
     margin-top: 6px;
-    pointer-events: none;
+
     position: absolute;
     right: 25px;
     top: 50%;
@@ -241,7 +241,7 @@
     width: 8px;
     height: 8px;
     margin-top: -4px;
-    pointer-events: none;
+
     position: absolute;
     right: 12px;
     top: 50%;

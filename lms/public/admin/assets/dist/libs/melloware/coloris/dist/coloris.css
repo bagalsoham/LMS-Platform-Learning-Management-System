@@ -116,7 +116,7 @@
   border-radius: 50%;
   background-color: currentColor;
   box-shadow: 0 0 1px #888;
-  pointer-events: none;
+
 }
 
 .clr-alpha div:before {
@@ -161,7 +161,7 @@
   left: 0;
   top: 0;
   opacity: 0;
-  pointer-events: none;
+
 }
 
 .clr-segmented label {
@@ -351,7 +351,7 @@ input.clr-color:focus {
   text-indent: -1000px;
   white-space: nowrap;
   overflow: hidden;
-  pointer-events: none;
+
 }
 
 .clr-field.clr-rtl button {
@@ -466,7 +466,7 @@ input.clr-color:focus {
   box-sizing: border-box;
   color: #fff;
   filter: drop-shadow(0 -4px 3px rgba(0,0,0,.1));
-  pointer-events: none;
+
 }
 
 .clr-picker.clr-polaroid.clr-dark:before {
