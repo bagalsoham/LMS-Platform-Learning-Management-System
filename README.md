@@ -1,7 +1,7 @@
 # LMS Platform - Learning Management System
 
 <p align="center">
-    <img src="lms/public/frontend/assets/images/logo.png" width="400" alt="LMS Platform Logo">
+    <img src="lms/screenshots/Screenshot_2025-09-09_163015-removebg-preview.png" width="400" alt="LMS Platform Logo">
 </p>
 
 <p align="center">
