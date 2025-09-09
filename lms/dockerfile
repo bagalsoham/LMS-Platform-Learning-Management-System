@@ -7,28 +7,51 @@ COPY . .
 RUN npm run build
 
 # Stage 2 - Backend
-FROM php:8.2-fpm AS backend
-# Install dependencies
+FROM php:8.2-cli AS backend
+
+# Install system dependencies
 RUN apt-get update && apt-get install -y \
     git curl unzip libpq-dev libonig-dev libzip-dev zip \
-    && docker-php-ext-install pdo pdo_mysql mbstring zip exif
+    && docker-php-ext-install pdo pdo_mysql mbstring zip exif \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
 # Install Composer
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
 WORKDIR /var/www
+
+# Copy composer files first for better caching
+COPY composer.json composer.lock ./
+
+# Install PHP dependencies
+RUN composer install --no-dev --optimize-autoloader --no-scripts --no-interaction
+
+# Copy application code
 COPY . .
 
 # Copy frontend build from previous stage
 COPY --from=frontend /app/public/build ./public/build
 
-# Create SQLite file (if using SQLite)
+# Create SQLite database file if needed
 RUN mkdir -p database && touch database/database.sqlite
 
-# Install PHP packages without scripts to avoid DB errors
-RUN composer install --no-dev --optimize-autoloader --no-scripts
+# Set proper permissions
+RUN chown -R www-data:www-data /var/www \
+    && chmod -R 755 /var/www/storage \
+    && chmod -R 755 /var/www/bootstrap/cache
 
-# Clear caches
-RUN php artisan config:clear && php artisan route:clear && php artisan view:clear
+# Set environment variables
+ENV APP_ENV=production
+ENV APP_DEBUG=false
 
-CMD ["php-fpm"]
+# Generate application key and cache configs
+RUN php artisan key:generate --no-interaction --force || true
+RUN composer dump-autoload --optimize
+RUN php artisan config:cache || true
+
+# Expose port
+EXPOSE 8000
+
+# Use PHP built-in server
+CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=8000"]
